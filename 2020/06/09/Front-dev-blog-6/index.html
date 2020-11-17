@@ -7,14 +7,23 @@
   
   <title>Front 개발 블로그(6) | gastroad&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="거의 한 달 만에 포스팅을 하려한다맥북에 커피를 쏟아 수리를 맡겼는데 2주 정도 걸렸다.수리비가 장난 아니니까 커피를 쏟지 않게 조심해야 한다 …역시 커피는 마시는 것보다 쏟는 게 잠 깨는 데에 도움이 되는 거 같다… 여차여차 백엔드 개발자를 구했다그래서 부담이었던 백엔드 부분 공부를 미룰 수 있게 되었다. 본제로 돌아와서 먼저 기본적인 개발 준비는 끝났으">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Front 개발 블로그(6)">
 <meta property="og:url" content="http://example.com/2020/06/09/Front-dev-blog-6/index.html">
 <meta property="og:site_name" content="gastroad&#39;s blog">
+<meta property="og:description" content="거의 한 달 만에 포스팅을 하려한다맥북에 커피를 쏟아 수리를 맡겼는데 2주 정도 걸렸다.수리비가 장난 아니니까 커피를 쏟지 않게 조심해야 한다 …역시 커피는 마시는 것보다 쏟는 게 잠 깨는 데에 도움이 되는 거 같다… 여차여차 백엔드 개발자를 구했다그래서 부담이었던 백엔드 부분 공부를 미룰 수 있게 되었다. 본제로 돌아와서 먼저 기본적인 개발 준비는 끝났으">
 <meta property="og:locale">
 <meta property="og:image" content="http://example.com/img/Front-dev-blog-6/1.png">
+<meta property="og:image" content="http://example.com/img/Front-dev-blog-6/2.png">
+<meta property="og:image" content="http://example.com/img/Front-dev-blog-6/3.png">
+<meta property="og:image" content="http://example.com/img/Front-dev-blog-6/4.png">
+<meta property="og:image" content="http://example.com/img/Front-dev-blog-6/5.png">
+<meta property="og:image" content="http://example.com/img/Front-dev-blog-6/6.png">
+<meta property="og:image" content="http://example.com/img/Front-dev-blog-6/7.png">
+<meta property="og:image" content="http://example.com/img/Front-dev-blog-6/8.png">
 <meta property="article:published_time" content="2020-06-08T15:00:00.000Z">
-<meta property="article:modified_time" content="2020-11-17T03:16:25.725Z">
+<meta property="article:modified_time" content="2020-11-17T03:28:58.066Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/img/Front-dev-blog-6/1.png">
 <meta property="fb:app_id" content="라인&amp;바차트,">
@@ -88,8 +97,33 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
+        <p>거의 한 달 만에 포스팅을 하려한다<br>맥북에 커피를 쏟아 수리를 맡겼는데 2주 정도 걸렸다.<br>수리비가 장난 아니니까 커피를 쏟지 않게 조심해야 한다 …<br>역시 커피는 마시는 것보다 쏟는 게 잠 깨는 데에 도움이 되는 거 같다…</p>
+<p>여차여차 백엔드 개발자를 구했다<br>그래서 부담이었던 백엔드 부분 공부를 미룰 수 있게 되었다.</p>
+<p>본제로 돌아와서 먼저 기본적인 개발 준비는 끝났으니<br>본격적으로 개발을 시작하도록 하겠다</p>
+<p>오늘은 router 설정 을 하려 한다<br>프로젝트 내부에서 URI 변경이 될때 화면이 전환되는 기능을 개발 할 것이다<br>react-router 라는 라이브러리를 사용해서 router 설정을 할 것이다.<br>react-router 설정은 간단하다 최상위에 Router 를 두고 Swich의 children 으로 Route component에 path, component를 props 로 넘겨주면 된다<br>말로 쓰려니까 어려워 보이지만 코드를 보면서 설명하도록 하겠다</p>
+<ul>
 <li><img src="/img/Front-dev-blog-6/1.png"></li>
+</ul>
+<p>App.tsx 에 최상단 wrapper 로 Router를 생성하고 모든 페이지공용으로 사용 하는 Header 를 두었다<br>&lt;&gt; &lt;/&gt; 문법은 React.Fragment 라는 그냥 wrapper 로 사용하는 문법이다<br>root-modal 은 나중에 popup 을 만들때 react-dom 에 createPortal 라는 기능을 사용하려고 미리 생성해 두었다<br>그후 Switch 하단에 Route 를 생성해두면<br>localhost/dashboard 로 접근을 하면 DashBoard Component 가 rendering 될것이다<br>마지막으로 Redirect Component 를 작성하여 URI 가 잘못된 곳으로 접근했을때 모두 dashboard 페이지로 이동하게 설정해 두었다</p>
+<p>renderRoute 는 이후 props 로 추가 데이터가 필요할 경우가 있을거 같아 미리 작성해 두었다</p>
+<p>이쯤에서 디랙토리 구조를 살펴 보자면</p>
+<ul>
+<li><img src="/img/Front-dev-blog-6/2.png"></li>
+</ul>
+<p>이런식으로 되어있다<br>DashBoard,GameList,Setting 은</p>
+<ul>
+<li><img src="/img/Front-dev-blog-6/3.png" alt="DashBoard"></li>
+<li><img src="/img/Front-dev-blog-6/4.png" alt="GameList"></li>
+<li><img src="/img/Front-dev-blog-6/5.png" alt="Setting"></li>
+</ul>
+<p>간단하게 제대로 나오는지 확인만 하려고 작성해 두었다</p>
+<ul>
+<li><img src="/img/Front-dev-blog-6/6.png" alt="header"></li>
+<li><img src="/img/Front-dev-blog-6/7.png" alt="index"></li>
+</ul>
+<p>header 도 비슷하게 작성해 두었다<br>index.ts 는 저런식으로 작성해두면 다른 파일에서 import 할 경우에<br>디랙토리 까지만 접근을해도 자동으로 잡아준다</p>
+<ul>
+<li><img src="/img/Front-dev-blog-6/8.png"></li>
 </ul>
 
       
@@ -104,11 +138,11 @@
     
 <nav id="article-nav">
   
-    <a href="/2020/09/17/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/11/12/git-SSH-key/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Hello World
+          git hub 에 SSH key 등록하기
         
       </div>
     </a>
@@ -132,7 +166,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/save-money/">save-money</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EA%B8%B0%ED%83%80/">기타</a><span class="category-list-count">2</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/d3/">d3</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/save-money/">save-money</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EA%B8%B0%ED%83%80/">기타</a><span class="category-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -142,7 +176,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oh-my-zsh/" rel="tag">oh-my-zsh</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3js/" rel="tag">d3js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oh-my-zsh/" rel="tag">oh-my-zsh</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -152,7 +186,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/oh-my-zsh/" style="font-size: 10px;">oh-my-zsh</a>
+      <a href="/tags/d3js/" style="font-size: 10px;">d3js</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/oh-my-zsh/" style="font-size: 10px;">oh-my-zsh</a>
     </div>
   </div>
 
@@ -161,7 +195,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -178,7 +212,7 @@
           </li>
         
           <li>
-            <a href="/2020/11/12/d3js-1/">d3js-1</a>
+            <a href="/2020/11/12/d3js-1/">D3 공부일지 (1)</a>
           </li>
         
           <li>
@@ -186,11 +220,11 @@
           </li>
         
           <li>
-            <a href="/2020/09/17/hello-world/">Hello World</a>
+            <a href="/2020/06/09/Front-dev-blog-6/">Front 개발 블로그(6)</a>
           </li>
         
           <li>
-            <a href="/2020/06/09/Front-dev-blog-6/">Front 개발 블로그(6)</a>
+            <a href="/2020/05/11/Front-dev-blog-5/">Front 개발 블로그(5)</a>
           </li>
         
       </ul>

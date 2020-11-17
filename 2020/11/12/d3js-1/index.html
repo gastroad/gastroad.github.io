@@ -5,15 +5,18 @@
   
 
   
-  <title>d3js-1 | gastroad&#39;s blog</title>
+  <title>D3 공부일지 (1) | gastroad&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
-<meta property="og:title" content="d3js-1">
+  <meta name="description" content="D3 를 공부하려고 한다workbox, D3, 테스트 코드 3개를 공부해 보려 하는데먼저 D3 부터 시작하기로 했다 D3란 Data-Driven Documents 의 약자로 D가 3개 들어가서 D3 라고 하는거같다 직역을 하면 정보-중심 문서 라는 뜻인거같다 일단 d3js.org 에 접속해 보았다, 접속하자마자 최 상단에 d3 가 뭘 하는것인지 쓰여있는데">
+<meta property="og:type" content="article">
+<meta property="og:title" content="D3 공부일지 (1)">
 <meta property="og:url" content="http://example.com/2020/11/12/d3js-1/index.html">
 <meta property="og:site_name" content="gastroad&#39;s blog">
+<meta property="og:description" content="D3 를 공부하려고 한다workbox, D3, 테스트 코드 3개를 공부해 보려 하는데먼저 D3 부터 시작하기로 했다 D3란 Data-Driven Documents 의 약자로 D가 3개 들어가서 D3 라고 하는거같다 직역을 하면 정보-중심 문서 라는 뜻인거같다 일단 d3js.org 에 접속해 보았다, 접속하자마자 최 상단에 d3 가 뭘 하는것인지 쓰여있는데">
 <meta property="og:locale">
 <meta property="article:published_time" content="2020-11-12T08:53:19.000Z">
-<meta property="article:modified_time" content="2020-11-12T08:53:19.713Z">
+<meta property="article:modified_time" content="2020-11-17T03:39:27.816Z">
+<meta property="article:tag" content="d3js">
 <meta name="twitter:card" content="summary">
 <meta property="fb:app_id" content="라인&amp;바차트,">
   
@@ -66,6 +69,10 @@
   <time datetime="2020-11-12T08:53:19.000Z" itemprop="datePublished">2020-11-12</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/d3/">d3</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -74,7 +81,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      d3js-1
+      D3 공부일지 (1)
     </h1>
   
 
@@ -82,13 +89,72 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>D3 를 공부하려고 한다<br>workbox, D3, 테스트 코드 3개를 공부해 보려 하는데<br>먼저 D3 부터 시작하기로 했다</p>
+<p>D3란 Data-Driven Documents 의 약자로 D가 3개 들어가서 D3 라고 하는거같다 직역을 하면 정보-중심 문서 라는 뜻인거같다</p>
+<p>일단 d3js.org 에 접속해 보았다, 접속하자마자 최 상단에 d3 가 뭘 하는것인지 쓰여있는데</p>
+<p><code>D3.js is a JavaScript library for manipulating documents based on data. D3 helps you bring data to life using HTML, SVG, and CSS. D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a proprietary framework, combining powerful visualization components and a data-driven approach to DOM manipulation.</code></p>
+<p>대충 해석해 보자면<br>D3 는 데이터 기반으로 문서를 조작하는 자바스크립트 라이브러리 이다<br>HTML,SVG,CSS 에 생명을 불어 넣는데 도움이 된다고 한다<br>웹표준을 준수하여 프레임 워크에 묶이지 않고도 최신 브라우저의 기능을 제공한다</p>
+<p>영어실력이 좋지 못해서 정확한 해석은 되지 않지만 대충 이런 뜻인거 같다</p>
+<p>이후 쭉 읽어보면 D3 에대한 상세한 설명 후 아마도 핵심 기능으로 추정되는<br>5가지 기능에 대한 설명이 있다</p>
+<ol>
+<li>selections</li>
+<li>Dynamic Properties</li>
+<li>Enter and Exit</li>
+<li>Transformation, not Representation</li>
+<li>Transitions</li>
+</ol>
+<p>따라서 위 5가지 순서대로 공부후 나중에 예제를 몇개 만들어 보려고 한다</p>
+<h3 id="selections"><a href="#selections" class="headerlink" title="selections"></a>selections</h3><p>기본적으로 element 를 select 하는 문법인거같다 기존 W3C DOM API 를 사용하면</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> paragraphs = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;p&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; paragraphs.length; i++) &#123;</span><br><span class="line">  <span class="keyword">var</span> paragraph = paragraphs.item(i);</span><br><span class="line">  paragraph.style.setProperty(<span class="string">&quot;color&quot;</span>, <span class="string">&quot;blue&quot;</span>, <span class="literal">null</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>이렇게 나오는데 D3 의 select 방법을 사용하면</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d3.selectAll(<span class="string">&quot;p&quot;</span>).style(<span class="string">&quot;color&quot;</span>, <span class="string">&quot;blue&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>처럼 간단하게 사용할수 있다<br>물론 한개만 선택하는것도 가능하다고 한다</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d3.select(<span class="string">&quot;body&quot;</span>).style(<span class="string">&quot;background-color&quot;</span>, <span class="string">&quot;black&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>기본 DOM API 를 사용하면 querySelectAll 로 잡아서 for 문을 돌려가며 style 등의 attribute 를 수정하지만 D3 의 경우에는 selectAll 을 통해서<br>별도의 반복문 없이 바로 수정할수 있다는 장점이 있는거같다</p>
+<p>select,selectAll 등에는 “p”,”body” 같은 태그를 제외하고도 ID,Class 도 들어간다고 한다</p>
+<h3 id="Dynamic-Properties"><a href="#Dynamic-Properties" class="headerlink" title="Dynamic Properties"></a>Dynamic Properties</h3><p>d3는 동적으로 속성을 할당할수 있다</p>
+<p>예제를 하나 가져왔다</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">d3.selectAll(<span class="string">&quot;p&quot;</span>)</span><br><span class="line">  .data([<span class="number">4</span>, <span class="number">8</span>, <span class="number">15</span>, <span class="number">16</span>, <span class="number">23</span>, <span class="number">42</span>])</span><br><span class="line">  .style(<span class="string">&quot;font-size&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d, i</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> d + <span class="string">&quot;px&quot;</span>;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>위 코드를 해석하자면 d3 에서 모든 P 태그를 선택한후 data 를 추가해준뒤<br>font-size 라는 스타일에 data[index] + px 한 값을 return 해준 것이다</p>
+<p>위 예제로 style 함수에 첫번째 인자로는 수정할 요소의 이름을<br>두번째 인자로는 수정할 요소의 인자를 함수로 받을수 있다는 사실과<br>인자로 받는 함수에 인자로 data 값과 index를 받을수 있다는걸 알수 있다</p>
+<p>아마 차트를 그릴때 data 에 따라 크기를 다르게 하게 하기 위해 있는 기능인거 같다</p>
+<h3 id="Enter-and-Exit"><a href="#Enter-and-Exit" class="headerlink" title="Enter and Exit"></a>Enter and Exit</h3><p>d3 에는 Enter,Exit 란 함수가 있다<br>Enter 는 데이터로 받아들인 요소가 이미 존재하고 있는 수보다 많을때<br>새로 생선된 요소를 선택하는 함수이다<br>Exit 는 Enter 의 반대로 데이터로 받아들인 요소가 이미 존재하고 있는 수보다 적을때 그 적은만큼의 요소를 선택하는 함수이다</p>
+<p>예를 들어 html 이 아래와 같이 있다고 가정해보자</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>이 상태에서</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> temp1 = d3.select(<span class="string">&quot;body&quot;</span>).selectAll(<span class="string">&quot;div&quot;</span>).data([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>했을경우 div 태그는 6개 인데 data 는 총 3개 가 들어간다 이때</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">temp2.exit().remove();</span><br></pre></td></tr></table></figure>
+
+<p>exit() 를 통하여 data를 받지 못한 3개의 div 태그를 선택한후 remove 해준다</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>그러면 위 처럼 변경 된다</p>
+<p>데이터 기반의 문서 라는 이름대로 데이터를 기반으로 문서를 변환할수 있다<br>문서가 처음에 서버에 랜더링되고 d3 를 통해 클라이언트에서 업데이트 되는 하이브리드 방식도 가능하다고 한다</p>
+<h3 id="Transformation-not-Representation"><a href="#Transformation-not-Representation" class="headerlink" title="Transformation, not Representation"></a>Transformation, not Representation</h3><p>이 부분은 따로 함수나 기능같은것을 설명하는게 아니라<br>d3의 그래픽 은 다른 processing,protovis 와 달리 html,svg,css 와 같은 웹 표준에서 직접 지정할수 있다<br>미래에는 d3 이외의 툴킷을 사용해도 d3 처럼 웹 표준을 사용할것이다</p>
+<h3 id="Transitions"><a href="#Transitions" class="headerlink" title="Transitions"></a>Transitions</h3><p>마지막으로 애니메이션 관련된 부분인거 같다<br>D3는 문자열에 포함 된 숫자 및 숫자 (글꼴 크기, 경로 데이터 등) 및 복합 값과 같은 기본 요소를 모두 지원한다고 한다<br>예를 들어 페이지의 배경을 검은 색으로 페이드하려면</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">d3.select(“body”).transition()</span><br><span class="line"> .style(“background-color”, “black”);</span><br></pre></td></tr></table></figure>
+
+<p>duration 과 delay 도 설정할수 있다</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">d3.selectAll(<span class="string">&quot;circle&quot;</span>)</span><br><span class="line">  .transition()</span><br><span class="line">  .duration(<span class="number">750</span>)</span><br><span class="line">  .delay(<span class="function"><span class="keyword">function</span> (<span class="params">d, i</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> i * <span class="number">10</span>;</span><br><span class="line">  &#125;)</span><br><span class="line">  .attr(<span class="string">&quot;r&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">d</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Math</span>.sqrt(d * scale);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>더 자세한 설정은 필요할때 마다 찾아보면 될거같다<br>다음번에는 오늘 공부한 내용을 가지고 예제 차트를 몇개 만들어 보려고 한다</p>
+<p>참고 : <a target="_blank" rel="noopener" href="https://d3js.org/">https://d3js.org/</a></p>
+
       
     </div>
     <footer class="article-footer">
       <a data-url="http://example.com/2020/11/12/d3js-1/" data-id="ckheli9dh00052akjdkf896ea" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/d3js/" rel="tag">d3js</a></li></ul>
+
     </footer>
   </div>
   
@@ -123,7 +189,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/save-money/">save-money</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EA%B8%B0%ED%83%80/">기타</a><span class="category-list-count">2</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/d3/">d3</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/save-money/">save-money</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EA%B8%B0%ED%83%80/">기타</a><span class="category-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -133,7 +199,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oh-my-zsh/" rel="tag">oh-my-zsh</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3js/" rel="tag">d3js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oh-my-zsh/" rel="tag">oh-my-zsh</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -143,7 +209,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/oh-my-zsh/" style="font-size: 10px;">oh-my-zsh</a>
+      <a href="/tags/d3js/" style="font-size: 10px;">d3js</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/oh-my-zsh/" style="font-size: 10px;">oh-my-zsh</a>
     </div>
   </div>
 
@@ -152,7 +218,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -169,7 +235,7 @@
           </li>
         
           <li>
-            <a href="/2020/11/12/d3js-1/">d3js-1</a>
+            <a href="/2020/11/12/d3js-1/">D3 공부일지 (1)</a>
           </li>
         
           <li>
@@ -177,11 +243,11 @@
           </li>
         
           <li>
-            <a href="/2020/09/17/hello-world/">Hello World</a>
+            <a href="/2020/06/09/Front-dev-blog-6/">Front 개발 블로그(6)</a>
           </li>
         
           <li>
-            <a href="/2020/06/09/Front-dev-blog-6/">Front 개발 블로그(6)</a>
+            <a href="/2020/05/11/Front-dev-blog-5/">Front 개발 블로그(5)</a>
           </li>
         
       </ul>
