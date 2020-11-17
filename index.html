@@ -91,7 +91,7 @@
 
 <p>커맨드를 입력한다 그러면</p>
 <ul>
-<li><img src="../img/oh-my-zsh-alias/1.png" alt="혹시 몰라 몇가지 부분은 편집을 해두었다"></li>
+<li><img src="/img/oh-my-zsh-alias/1.png" alt="혹시 몰라 몇가지 부분은 편집을 해두었다"></li>
 </ul>
 <p>아래 사진처럼 .zshrc 라는 파일이 있을것이다</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vi .zshrc</span><br></pre></td></tr></table></figure>
@@ -102,7 +102,7 @@
 <p>형태로 작성후 저장, 재실행 후 단축어만 입력하면 명령어가 실행이 된다<br>테스트로 hello 를 입력하면 echo alias-test 가 실행되게 한번 해보겠다</p>
 <p>.zshrc 파일을 vi 로 연후 insert 버튼을 누르면 파일 편집이 가능하다</p>
 <ul>
-<li><img src="../img/oh-my-zsh-alias/2.png" alt=".zshrc"></li>
+<li><img src="/img/oh-my-zsh-alias/2.png" alt=".zshrc"></li>
 </ul>
 <p>.zshrc 파일안에 위 사진처럼 명령어를 입력후 ESC 키 [:] [w][q] 를 입력하면 저장하고 파일나가기를 할수 있다 이때 한영키에 주의해서 하도록 하자</p>
 <p>.zshrc 파일에 alias 를 설정하고 저장한후</p>
@@ -110,7 +110,7 @@
 
 <p>명령어를 통해 zsh 를 재실행 해주도록 한다<br>이제 터미널에 hello 를 입력하면</p>
 <ul>
-<li><p><img src="../img/oh-my-zsh-alias/3.png"></p>
+<li><p><img src="/img/oh-my-zsh-alias/3.png"></p>
 <p>echo alias-test 가 정상적으로 출력이 되었다.<br>이제 alias 를 어떻게 활용 하는지에 대해서 알아보도록 하겠다<br>개발을 할때 개발서버를 키는 부분을 alias 를 통하여 간단하게 만들어 보겠다</p>
 </li>
 </ul>
@@ -210,7 +210,7 @@
 <h3 id="1-SSH-key-확인"><a href="#1-SSH-key-확인" class="headerlink" title="1.SSH key 확인"></a>1.SSH key 확인</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/.ssh</span><br><span class="line">$ ls -al</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><img src="../img/git-SSH-key/1.png" alt="빨간부분이 public key 이다"></li>
+<li><img src="/img/git-SSH-key/1.png" alt="빨간부분이 public key 이다"></li>
 </ul>
 <p>우선 터미널에 들어가 위 명령어를 순서대로 입력한다<br>만약 SSH key 를 생성한 적이 있으면 이때 공개키가 있는것을 확인할수 있다<br>공개키가 있으면 2번 단계를 건너뛰고 3번으로 가면 된다.</p>
 <h3 id="2-SSH-keygen"><a href="#2-SSH-keygen" class="headerlink" title="2. SSH keygen"></a>2. SSH keygen</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C “하고싶은 말” -b 2048</span><br></pre></td></tr></table></figure>
@@ -228,13 +228,13 @@
 <p>명령어를 통해 바로 클립보드로 복사할수도 있다</p>
 <h3 id="4-gih-hub-등록"><a href="#4-gih-hub-등록" class="headerlink" title="4. gih hub 등록"></a>4. gih hub 등록</h3><p>ssh public key를 클립보드에 복사했다면<br>github 에 접속후 우측상단에 프로필을 클릭한다음 setting 에 들어간다</p>
 <ul>
-<li><p><img src="../img/git-SSH-key/2.png"></p>
+<li><p><img src="/img/git-SSH-key/2.png"></p>
 <p>그후SSH and GPG keys 에 들어간뒤 new SSH key 를 클릭한다</p>
 </li>
-<li><p><img src="../img/git-SSH-key/3.png"></p>
+<li><p><img src="/img/git-SSH-key/3.png"></p>
 <p>Key 부분에 복사한 public key 를 등록하면 SSH key 등록이 된다</p>
 </li>
-<li><p><img src="../img/git-SSH-key/4.png"></p>
+<li><p><img src="/img/git-SSH-key/4.png"></p>
 <p>이제 내 Repositories 에 있는 Repository 는 전부 연결이 정상작동 할거다</p>
 </li>
 </ul>
@@ -247,42 +247,6 @@
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/" rel="tag">git</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Front-dev-blog-6" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/11/12/Front-dev-blog-6/" class="article-date">
-  <time datetime="2020-11-12T08:52:50.000Z" itemprop="datePublished">2020-11-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/12/Front-dev-blog-6/">Front-dev-blog-6</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/11/12/Front-dev-blog-6/" data-id="ckheli9di00062akjd4becpa0" class="article-share-link">Share</a>
-      
-      
     </footer>
   </div>
   
@@ -339,6 +303,49 @@
 
 
   
+    <article id="post-Front-dev-blog-6" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/09/Front-dev-blog-6/" class="article-date">
+  <time datetime="2020-06-08T15:00:00.000Z" itemprop="datePublished">2020-06-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/save-money/">save-money</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/06/09/Front-dev-blog-6/">Front 개발 블로그(6)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><img src="/img/Front-dev-blog-6/1.png"></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/06/09/Front-dev-blog-6/" data-id="ckheli9di00062akjd4becpa0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Front-dev-blog-5" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/05/11/Front-dev-blog-5/" class="article-date">
@@ -369,7 +376,7 @@
 <p>평소라면 종이에 적어서 하겠지만 포스팅을 해야하므로 아이패드를 사용해서 기획을 하도록 하겠다<br>일단 이 프로젝트의 핵심기능인 여러 게임 플랫폼의 게임 목록을 한곳에서 볼수 있도록 하는 기능이 개발 가능 한지 부터 확인을 해보도록 하겠다<br>일단 1 차 목표로 steam 과 epic games 의 게임 목록을 불러올수 있는지부터 확인해보겠다<br>open api 를 확인할때 access token 을 발급 받는 방법, 필요한 api 와 scope 2가지를 유의해서 보면 된다</p>
 <p>steam open api :<br><a target="_blank" rel="noopener" href="https://partner.steamgames.com/doc/webapi_overview">https://partner.steamgames.com/doc/webapi_overview</a><br><a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/Steam_Web_API#GetGlobalAchievementPercentagesForApp_.28v0001.29">https://developer.valvesoftware.com/wiki/Steam_Web_API#GetGlobalAchievementPercentagesForApp_.28v0001.29</a></p>
 <ul>
-<li><img src="../img/Front-dev-blog-5/1.png" alt="https://developer.valvesoftware.com/wiki/Steam_Web_API#GetOwnedGames_.28v0001.29"></li>
+<li><img src="/img/Front-dev-blog-5/1.png" alt="https://developer.valvesoftware.com/wiki/Steam_Web_API#GetOwnedGames_.28v0001.29"></li>
 </ul>
 <p>일단 GetOwnedGames 라는 api 가 있다<br>내 소유의 게임들 이라는 이름이니 아마 내가 소유하고있는 게임의 목록을 가져올수 있을것으로 보인다</p>
 <ul>
@@ -378,10 +385,10 @@
 <p>web api 사용법이 적혀있는 부분이다<br>아직 backend 를 개발하지 않을거기 때문에 일단은 기능 개발이 가능한것만 확인했으니 이제 epic games 를 확인해보도록 하겠다</p>
 <p>epic games open api :<br><a target="_blank" rel="noopener" href="https://dev.epicgames.com/docs/services">https://dev.epicgames.com/docs/services</a><br>epic games 는 약 1시간 동안 찾아 보았지만 게임 목록 불러오는 기능을 찾지 못하여 나중에 crawling 을 하든 하도록 하겠다 backend 를 개발할때 헤당 기능 다시 찾아보기로 하고 일단은 넘어가겠다<br>이제 웹 뷰 기획을 시작하겠다</p>
 <h3 id="기획안-1"><a href="#기획안-1" class="headerlink" title="기획안 1"></a>기획안 1</h3><ul>
-<li><img src="../img/Front-dev-blog-5/3.png"><br>nav를 좌측에 위치시키고 오른쪽에 Account 관련 정보를 둔다Account 를 클릭하면 팝업이 나타나고 현재 연동중인 플랫폼 (steam, epic games. etc…) 의 현재 상태가 나타나게 한다<br>이런식으로 진행했을경우 장점은 메뉴, 서브메뉴가 많아져도 편리하게 이용할수 있다</li>
+<li><img src="/img/Front-dev-blog-5/3.png"><br>nav를 좌측에 위치시키고 오른쪽에 Account 관련 정보를 둔다Account 를 클릭하면 팝업이 나타나고 현재 연동중인 플랫폼 (steam, epic games. etc…) 의 현재 상태가 나타나게 한다<br>이런식으로 진행했을경우 장점은 메뉴, 서브메뉴가 많아져도 편리하게 이용할수 있다</li>
 </ul>
 <h3 id="기획안-2"><a href="#기획안-2" class="headerlink" title="기획안 2"></a>기획안 2</h3><ul>
-<li><p><img src="../img/Front-dev-blog-5/4.png"><br>nav 를 header 아래에 위치시키고 기획안 1과 동일하게 Account 를 위치시킨다<br>이 방법의 장점은 width 를 크게 사용할수 있다<br>하지만 menu, submenu 가 많아지면 화면이 쉽게 지저분해질수 있으므로 주의를 가해야 한다<br>일단 당장 필요한 기능을 생각해 보면</p>
+<li><p><img src="/img/Front-dev-blog-5/4.png"><br>nav 를 header 아래에 위치시키고 기획안 1과 동일하게 Account 를 위치시킨다<br>이 방법의 장점은 width 를 크게 사용할수 있다<br>하지만 menu, submenu 가 많아지면 화면이 쉽게 지저분해질수 있으므로 주의를 가해야 한다<br>일단 당장 필요한 기능을 생각해 보면</p>
 <ol>
 <li>dashBoard<br>게임 플레이시간 관련 통계, 소유하고있는 게임의 종류 통계,</li>
 <li>gameList<br>게임 목록 listview,cardview 2가지, 게임 실행</li>
@@ -390,14 +397,14 @@
 </li>
 </ul>
 <h3 id="dashBoard"><a href="#dashBoard" class="headerlink" title="dashBoard"></a>dashBoard</h3><ul>
-<li><p><img src="../img/Front-dev-blog-5/5.png"></p>
+<li><p><img src="/img/Front-dev-blog-5/5.png"></p>
 </li>
-<li><p><img src="../img/Front-dev-blog-5/6.jpg"></p>
+<li><p><img src="/img/Front-dev-blog-5/6.jpg"></p>
 <p>DashBoard 페이지 기획안이다<br>사실 차트는 어떤 데이터를 어떻게 보여줄지 생각하고 만들어야 해서<br>어떤 데이터를 보여줄지 생각을 하면서 기획을 했지만 아직 어떤데이터를 가져올수있는지 확실하지 않아서 개발하면서 바뀔거같다</p>
 </li>
-<li><p><img src="../img/Front-dev-blog-5/7.jpg"></p>
+<li><p><img src="/img/Front-dev-blog-5/7.jpg"></p>
 </li>
-<li><p><img src="../img/Front-dev-blog-5/8.jpg"></p>
+<li><p><img src="/img/Front-dev-blog-5/8.jpg"></p>
 </li>
 </ul>
 <p>게임 목록페이지를 card view 와 list view 2벌을 만들 예정이다<br>일단 기본적인 목록만 추가했고 filter 와 order by 를 추가할 예정이다</p>
@@ -444,24 +451,24 @@
       
         <p>저번에 말했던대로 이번에는 github에 git 을 연결을 해보려고 한다<br>우선 지금까지의 작업본을 commit 을 하자</p>
 <ul>
-<li><img src="../img/Front-dev-blog-4/1.png"></li>
+<li><img src="/img/Front-dev-blog-4/1.png"></li>
 </ul>
 <p>나는 보통 vscode 에서 기본으로 제공해주는 git 이나 sourcetree, 터미널 3가지를 같이 사용한다<br>merge 는 터미널, commit 은 vscode, tree 를 보거나 roll back 같은 작업 은 sourcetree 를 선호한다</p>
 <p>위 사진처럼 스테이징 한후 엔터를 눌러주면 git 에 커밋이 완료 된다<br>그리고<br>github에 가서 repository 를 생성해주면</p>
 <ul>
-<li><img src="../img/Front-dev-blog-4/2.png"></li>
+<li><img src="/img/Front-dev-blog-4/2.png"></li>
 </ul>
 <p>아래와 같은 화면이 나올거다</p>
 <p>이제 쓰여있는 대로 git remote add orgin ~~ 명령어를 입력하면 되는데<br>git 이 위치한 /savemoney 로 가서 헤당명령어를 입력한후 origin master 에 push 를 하면</p>
 <ul>
-<li><img src="../img/Front-dev-blog-4/3.png"></li>
+<li><img src="/img/Front-dev-blog-4/3.png"></li>
 </ul>
 <p>에러가 나올거다</p>
 <p>github 에 ssh key 를 등록을 하지않아서 나오는 오류이다<br>예전에는 username, email, password 를 입력하면 됐지만 이제<br>ssh key를 등록해줘야 할수있게 바뀌였다고 들었다</p>
 <p>ssh key 를 등록하는 방법은<br><a target="_blank" rel="noopener" href="https://gastroad.github.io/2020/11/12/git-SSH-key/">https://gastroad.github.io/2020/11/12/git-SSH-key/</a><br>에 정리해 두었다</p>
 <p>ssh key 를 git hub 에 등록후 push 에 성공했다면</p>
 <ul>
-<li><img src="../img/Front-dev-blog-4/4.png"></li>
+<li><img src="/img/Front-dev-blog-4/4.png"></li>
 </ul>
 <p>아래 화면 처럼 나오게 될것이다<br>여기서 contributors 가 2명인이유는 앞에서도 말했듯이<br>vscode, sourcetree, 터미널 3가지를 동시에 사용하기때문에 commit 을 하는 계정이 2개라 contributors 가 2명으로 나타난다</p>
 
@@ -512,28 +519,28 @@
 <p>이 두가지를 해보려고 한다</p>
 <h3 id="webpack-config-하기"><a href="#webpack-config-하기" class="headerlink" title="webpack config 하기"></a>webpack config 하기</h3><p>일단 package.json 과 같은 위치에 webpack.config.js 파일을 생성한다.<br>그리고 웹팩이 번들링 할 파일을 생성한다<br>나는 src/index.tsx 를 생성해 주었다</p>
 <ul>
-<li><p><img src="../img/Front-dev-blog-3/1.png"></p>
+<li><p><img src="/img/Front-dev-blog-3/1.png"></p>
 <p>이제 웹팩이 번들링을 할 index.tsx 파일의 위치를 webpack.config.js 에 적어준다</p>
 </li>
-<li><p><img src="../img/Front-dev-blog-3/2.png"></p>
+<li><p><img src="/img/Front-dev-blog-3/2.png"></p>
 </li>
 </ul>
 <p>그 후 웹팩 빌드 결과물이 나올 위치를 지정해 준다</p>
 <ul>
-<li><img src="../img/Front-dev-blog-3/3.png"></li>
+<li><img src="/img/Front-dev-blog-3/3.png"></li>
 </ul>
 <p>__dirname 은 root 에서 부터 현재 위치를 나타낸다<br>현재 위치에서 build 폴더에 webpack 이 빌드 하고 나온 결과물 을 저장한다</p>
 <p>이제 저번에 미리 package.json 에 작성 해둔 scripts 를 터미널에서 실행해보겠다</p>
 <ul>
-<li><img src="../img/Front-dev-blog-3/4.png"></li>
+<li><img src="/img/Front-dev-blog-3/4.png"></li>
 </ul>
 <p>위 사진 처럼 나왔으면 성공이다<br>이제 build 디렉토리에 가서 확인해보면<br>webpack.config.js 에서 output 에 filename 으로 작성한<br>my-first-webpack.bundle.js 가 생성되었을것이다</p>
 <ul>
-<li><img src="../img/Front-dev-blog-3/5.png"></li>
+<li><img src="/img/Front-dev-blog-3/5.png"></li>
 </ul>
 <p>이제 필요한 loader 를 추가 하도록 하자</p>
 <ul>
-<li><img src="../img/Front-dev-blog-3/6.png"></li>
+<li><img src="/img/Front-dev-blog-3/6.png"></li>
 </ul>
 <ol>
 <li>babel 은 호완성을 위해서 무조건 설치해주는것이 좋다</li>
@@ -542,7 +549,7 @@
 <li>폰트 적용을 위해서 추가해 주었다<br>웹 페이지 디자인이 아무리 깔끔해도 폰트가 구리면 페이지가 전체적으로 낡은 느낌이나는거 같아서 폰트는 귀찮아도 꼭 추가하는것을 추천한다.</li>
 </ol>
 <ul>
-<li><img src="../img/Front-dev-blog-3/7.png"></li>
+<li><img src="/img/Front-dev-blog-3/7.png"></li>
 </ul>
 <ol>
 <li><p>alias 는 @src @components @utils 3개를 작성해 주었다<br>프로젝트 내부에서 import 를 할때 @src 를 입력해서 절대경로로 path 를 설정해 줄수 있다</p>
@@ -552,7 +559,7 @@
 </li>
 </ol>
 <ul>
-<li><img src="../img/Front-dev-blog-3/8.png"></li>
+<li><img src="/img/Front-dev-blog-3/8.png"></li>
 </ul>
 <ol>
 <li>host 0.0.0.0 은 자기 자신을 가르키는 ip 이다</li>
@@ -562,7 +569,7 @@
 <li>https 는 https:로 접근할수 있게 해준다<br>이제 devServer 설정이 끝났다 마지막으로 plugins 만 추가하면 webpack 설정은 일단 끝난다(추후 개발하면서 여러번 수정이 있을 예정이다.)</li>
 </ol>
 <ul>
-<li><img src="../img/Front-dev-blog-3/9.png"></li>
+<li><img src="/img/Front-dev-blog-3/9.png"></li>
 </ul>
 <ol>
 <li><p>CaseSensitivePathsPlugin 은 필요한 모든 모듈의 전체 경로를 디스크상의 실제 경로와 정확히 일치시키는 플러그인이다<br>파일 시스템 이 달라 대소문자 때문에 충돌을 일으킬 경우를 줄여준다</p>
@@ -572,33 +579,33 @@
 </li>
 </ol>
 <ul>
-<li><img src="../img/Front-dev-blog-3/10.png"></li>
+<li><img src="/img/Front-dev-blog-3/10.png"></li>
 </ul>
 <p>이런식으로 나온다면 성공적으로 웹팩 설정을 끝낸것이다</p>
 <h3 id="프로젝트-구동-하기"><a href="#프로젝트-구동-하기" class="headerlink" title="프로젝트 구동 하기"></a>프로젝트 구동 하기</h3><p>이제 <a target="_blank" rel="noopener" href="https://localhost/">https://localhost</a> 에 접속하면 아무것도없는 빈 화면이 나올것이다<br>아무것도 없으면 프로젝트가 정상적으로 빌드가 되고있는건지 안되고있는건지 확인하기 어려우니 index.html 과 index.tsx 를 작성해주도록 하자</p>
 <ul>
-<li><p><img src="../img/Front-dev-blog-3/11.png"></p>
+<li><p><img src="/img/Front-dev-blog-3/11.png"></p>
 <p>index.html 에 body 안에 id=”root” 만 작성했다 이제 저 위치를 잡아서 react의 시작점으로 만들것이다</p>
 <p>이제 index.tsx 로 가서</p>
 </li>
-<li><p><img src="../img/Front-dev-blog-3/12.png"></p>
+<li><p><img src="/img/Front-dev-blog-3/12.png"></p>
 </li>
 </ul>
 <p>위와 같이 작성한다<br>root 를 getElementById 해서 app 을 보여주겠다는 뜻이다<br>그리고 같은 경로에 App.tsx 를</p>
 <ul>
-<li><img src="../img/Front-dev-blog-3/13.png"></li>
+<li><img src="/img/Front-dev-blog-3/13.png"></li>
 </ul>
 <p>아래와 같이 작성한다<br>프로젝트가 정상적으로 실행 되었는지를 확인하기위해서 추가했다<br>빈화면보다 hello 라도 나오는게 직관적으로 잘 동작할수있는지 확인할수 있어서 이다</p>
 <p>이제 .babelrc , .tsconfig.json 만 작성해주면 프로젝트가 정상적으로 동작할 것이다</p>
 <ul>
-<li><img src="../img/Front-dev-blog-3/14.png"></li>
+<li><img src="/img/Front-dev-blog-3/14.png"></li>
 </ul>
 <p>.tsconfig<br>처음 목표중하나인 typescript strict 모드를 사용했다 compilearOptions 에 strict를 사용하면 타입이 올바르지않을때 빌드조차 안된다는 소리를 들어서<br>compilearOptions 에 추가하진 않았다</p>
 <ul>
-<li><p><img src="../img/Front-dev-blog-3/15.png"><br>위와 같이 설정이 끝났으면</p>
+<li><p><img src="/img/Front-dev-blog-3/15.png"><br>위와 같이 설정이 끝났으면</p>
 <p><a target="_blank" rel="noopener" href="https://localhost/">https://localhost</a> 에서</p>
 </li>
-<li><p><img src="../img/Front-dev-blog-3/16.png"></p>
+<li><p><img src="/img/Front-dev-blog-3/16.png"></p>
 </li>
 </ul>
 <p>hello 가 정상적으로 나오는것이 확인될것이다<br>babelrc 와 tsconfig 는 취향에 따라 수정하면 된다</p>
@@ -652,33 +659,33 @@
 <h3 id="프로젝트-명-정하기"><a href="#프로젝트-명-정하기" class="headerlink" title="프로젝트 명 정하기"></a>프로젝트 명 정하기</h3><p>프로젝트 이름을 정하는건 언제 해봐도 어려운거 같다<br>개인적으로 직관적 이면서 정감이 가는 이름으로 해야 바쁜와중에 한번이라도 더 보게 되는거 같다<br>GOG Galaxy 와 비슷한 프로젝트를 진행하는 이유중 하나인 같은게임 중복 구매 방지 에 중점을 두어 savemoney 라고 이름 짓기로 했다</p>
 <h3 id="npm-을-이용하여-필요한-라이브러리-다운로드"><a href="#npm-을-이용하여-필요한-라이브러리-다운로드" class="headerlink" title="npm 을 이용하여 필요한 라이브러리 다운로드"></a>npm 을 이용하여 필요한 라이브러리 다운로드</h3><p>일단 프로젝트 디랙토리 부터 생성을 하자</p>
 <ul>
-<li><p><img src="../img/Front-dev-blog-2/1.png"><br>백엔드 부분도 개발을해서 git hub 에 올릴 예정이기 때문에<br>폴더만 미리 먼저 만들어 두었다</p>
+<li><p><img src="/img/Front-dev-blog-2/1.png"><br>백엔드 부분도 개발을해서 git hub 에 올릴 예정이기 때문에<br>폴더만 미리 먼저 만들어 두었다</p>
 <p>그후 터미널로 가서 git init 을 해주면</p>
 </li>
-<li><p><img src="../img/Front-dev-blog-2/2.png"><br>위 사진 처럼 저장소를 초기화 했다고 나온다</p>
+<li><p><img src="/img/Front-dev-blog-2/2.png"><br>위 사진 처럼 저장소를 초기화 했다고 나온다</p>
 </li>
-<li><p><img src="../img/Front-dev-blog-2/3.png"><br>그후 ls -al 명령어를 통해 git 이 정상적으로 설치가 된것을 확인할수 있다</p>
+<li><p><img src="/img/Front-dev-blog-2/3.png"><br>그후 ls -al 명령어를 통해 git 이 정상적으로 설치가 된것을 확인할수 있다</p>
 <p>이제 savemoney-front 로 이동해서 npm init 을 친후 엔터를 누르다 보면</p>
 </li>
-<li><p><img src="../img/Front-dev-blog-2/4.png"><br>위 사진 처럼 npm init 설정이 될것이다</p>
+<li><p><img src="/img/Front-dev-blog-2/4.png"><br>위 사진 처럼 npm init 설정이 될것이다</p>
 <p>이후 savemoney-front 디렉토리를 확인해보면</p>
 </li>
-<li><p><img src="../img/Front-dev-blog-2/5.png"><br>pakage.json 이 생성된것을 확인할수 있다.</p>
+<li><p><img src="/img/Front-dev-blog-2/5.png"><br>pakage.json 이 생성된것을 확인할수 있다.</p>
 <p>이제 기본적으로 필요한 라이브러리 를 설치할려고 한다</p>
 </li>
-<li><p><img src="../img/Front-dev-blog-2/6.png"></p>
+<li><p><img src="/img/Front-dev-blog-2/6.png"></p>
 </li>
-<li><p><img src="../img/Front-dev-blog-2/7.png"><br>기본적으로 react,react-dom 과 webpack 을 dev에 설치 했다<br>npm install 과 npm install <del>~</del> — save-dev 의 차이점은</p>
+<li><p><img src="/img/Front-dev-blog-2/7.png"><br>기본적으로 react,react-dom 과 webpack 을 dev에 설치 했다<br>npm install 과 npm install <del>~</del> — save-dev 의 차이점은</p>
 </li>
-<li><p><img src="../img/Front-dev-blog-2/8.png"><br>위 사진 처럼 dev dependencies에 설치할것인지 dependencies 에 설치할지 정할수 있다<br>dev dependencies 에 설치된 라이브러리 들은 prd 로 빌드했을때 추가 되지않는다 즉 개발에 필요한 도구들은 dev dependencies 에 prd, 개발 둘다 필요한 경우에는 dependencies 에 추가 하면 된다</p>
+<li><p><img src="/img/Front-dev-blog-2/8.png"><br>위 사진 처럼 dev dependencies에 설치할것인지 dependencies 에 설치할지 정할수 있다<br>dev dependencies 에 설치된 라이브러리 들은 prd 로 빌드했을때 추가 되지않는다 즉 개발에 필요한 도구들은 dev dependencies 에 prd, 개발 둘다 필요한 경우에는 dependencies 에 추가 하면 된다</p>
 <p>npm install 이 정상적으로 작동을했으면 node_modules 라는 폴더가 생겼을것이다 이거까지 git 에 올리면 파일 용량이 엄청 커지므로 git 에 올릴때는 헤당하는 폴더는 무시하게 .gitignore 를 작성해 주는것이 좋다</p>
 </li>
-<li><p><img src="../img/Front-dev-blog-2/9.png"><br>다시 루트 디렉토리로 돌아와 .gitignore 를 작성해준다<br>node_modules 와 나중에 만들 build 폴더까지 미리 ignore 에 추가해두면 git 에 push 를 해도 node_modules 와 build 폴더는 무시된다</p>
+<li><p><img src="/img/Front-dev-blog-2/9.png"><br>다시 루트 디렉토리로 돌아와 .gitignore 를 작성해준다<br>node_modules 와 나중에 만들 build 폴더까지 미리 ignore 에 추가해두면 git 에 push 를 해도 node_modules 와 build 폴더는 무시된다</p>
 </li>
-<li><p><img src="../img/Front-dev-blog-2/10.png"><br>이것저것 개발에 필요한 라이브러리를 설치하고 나면 이런 모습이다</p>
+<li><p><img src="/img/Front-dev-blog-2/10.png"><br>이것저것 개발에 필요한 라이브러리를 설치하고 나면 이런 모습이다</p>
 <p>이제 script를 작성해 주면된다</p>
 </li>
-<li><p><img src="../img/Front-dev-blog-2/11.png"><br>webpack설정을 아직 하진 않았지만 미리 script를 작성해 두었다<br>script 에 관한 부분은 나중에 webpack 설정을 할때 나중에 다시 다루도록 하겠다</p>
+<li><p><img src="/img/Front-dev-blog-2/11.png"><br>webpack설정을 아직 하진 않았지만 미리 script를 작성해 두었다<br>script 에 관한 부분은 나중에 webpack 설정을 할때 나중에 다시 다루도록 하겠다</p>
 </li>
 </ul>
 
@@ -755,7 +762,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/save-money/">save-money</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EA%B8%B0%ED%83%80/">기타</a><span class="category-list-count">2</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/save-money/">save-money</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EA%B8%B0%ED%83%80/">기타</a><span class="category-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -784,7 +791,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -809,11 +816,11 @@
           </li>
         
           <li>
-            <a href="/2020/11/12/Front-dev-blog-6/">Front-dev-blog-6</a>
+            <a href="/2020/09/17/hello-world/">Hello World</a>
           </li>
         
           <li>
-            <a href="/2020/09/17/hello-world/">Hello World</a>
+            <a href="/2020/06/09/Front-dev-blog-6/">Front 개발 블로그(6)</a>
           </li>
         
       </ul>

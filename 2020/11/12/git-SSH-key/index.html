@@ -14,15 +14,15 @@
 <meta property="og:site_name" content="gastroad&#39;s blog">
 <meta property="og:description" content="git hub 에 ssh key 를 등록하는 방법에 대해서 알아보도록 하자mac os 기준으로 SSH key 를 등록할것이니 대부분 비슷하겠지만mac 이 아니라면 명령어가 조금 다를수도 있다 SSH key 란서버에 접속 할 때 비밀 번호 대신 사용하는 기능이다비밀번호 보다 높은 수준의 보안을 필요로 하거나 로그인 없이 자동으로 서버에 접속 할 경우 사용한다">
 <meta property="og:locale">
-<meta property="og:image" content="http://example.com/2020/11/12/img/git-SSH-key/1.png">
-<meta property="og:image" content="http://example.com/2020/11/12/img/git-SSH-key/2.png">
-<meta property="og:image" content="http://example.com/2020/11/12/img/git-SSH-key/3.png">
-<meta property="og:image" content="http://example.com/2020/11/12/img/git-SSH-key/4.png">
+<meta property="og:image" content="http://example.com/img/git-SSH-key/1.png">
+<meta property="og:image" content="http://example.com/img/git-SSH-key/2.png">
+<meta property="og:image" content="http://example.com/img/git-SSH-key/3.png">
+<meta property="og:image" content="http://example.com/img/git-SSH-key/4.png">
 <meta property="article:published_time" content="2020-11-12T08:53:11.000Z">
-<meta property="article:modified_time" content="2020-11-12T09:58:04.385Z">
+<meta property="article:modified_time" content="2020-11-17T03:16:28.012Z">
 <meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2020/11/12/img/git-SSH-key/1.png">
+<meta name="twitter:image" content="http://example.com/img/git-SSH-key/1.png">
 <meta property="fb:app_id" content="라인&amp;바차트,">
   
   
@@ -106,7 +106,7 @@
 <h3 id="1-SSH-key-확인"><a href="#1-SSH-key-확인" class="headerlink" title="1.SSH key 확인"></a>1.SSH key 확인</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/.ssh</span><br><span class="line">$ ls -al</span><br></pre></td></tr></table></figure>
 
 <ul>
-<li><img src="../img/git-SSH-key/1.png" alt="빨간부분이 public key 이다"></li>
+<li><img src="/img/git-SSH-key/1.png" alt="빨간부분이 public key 이다"></li>
 </ul>
 <p>우선 터미널에 들어가 위 명령어를 순서대로 입력한다<br>만약 SSH key 를 생성한 적이 있으면 이때 공개키가 있는것을 확인할수 있다<br>공개키가 있으면 2번 단계를 건너뛰고 3번으로 가면 된다.</p>
 <h3 id="2-SSH-keygen"><a href="#2-SSH-keygen" class="headerlink" title="2. SSH keygen"></a>2. SSH keygen</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C “하고싶은 말” -b 2048</span><br></pre></td></tr></table></figure>
@@ -124,13 +124,13 @@
 <p>명령어를 통해 바로 클립보드로 복사할수도 있다</p>
 <h3 id="4-gih-hub-등록"><a href="#4-gih-hub-등록" class="headerlink" title="4. gih hub 등록"></a>4. gih hub 등록</h3><p>ssh public key를 클립보드에 복사했다면<br>github 에 접속후 우측상단에 프로필을 클릭한다음 setting 에 들어간다</p>
 <ul>
-<li><p><img src="../img/git-SSH-key/2.png"></p>
+<li><p><img src="/img/git-SSH-key/2.png"></p>
 <p>그후SSH and GPG keys 에 들어간뒤 new SSH key 를 클릭한다</p>
 </li>
-<li><p><img src="../img/git-SSH-key/3.png"></p>
+<li><p><img src="/img/git-SSH-key/3.png"></p>
 <p>Key 부분에 복사한 public key 를 등록하면 SSH key 등록이 된다</p>
 </li>
-<li><p><img src="../img/git-SSH-key/4.png"></p>
+<li><p><img src="/img/git-SSH-key/4.png"></p>
 <p>이제 내 Repositories 에 있는 Repository 는 전부 연결이 정상작동 할거다</p>
 </li>
 </ul>
@@ -159,9 +159,9 @@
     </a>
   
   
-    <a href="/2020/11/12/Front-dev-blog-6/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2020/09/17/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Front-dev-blog-6</div>
+      <div class="article-nav-title">Hello World</div>
     </a>
   
 </nav>
@@ -177,7 +177,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/save-money/">save-money</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EA%B8%B0%ED%83%80/">기타</a><span class="category-list-count">2</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/save-money/">save-money</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EA%B8%B0%ED%83%80/">기타</a><span class="category-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -206,7 +206,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -231,11 +231,11 @@
           </li>
         
           <li>
-            <a href="/2020/11/12/Front-dev-blog-6/">Front-dev-blog-6</a>
+            <a href="/2020/09/17/hello-world/">Hello World</a>
           </li>
         
           <li>
-            <a href="/2020/09/17/hello-world/">Hello World</a>
+            <a href="/2020/06/09/Front-dev-blog-6/">Front 개발 블로그(6)</a>
           </li>
         
       </ul>
