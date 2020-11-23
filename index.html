@@ -24,7 +24,7 @@
   
 <link rel="stylesheet" href="/css/style.css">
 
-<meta name="generator" content="Hexo 5.1.1"></head>
+<meta name="generator" content="Hexo 5.2.0"></head>
 
 <body>
   <div id="container">
@@ -59,6 +59,115 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-React-hook-2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/23/React-hook-2/" class="article-date">
+  <time datetime="2020-11-22T15:00:00.000Z" itemprop="datePublished">2020-11-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/react/">react</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/23/React-hook-2/">React  Hook (2)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- <blockquote></blockquote> -->
+
+<p>참고 : <a target="_blank" rel="noopener" href="https://reactjs.org/docs/hooks-intro.html">https://reactjs.org/docs/hooks-intro.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/11/23/React-hook-2/" data-id="ckhu43umv0001dykj0vmc0rrl" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hook/" rel="tag">hook</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-React-hook-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/18/React-hook-1/" class="article-date">
+  <time datetime="2020-11-17T15:00:00.000Z" itemprop="datePublished">2020-11-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/react/">react</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/11/18/React-hook-1/">React  Hook (1)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>오늘은 react의 hook 에 대해서 포스팅을 해 볼 생각이다<br>이미 많은 사람들이 hook 에 대해서 포스팅을 해서 내 포스팅이 영양가가 있을거 같지는 않지만<br>1년정도 사용하면서 정확하게 모르는 부분도 있기 때문에 정리할겸 글을 써보려 한다</p>
+<p>일단 hook 은 2018 ReactConf 에서 발표하고 React 16.8 버전부터 추가된 기능이다<br>hook의 특징으로는 다음과 같다</p>
+<ol>
+<li>선택적 사용 기존의 코드를 다시 작성할 필요 없이 일부의 컴포넌트들 안에서 Hook을 사용할 수 있습니다.<br>그러나 만약 당장 Hook이 필요 없다면, Hook을 사용할 필요는 없습니다.</li>
+<li>100% 이전 버전과의 호환성 Hook은 호환성을 깨뜨리는 변화가 없습니다.</li>
+<li>현재 사용 가능 Hook은 배포 v16.8.0에서 사용할 수 있습니다.</li>
+</ol>
+<p>개인적으로 2번 이전 버전과의 호환성 부분이 가장 마음에 들었다 react 에서 class 바로 제거 해주지않아서 hook에 대해서 완벽하게 공부하기전에<br>리팩토링을 해야하는 불상사가 일어나지않아서 좋았다<br><strike>버전을 올리지 않는다는 선택지는 없다</strike></p>
+<p>hook 을 만든 이유는</p>
+<ol>
+<li>컴포넌트 사이에서 상태와 관련된 로직을 재사용하기 어렵습니다.</li>
+<li>복잡한 컴포넌트들은 이해하기 어렵습니다.</li>
+<li>class는 사람과 기계를 혼동시킵니다.</li>
+</ol>
+<p>3가지를 말했다</p>
+<h3 id="컴포넌트-사이에서-상태와-관련된-로직을-재사용하기-어렵습니다"><a href="#컴포넌트-사이에서-상태와-관련된-로직을-재사용하기-어렵습니다" class="headerlink" title="컴포넌트 사이에서 상태와 관련된 로직을 재사용하기 어렵습니다."></a>컴포넌트 사이에서 상태와 관련된 로직을 재사용하기 어렵습니다.</h3><p>React는 컴포넌트에 재사용 가능한 행동을 붙이는 방법을 제공하지않는다<br>(ex) store 에 component 를 연결하는것)<br>이걸 해결하기위해 render props 그리고 higher-order components 같은 패턴을 사용하게되는데<br>이런 패턴을 사용할때 컴포넌트를 재구성해야 하며 코드를 추적하기 어렵게 만든다 한다</p>
+<h5 id="hook-을-사용하면-컴포넌트로-부터-상태-관련-로직을-추상화-할수-있고-계층-변화-없이-상태-관련-로직을-재사용할-수-있도록-도와준다고-한다"><a href="#hook-을-사용하면-컴포넌트로-부터-상태-관련-로직을-추상화-할수-있고-계층-변화-없이-상태-관련-로직을-재사용할-수-있도록-도와준다고-한다" class="headerlink" title="hook 을 사용하면 컴포넌트로 부터 상태 관련 로직을 추상화 할수 있고 계층 변화 없이 상태 관련 로직을 재사용할 수 있도록 도와준다고 한다"></a>hook 을 사용하면 컴포넌트로 부터 상태 관련 로직을 추상화 할수 있고 계층 변화 없이 상태 관련 로직을 재사용할 수 있도록 도와준다고 한다</h5><h3 id="복잡한-컴포넌트들은-이해하기-어렵습니다"><a href="#복잡한-컴포넌트들은-이해하기-어렵습니다" class="headerlink" title="복잡한 컴포넌트들은 이해하기 어렵습니다."></a>복잡한 컴포넌트들은 이해하기 어렵습니다.</h3><p>유지하기 힘든 상태 관련 로직들과 사이드 이펙트가 있는 컴포넌트들을 유지할때가 있다<br>각 lifecycle method 에 관련없는 로직이 섞여있을때가 있다<br>이로인해 버그가 쉽게 발생하고 무결성을 쉽게 해친다</p>
+<h5 id="hook-을-사용하면-로직에-기반을-둔-작은-함수로-컴포넌트를-나눌수-있다"><a href="#hook-을-사용하면-로직에-기반을-둔-작은-함수로-컴포넌트를-나눌수-있다" class="headerlink" title="hook 을 사용하면 로직에 기반을 둔 작은 함수로 컴포넌트를 나눌수 있다"></a>hook 을 사용하면 로직에 기반을 둔 작은 함수로 컴포넌트를 나눌수 있다</h5><h3 id="Clss은-사람과-기계를-혼동시킵니다"><a href="#Clss은-사람과-기계를-혼동시킵니다" class="headerlink" title="Clss은 사람과 기계를 혼동시킵니다."></a>Clss은 사람과 기계를 혼동시킵니다.</h3><p>class 는 코드의 재사용성과 코드 구성을 좀 더 어렵게 만들 뿐만 아니라 React를 배우는데 큰 진입장벽이다<br>javascript 에서 어떻게 this 가 작동하는지 알아야만 했고 대부분의 다른 언어와 는 다르게 작동한다<br>처음 React 를 공부할때 constructor 라던가 binding 이라던가 사실 이해를 하지못하고 대충 따라서 쳤다 그래서 js를 처음 공부하고 React 를 사용하는 유저의 진입장벽을 크게 낮출수 있을거같다.</p>
+<h5 id="hook-을-사용하면-Class-없이-React-기능들을-사용하는-방법을-알려준다"><a href="#hook-을-사용하면-Class-없이-React-기능들을-사용하는-방법을-알려준다" class="headerlink" title="hook 을 사용하면 Class 없이 React 기능들을 사용하는 방법을 알려준다"></a>hook 을 사용하면 Class 없이 React 기능들을 사용하는 방법을 알려준다</h5><p>여기까지 hook의 개요에 대해서 알아보았다.<br>이렇게 기존 React의 많은 단점을 보완한것으로 보이는데 실제로 hook 을 사용했을때 어떻게 변하는지 다음 포스팅에서 알아보겠다</p>
+<!-- <blockquote></blockquote> -->
+
+<p>참고 : <a target="_blank" rel="noopener" href="https://reactjs.org/docs/hooks-intro.html">https://reactjs.org/docs/hooks-intro.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/11/18/React-hook-1/" data-id="ckhu43ums0000dykj8tl9huuq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hook/" rel="tag">hook</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-oh-my-zsh-alias" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -711,57 +820,12 @@
 
 
   
-    <article id="post-Front-dev-blog-1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/05/01/Front-dev-blog-1/" class="article-date">
-  <time datetime="2020-04-30T15:00:00.000Z" itemprop="datePublished">2020-05-01</time>
-</a>
+
+
+  <nav id="page-nav">
     
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/save-money/">save-money</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/05/01/Front-dev-blog-1/">Front 개발 블로그(1)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>이번에 석가탄신일,근로자의 날,어린이날 등 긴 연휴가 생겨서 뭐라도 해봐야할거같아서 블로그 포스팅을 하기로 결정했다.<br>어떤 토이 프로젝트 를 진행해야 재미있고 또 유익하게 코딩을할수 있을까<br>고민중인지라 내가 부족하다 싶은부분, 또 하고 싶은 기술을 먼저 정리해볼까 한다</p>
-<h3 id="Chart"><a href="#Chart" class="headerlink" title="Chart"></a>Chart</h3><p>말할것도없이 나는 차트를 못만든다….<br>회사를 다니면서 실무로 차트를 만들일도 크게 없어서<br>원하는 차트를 마음대로 그리지 못한다<br>그래서 이번 프로젝트에서 복잡한 차트를 만드는것이 목표이다<br>추가로 평소 사용하는 chart.js 가 아닌 D3 를 사용하는것이 목표이다<br>(어디까지나 목표 설정이다..)</p>
-<h3 id="Socket-Web-notification"><a href="#Socket-Web-notification" class="headerlink" title="Socket + Web notification"></a>Socket + Web notification</h3><p>실시간으로 서버와 통신을 해보고싶다.<br>소켓을 이용해서 실시간으로 내가 만들 웹 페이지를 보고 있지않아도<br>노티를 띄우는게 목표이다 .<br>평소 해보고 싶었던 것 중 하나인데 프론트 작업 뿐만 아니라 백엔드 자원도 필요하기때문에 쉽게 만들기 힘들어서 도전해 보지 못하였다<br>그래서 이번 프로젝트에서는 소켓, 웹노티, ServiceWorker 까지 사용해서 기능을 하나 만들어 보고 싶다</p>
-<h3 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h3><p>현재 내가 회사에서 진행하고있는 프로젝트는 Store 가 크게 필요없다<br>그래서 인지 항상 스토어를 사용할지 말지 고민을 하고 무턱대고 적용하고 필요없는거같아서 제거하고 를 반복한다<br>사실 이번에 내가 만들 프로젝트가 Store 가 필요할거 같지는 않지만<br>평소 Store 를 자주 사용하지 않는탓에 이에 대한 이해도가 부족한거같으니 생산성이 떨어지더라도 한번 해보려고 한다</p>
-<h3 id="TypeScript"><a href="#TypeScript" class="headerlink" title="TypeScript"></a>TypeScript</h3><p>공부하기 가장 싫어하는 기술이다 타입을 적었을 때 컴포넌트 를 모듈화&amp; 재사용 할 경우 편리하긴하다<br>하지만 작성하기 너무 귀찮아서 잘 사용하지 않는다 …<br>사실 좋은 습관도 아니고 이번기회에 타입스크립트를 strict 하게 적용하며 타입스크립트에 적응하고싶다<br>개발시간이 중요한 프로젝트가 아니니 천천히 확실하게 적용할 생각이다</p>
-<p>이정도 기술이 들어간다 가정하고 토이프로젝트를 진행하려 한다</p>
-<p>그래서 어떤 토이 프로젝트를 진행하면 좋을까</p>
-<h2 id="gog-galaxy"><a href="#gog-galaxy" class="headerlink" title="gog galaxy"></a>gog galaxy</h2><p><a target="_blank" rel="noopener" href="https://www.gog.com/galaxy">https://www.gog.com/galaxy</a><br>gog 갤럭시라는 앱이 있는데 이거랑 비슷한 프로젝트를 진행하는것도 괜찮을거같다.<br>스팀, 에픽게임즈 에 여러 게임이 있어서 가끔 같은 게임을 세일 한다고 덜컥 사버리는 경우도 있다<br>이를 방지하기 위해 gogGalaxy 앱을 사용하고있는데 불편한 점이 몇가지 있어서 이를 개선하고 내가 편하게 사용할수있게 만드는것도 재미있지 않을까 싶다.</p>
-<h2 id="숙박-예약-웹"><a href="#숙박-예약-웹" class="headerlink" title="숙박 예약 웹"></a>숙박 예약 웹</h2><p>야놀자, 호텔스 컴바인 등 여러 앱들이 이미 존재하고있다.<br>그래서 여러 웹사이트의 숙박정보들을 headless browser, web crawler 를 통해 정보를 수집한뒤 가격비교 를 하는 프로젝트도 나름 재미있을거같다<br>여러 숙박업체의 지도상의 위치는 동일할태니 위치로 묶어서 가격비교를 하면 될거같다</p>
-<p>이외에 더 재미있어보이는 프로젝트 가 있으면 고려해보겠지만<br>딱히 생각이 나오질 않는 관계로 여기 까지로 하고 다음편에는 기본적인 개발 설정을 해보려고한다.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2020/05/01/Front-dev-blog-1/" data-id="ckheli9da00002akjdn8ibnyj" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+  </nav>
 
 </section>
         
@@ -771,7 +835,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/d3/">d3</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/save-money/">save-money</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EA%B8%B0%ED%83%80/">기타</a><span class="category-list-count">2</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/d3/">d3</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/save-money/">save-money</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EA%B8%B0%ED%83%80/">기타</a><span class="category-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -781,7 +845,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3js/" rel="tag">d3js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oh-my-zsh/" rel="tag">oh-my-zsh</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3js/" rel="tag">d3js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hook/" rel="tag">hook</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oh-my-zsh/" rel="tag">oh-my-zsh</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -791,7 +855,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/d3js/" style="font-size: 10px;">d3js</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/oh-my-zsh/" style="font-size: 10px;">oh-my-zsh</a>
+      <a href="/tags/d3js/" style="font-size: 10px;">d3js</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hook/" style="font-size: 20px;">hook</a> <a href="/tags/oh-my-zsh/" style="font-size: 10px;">oh-my-zsh</a>
     </div>
   </div>
 
@@ -800,7 +864,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -813,6 +877,14 @@
       <ul>
         
           <li>
+            <a href="/2020/11/23/React-hook-2/">React  Hook (2)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/18/React-hook-1/">React  Hook (1)</a>
+          </li>
+        
+          <li>
             <a href="/2020/11/12/oh-my-zsh-alias/">oh-my-zsh alias 설정</a>
           </li>
         
@@ -822,14 +894,6 @@
         
           <li>
             <a href="/2020/11/12/git-SSH-key/">git hub 에 SSH key 등록하기</a>
-          </li>
-        
-          <li>
-            <a href="/2020/06/09/Front-dev-blog-6/">Front 개발 블로그(6)</a>
-          </li>
-        
-          <li>
-            <a href="/2020/05/11/Front-dev-blog-5/">Front 개발 블로그(5)</a>
           </li>
         
       </ul>

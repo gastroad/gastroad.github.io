@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>React  Hook (1) | gastroad&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="오늘은 react의 hook 에 대해서 포스팅을 해 볼 생각이다이미 많은 사람들이 hook 에 대해서 포스팅을 해서 내 포스팅이 영양가가 있을거 같지는 않지만1년정도 사용하면서 정확하게 모르는 부분도 있기 때문에 정리할겸 글을 써보려 한다 일단 hook 은 2018 ReactConf 에서 발표하고 React 16.8 버전부터 추가된 기능이다hook의 특징으">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React  Hook (1)">
+<meta property="og:url" content="http://example.com/2020/11/18/React-hook-1/index.html">
+<meta property="og:site_name" content="gastroad&#39;s blog">
+<meta property="og:description" content="오늘은 react의 hook 에 대해서 포스팅을 해 볼 생각이다이미 많은 사람들이 hook 에 대해서 포스팅을 해서 내 포스팅이 영양가가 있을거 같지는 않지만1년정도 사용하면서 정확하게 모르는 부분도 있기 때문에 정리할겸 글을 써보려 한다 일단 hook 은 2018 ReactConf 에서 발표하고 React 16.8 버전부터 추가된 기능이다hook의 특징으">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-11-17T15:00:00.000Z">
+<meta property="article:modified_time" content="2020-11-23T05:30:24.526Z">
+<meta property="article:tag" content="hook">
+<meta name="twitter:card" content="summary">
+<meta property="fb:app_id" content="라인&amp;바차트,">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">gastroad&#39;s blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-React-hook-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/11/18/React-hook-1/" class="article-date">
+  <time datetime="2020-11-17T15:00:00.000Z" itemprop="datePublished">2020-11-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/react/">react</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      React  Hook (1)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>오늘은 react의 hook 에 대해서 포스팅을 해 볼 생각이다<br>이미 많은 사람들이 hook 에 대해서 포스팅을 해서 내 포스팅이 영양가가 있을거 같지는 않지만<br>1년정도 사용하면서 정확하게 모르는 부분도 있기 때문에 정리할겸 글을 써보려 한다</p>
+<p>일단 hook 은 2018 ReactConf 에서 발표하고 React 16.8 버전부터 추가된 기능이다<br>hook의 특징으로는 다음과 같다</p>
+<ol>
+<li>선택적 사용 기존의 코드를 다시 작성할 필요 없이 일부의 컴포넌트들 안에서 Hook을 사용할 수 있습니다.<br>그러나 만약 당장 Hook이 필요 없다면, Hook을 사용할 필요는 없습니다.</li>
+<li>100% 이전 버전과의 호환성 Hook은 호환성을 깨뜨리는 변화가 없습니다.</li>
+<li>현재 사용 가능 Hook은 배포 v16.8.0에서 사용할 수 있습니다.</li>
+</ol>
+<p>개인적으로 2번 이전 버전과의 호환성 부분이 가장 마음에 들었다 react 에서 class 바로 제거 해주지않아서 hook에 대해서 완벽하게 공부하기전에<br>리팩토링을 해야하는 불상사가 일어나지않아서 좋았다<br><strike>버전을 올리지 않는다는 선택지는 없다</strike></p>
+<p>hook 을 만든 이유는</p>
+<ol>
+<li>컴포넌트 사이에서 상태와 관련된 로직을 재사용하기 어렵습니다.</li>
+<li>복잡한 컴포넌트들은 이해하기 어렵습니다.</li>
+<li>class는 사람과 기계를 혼동시킵니다.</li>
+</ol>
+<p>3가지를 말했다</p>
+<h3 id="컴포넌트-사이에서-상태와-관련된-로직을-재사용하기-어렵습니다"><a href="#컴포넌트-사이에서-상태와-관련된-로직을-재사용하기-어렵습니다" class="headerlink" title="컴포넌트 사이에서 상태와 관련된 로직을 재사용하기 어렵습니다."></a>컴포넌트 사이에서 상태와 관련된 로직을 재사용하기 어렵습니다.</h3><p>React는 컴포넌트에 재사용 가능한 행동을 붙이는 방법을 제공하지않는다<br>(ex) store 에 component 를 연결하는것)<br>이걸 해결하기위해 render props 그리고 higher-order components 같은 패턴을 사용하게되는데<br>이런 패턴을 사용할때 컴포넌트를 재구성해야 하며 코드를 추적하기 어렵게 만든다 한다</p>
+<h5 id="hook-을-사용하면-컴포넌트로-부터-상태-관련-로직을-추상화-할수-있고-계층-변화-없이-상태-관련-로직을-재사용할-수-있도록-도와준다고-한다"><a href="#hook-을-사용하면-컴포넌트로-부터-상태-관련-로직을-추상화-할수-있고-계층-변화-없이-상태-관련-로직을-재사용할-수-있도록-도와준다고-한다" class="headerlink" title="hook 을 사용하면 컴포넌트로 부터 상태 관련 로직을 추상화 할수 있고 계층 변화 없이 상태 관련 로직을 재사용할 수 있도록 도와준다고 한다"></a>hook 을 사용하면 컴포넌트로 부터 상태 관련 로직을 추상화 할수 있고 계층 변화 없이 상태 관련 로직을 재사용할 수 있도록 도와준다고 한다</h5><h3 id="복잡한-컴포넌트들은-이해하기-어렵습니다"><a href="#복잡한-컴포넌트들은-이해하기-어렵습니다" class="headerlink" title="복잡한 컴포넌트들은 이해하기 어렵습니다."></a>복잡한 컴포넌트들은 이해하기 어렵습니다.</h3><p>유지하기 힘든 상태 관련 로직들과 사이드 이펙트가 있는 컴포넌트들을 유지할때가 있다<br>각 lifecycle method 에 관련없는 로직이 섞여있을때가 있다<br>이로인해 버그가 쉽게 발생하고 무결성을 쉽게 해친다</p>
+<h5 id="hook-을-사용하면-로직에-기반을-둔-작은-함수로-컴포넌트를-나눌수-있다"><a href="#hook-을-사용하면-로직에-기반을-둔-작은-함수로-컴포넌트를-나눌수-있다" class="headerlink" title="hook 을 사용하면 로직에 기반을 둔 작은 함수로 컴포넌트를 나눌수 있다"></a>hook 을 사용하면 로직에 기반을 둔 작은 함수로 컴포넌트를 나눌수 있다</h5><h3 id="Clss은-사람과-기계를-혼동시킵니다"><a href="#Clss은-사람과-기계를-혼동시킵니다" class="headerlink" title="Clss은 사람과 기계를 혼동시킵니다."></a>Clss은 사람과 기계를 혼동시킵니다.</h3><p>class 는 코드의 재사용성과 코드 구성을 좀 더 어렵게 만들 뿐만 아니라 React를 배우는데 큰 진입장벽이다<br>javascript 에서 어떻게 this 가 작동하는지 알아야만 했고 대부분의 다른 언어와 는 다르게 작동한다<br>처음 React 를 공부할때 constructor 라던가 binding 이라던가 사실 이해를 하지못하고 대충 따라서 쳤다 그래서 js를 처음 공부하고 React 를 사용하는 유저의 진입장벽을 크게 낮출수 있을거같다.</p>
+<h5 id="hook-을-사용하면-Class-없이-React-기능들을-사용하는-방법을-알려준다"><a href="#hook-을-사용하면-Class-없이-React-기능들을-사용하는-방법을-알려준다" class="headerlink" title="hook 을 사용하면 Class 없이 React 기능들을 사용하는 방법을 알려준다"></a>hook 을 사용하면 Class 없이 React 기능들을 사용하는 방법을 알려준다</h5><p>여기까지 hook의 개요에 대해서 알아보았다.<br>이렇게 기존 React의 많은 단점을 보완한것으로 보이는데 실제로 hook 을 사용했을때 어떻게 변하는지 다음 포스팅에서 알아보겠다</p>
+<!-- <blockquote></blockquote> -->
+
+<p>참고 : <a target="_blank" rel="noopener" href="https://reactjs.org/docs/hooks-intro.html">https://reactjs.org/docs/hooks-intro.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2020/11/18/React-hook-1/" data-id="ckhu43ums0000dykj8tl9huuq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hook/" rel="tag">hook</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/11/23/React-hook-2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          React  Hook (2)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/11/12/oh-my-zsh-alias/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">oh-my-zsh alias 설정</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/d3/">d3</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/react/">react</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/save-money/">save-money</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EA%B8%B0%ED%83%80/">기타</a><span class="category-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3js/" rel="tag">d3js</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hook/" rel="tag">hook</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oh-my-zsh/" rel="tag">oh-my-zsh</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/d3js/" style="font-size: 10px;">d3js</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hook/" style="font-size: 20px;">hook</a> <a href="/tags/oh-my-zsh/" style="font-size: 10px;">oh-my-zsh</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/11/23/React-hook-2/">React  Hook (2)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/18/React-hook-1/">React  Hook (1)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/12/oh-my-zsh-alias/">oh-my-zsh alias 설정</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/12/d3js-1/">D3 공부일지 (1)</a>
+          </li>
+        
+          <li>
+            <a href="/2020/11/12/git-SSH-key/">git hub 에 SSH key 등록하기</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 gastroad&#39;s blog<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
