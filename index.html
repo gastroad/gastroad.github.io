@@ -98,6 +98,58 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <p>우선 Docker 부터 설정을 해보려 한다<br>결국 kubernetes,ligthsail 둘다 컨테이너화 된 docker 이미지가 있어야 사용할수 있으니 Docker 사용법은 조금 자세하게 알아보겠다.</p>
+<h3 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h3><p>오늘 해볼 일은 Docker 를 사용해서 내가 예전에 만들어둔 레포를 image 화 해보는것이다.</p>
+<p>우선 Docker 를 설치해보자<br>Docker 설치의 경우 <a target="_blank" rel="noopener" href="https://www.docker.com/">Docker</a> 에서 설치할수 있다 현재 m2 맥북을 사용하고있으므로 인텔 칩 전용 버전을 다운로드 했다</p>
+<p>Docker 를 설치하고 실행한다면 아래와 같은 화면이 나올것이다<br><img src="/img/deploy-2/1.png" alt="docker"></p>
+<p>이제 docker 설치는 확인했으니 Dockerfile 을 생성해보자</p>
+<p><img src="/img/deploy-2/2.png" alt="dockerfile 생성"></p>
+<p>vscode 에서 Dockerfile 을 생성하니 extension 도 설치를 추천하길래 설치해줬다</p>
+<p><img src="/img/deploy-2/3.png" alt="docker extension "></p>
+<p>이제 DockerFile 을 작성하겠다</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># DockerFile</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># syntax=docker/dockerfile:1</span></span><br><span class="line"></span><br><span class="line">FROM node:18-alpine</span><br><span class="line">WORKDIR /app</span><br><span class="line">COPY . .</span><br><span class="line">RUN npm install --production</span><br><span class="line">CMD [<span class="string">&quot;npm&quot;</span>, <span class="string">&quot;run&quot;</span>, <span class="string">&quot;start&quot;</span>]</span><br><span class="line">EXPOSE 80</span><br></pre></td></tr></table></figure>
+
+<p>DockerFile 을 작성했으면 빌드가 잘 되는지 확인해보자</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t getting-started .</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/deploy-2/4.png"></p>
+<p>잘 작동하는지는 모르겠지만 일단 빌드에는 성공을 했다<br>이제 이미지를 빌드했으니 앱 컨테이너를 시작해보자</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -dp 80:80 getting-started</span><br></pre></td></tr></table></figure>
+
+<p>이제 아래 명령어를 통해 정상적으로 작동하고있는지 확인 해보자</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<p>아무것도 나오지 않는다</p>
+<p>Docker Desktop 에서 컨테이너의 로그를 보니 아래 사진같이 나왔다</p>
+<p><img src="/img/deploy-2/5.png"></p>
+<p>package.json 에 프로젝트를 로컬에서 구동하는 모든 코드들을 devDependencies 에 작성해서<br>production 으로 install 하면 안되는것이 당연하다<br>일단 구동확인을 위해서 package.json 을 백업해두고 모든 devDependencies 를 dependencies 로 옮기고 다시 이미지를 빌드해보겠다.</p>
+<p>devDependencies 를 dependencies 로 옮기고나니까 컨테이너의 로그가 변경되었다</p>
+<p>일단 webpack devserver https가 삭제되었다고 server 를 사용하라고 경고를 보내서 수정해주었다.</p>
+<p><img src="/img/deploy-2/6.png"></p>
+<p>이 상태로도 진행이 되지 않아서 조금더 찾아 보니 <a target="_blank" rel="noopener" href="https://www.okteto.com/blog/building-docker-images-faster-for-webpack/">building-docker-images-faster-for-webpack</a> webpack 에서 docker images 를 더 빠르게 하는 방법이 적혀있는 글에서 문제를 찾았다</p>
+<p>현재 내 dockerFile 이랑 비교해보면</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">FROM node:18-alpine</span><br><span class="line">WORKDIR /app</span><br><span class="line">COPY . .</span><br><span class="line">RUN npm install --production</span><br><span class="line">CMD [<span class="string">&quot;npm&quot;</span>, <span class="string">&quot;run&quot;</span>, <span class="string">&quot;start&quot;</span>]</span><br><span class="line">EXPOSE 80</span><br><span class="line"></span><br><span class="line">------------------------</span><br><span class="line"></span><br><span class="line">FROM node:16 as build</span><br><span class="line"></span><br><span class="line">WORKDIR /usr/src/app</span><br><span class="line"></span><br><span class="line">COPY package.json yarn.lock ./</span><br><span class="line">RUN yarn install</span><br><span class="line"></span><br><span class="line">COPY . .</span><br><span class="line">RUN yarn build</span><br><span class="line"></span><br><span class="line">FROM nginx:alpine</span><br><span class="line">COPY --from=build /usr/src/app/dist /usr/share/nginx/html</span><br><span class="line">EXPOSE 80</span><br></pre></td></tr></table></figure>
+
+<p>내 dockerFile 에는 nginx 관련 설정이 없다.<br>사실 이전 webpack 이 없다는 로그를 봤을때 이상함을 느끼고 방법을 찾아봤어야했는데<br>왜 그때는 생각하지 못했나 싶다…<br>여하튼 DockerFile 을 다시 작성해 주었다</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># syntax=docker/dockerfile:1</span></span><br><span class="line">FROM node:18-alpine</span><br><span class="line"></span><br><span class="line">WORKDIR /usr/src/app</span><br><span class="line"></span><br><span class="line">COPY package.json  ./</span><br><span class="line">RUN npm install</span><br><span class="line"></span><br><span class="line">COPY . .</span><br><span class="line">RUN npm run build</span><br><span class="line"></span><br><span class="line">FROM nginx:alpine</span><br><span class="line">COPY --from=build /usr/src/app/build /usr/share/nginx/html</span><br><span class="line">EXPOSE 80</span><br></pre></td></tr></table></figure>
+
+<p>빌드 결과물이 내 프로젝트의 경우 dist 가 아닌 build 디렉토리로 생성이 되기떄문에 해당 부분과<br>node 버전은 18-alpine 으로 유지해주었다.<br>yarn 을 사용하지않았기떄문에 npm 으로 수정해주었다</p>
+<p>이제 다시 시도해보니</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker build -t getting-started .</span><br><span class="line"></span><br><span class="line">~~ 생략 ~~</span><br><span class="line">=&gt; ERROR [internal] load metadata <span class="keyword">for</span> docker.io/library/build:latest</span><br><span class="line">~~ 생략 ~~</span><br><span class="line"></span><br><span class="line">failed to solve with frontend dockerfile.v0: failed to solve with frontend gateway.v0: rpc error: code = Unknown desc = build: pull access denied, repository does not exist or may require authorization: server message: insufficient_scope: authorization failed</span><br></pre></td></tr></table></figure>
+
+<p>머리가 아파온다 일단 에러를 보니 권한 관련된 문제인거같아 sudo 로 일단 실행해보자</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sudo docker build -t getting-started .</span><br><span class="line"></span><br><span class="line">~~ 생략 ~~</span><br><span class="line"></span><br><span class="line"> =&gt; ERROR resolve image config <span class="keyword">for</span> docker.io/docker/dockerfile:1            0.7s</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">~~ 생략 ~~</span><br><span class="line"></span><br><span class="line">------</span><br><span class="line">   &gt; resolve image config <span class="keyword">for</span> docker.io/docker/dockerfile:1:</span><br><span class="line">------</span><br><span class="line">failed to solve with frontend dockerfile.v0: failed to solve with frontend gateway.v0: rpc error: code = Unknown desc = error getting credentials - err: <span class="built_in">exit</span> status 1, out: ``</span><br></pre></td></tr></table></figure>
+
+<p>권한 관련 에러메시지말고 앞부분은 똑같은 문제가 여전히 생긴다<br>Dockerfile에 FROM nginx:alpine 부분을 삭제하고 다시 시도해보니 작동한다<br>nginx 관련해서 문제가 있는것으로 추정되는데 nginx 관련 공부도 해봐야겠다.</p>
+<p>우선 가동을 우선으로 Dockerfile 을 다시 작성해보았다</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">FROM node:latest as builder</span><br><span class="line"></span><br><span class="line">RUN <span class="built_in">mkdir</span> /usr/src/app</span><br><span class="line">WORKDIR /usr/src/app</span><br><span class="line">COPY package.json /usr/src/app/package.json</span><br><span class="line">RUN npm install</span><br><span class="line"></span><br><span class="line">COPY . /usr/src/app</span><br><span class="line">RUN npm run build</span><br><span class="line"></span><br><span class="line">FROM nginx:latest</span><br><span class="line"></span><br><span class="line">RUN <span class="built_in">rm</span> -rf /etc/nginx/conf.d</span><br><span class="line">COPY conf /etc/nginx</span><br><span class="line"></span><br><span class="line">COPY --from=builder /usr/src/app/build /usr/share/nginx/html</span><br><span class="line"></span><br><span class="line">EXPOSE 80</span><br><span class="line">CMD [<span class="string">&quot;nginx&quot;</span>, <span class="string">&quot;-g&quot;</span>, <span class="string">&quot;daemon off;&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>최신버전 노드 를 가져오고 usr&#x2F;src&#x2F;app 디렉토리로 가서 작업 경로를 고정한다<br>그리고 package.json 을 복사해서 &#x2F;usr&#x2F;src&#x2F;app&#x2F;package.json 경로에 붙여넣어준뒤<br>npm install 을 해준다<br>그리고 소스를 작업폴더로 복사하고 빌드해준다</p>
+<p>그다음 nginx의 기본 설정을 삭제하고 conf 를 &#x2F;etc&#x2F;nginx 에 붙여 넣어준다<br>conf 는 아래처럼 작성해 두었다</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// [conf] =&gt; [conf.d] =&gt; [default.conf]</span></span><br><span class="line">server &#123;</span><br><span class="line">    listen <span class="number">80</span>;</span><br><span class="line">    location / &#123;</span><br><span class="line">        root /usr/share/nginx/html;</span><br><span class="line">        index index.<span class="property">html</span> index.<span class="property">htm</span>;</span><br><span class="line">        try_files $uri $uri/ /index.<span class="property">html</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>그 이후 빌드된결과를 nginx의 폴더로 이동 후 80포트를 열고 nginx 실행한다<br>이제 앱 컨테이너를 시작해보니 http:localhost 로 접속이 잘 되는것을 확인했다.</p>
+<p>여기까지 작업하는데 생각보다 시간이 오래걸려서 나중에 이어서 작성해야겠다<br>다음 작업할내용은 nginx 관련 공부와 production stage dev 환경별 docker 세팅까지 할예정이다</p>
+<p>참고 : <a target="_blank" rel="noopener" href="https://docs.docker.com/get-started/">Docker docs</a> <a target="_blank" rel="noopener" href="https://www.okteto.com/blog/building-docker-images-faster-for-webpack/">building-docker-images-faster-for-webpack</a></p>
 
       
     </div>
@@ -118,8 +170,8 @@
   
     <article id="post-deploy-1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/2023/04/09/deploy-1/" class="article-date">
-  <time class="dt-published" datetime="2023-04-09T03:19:50.000Z" itemprop="datePublished">2023-04-09</time>
+    <a href="/2023/04/08/deploy-1/" class="article-date">
+  <time class="dt-published" datetime="2023-04-08T03:19:50.000Z" itemprop="datePublished">2023-04-08</time>
 </a>
     
   <div class="article-category">
@@ -134,7 +186,7 @@
         
   
     <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/04/09/deploy-1/">docker,kubernetes 이용하여 aws 배포하기</a>
+      <a class="p-name article-title" href="/2023/04/08/deploy-1/">docker,kubernetes 이용하여 aws 배포하기</a>
     </h1>
   
 
@@ -172,7 +224,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://gastroad.github.io/2023/04/09/deploy-1/" data-id="clg94apnb0000l4jydsak2p09" data-title="docker,kubernetes 이용하여 aws 배포하기" class="article-share-link">공유</a>
+      <a data-url="https://gastroad.github.io/2023/04/08/deploy-1/" data-id="clg94apnb0000l4jydsak2p09" data-title="docker,kubernetes 이용하여 aws 배포하기" class="article-share-link">공유</a>
       
       
       
@@ -791,7 +843,7 @@
           </li>
         
           <li>
-            <a href="/2023/04/09/deploy-1/">docker,kubernetes 이용하여 aws 배포하기</a>
+            <a href="/2023/04/08/deploy-1/">docker,kubernetes 이용하여 aws 배포하기</a>
           </li>
         
           <li>
