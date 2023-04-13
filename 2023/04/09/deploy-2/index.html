@@ -18,9 +18,8 @@
 <meta property="og:image" content="https://gastroad.github.io/img/deploy-2/3.png">
 <meta property="og:image" content="https://gastroad.github.io/img/deploy-2/4.png">
 <meta property="og:image" content="https://gastroad.github.io/img/deploy-2/5.png">
-<meta property="og:image" content="https://gastroad.github.io/img/deploy-2/4.png">
 <meta property="article:published_time" content="2023-04-09T07:53:52.000Z">
-<meta property="article:modified_time" content="2023-04-13T10:50:23.913Z">
+<meta property="article:modified_time" content="2023-04-13T13:05:15.564Z">
 <meta property="article:author" content="gastroad">
 <meta property="article:tag" content="build&amp;delpoy">
 <meta name="twitter:card" content="summary">
@@ -153,9 +152,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">FROM node:latest as builder</span><br><span class="line">WORKDIR /usr/src/app</span><br><span class="line">COPY package.json  ./</span><br><span class="line">RUN npm install --production</span><br><span class="line">COPY . .</span><br><span class="line">RUN npm run build</span><br><span class="line"></span><br><span class="line">FROM nginx:latest</span><br><span class="line">COPY --from=builder /usr/src/app/build /usr/share/nginx/html</span><br><span class="line">EXPOSE 80</span><br></pre></td></tr></table></figure>
 
 <p>nginx 이미지를 가져오는데에서 문제가 생겼으니 그냥 최신버전을 가져오게 수정하였다<br>수정하는김에 node 도 그냥 최신버전을 가져오게 수정하였다.</p>
-<p>이제 다시 시도해 보자</p>
-<p><img src="/img/deploy-2/4.png"></p>
-<p>성공적으로 빌드가 되었다!!</p>
+<p>이제 다시 시도해 보니 성공적으로 빌드가 되었다!!</p>
 <p><del>이제 컨테이너에 다시 올리고</del><br>마지막으로 nginx 관련 설정과 명령어를 Dockerfile에 추가하고<br>다시 빌드해서 컨테이너에 올려보겠다.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">FROM node:latest as builder</span><br><span class="line">WORKDIR /usr/src/app</span><br><span class="line">COPY package.json  ./</span><br><span class="line">RUN npm install</span><br><span class="line">COPY . .</span><br><span class="line">RUN npm run build</span><br><span class="line"></span><br><span class="line">FROM nginx:latest</span><br><span class="line">RUN <span class="built_in">rm</span> -rf /etc/nginx/conf.d</span><br><span class="line">COPY conf /etc/nginx</span><br><span class="line">COPY --from=build /usr/src/app/build /usr/share/nginx/html</span><br><span class="line">CMD [<span class="string">&quot;nginx&quot;</span>, <span class="string">&quot;-g&quot;</span>, <span class="string">&quot;daemon off;&quot;</span>]</span><br><span class="line">EXPOSE 80</span><br></pre></td></tr></table></figure>
 
