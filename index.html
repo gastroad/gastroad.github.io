@@ -71,6 +71,197 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-deploy-3" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/04/17/deploy-3/" class="article-date">
+  <time class="dt-published" datetime="2023-04-17T11:43:50.000Z" itemprop="datePublished">2023-04-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/etc/">etc</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/04/17/deploy-3/">CORS 에 대해서 알아보자</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>오늘은 CORS 에 대해서 알아보도록 하겠다. 중요하고 자주 에러가 발생하기도 하니 조금 자세하게 다뤄보도록 하겠다.</p>
+<p>바로 본론으로 들어가</p>
+<h3 id="CORS-란"><a href="#CORS-란" class="headerlink" title="CORS 란"></a>CORS 란</h3><blockquote>
+<p>Cross-Origin Resource Sharing<br>교차 출처 리소스 공유</p>
+</blockquote>
+<p>웹 애플리케이션은 리소스가 자신의 출처(도메인, 프로토콜, 포트)와 다를 때 교차 출처 HTTP 요청을 실행한다.</p>
+<p>api 를 사용하다 보면 CORS 에러는 한번쯤은 봤을거라고 생각한다.</p>
+<p>보안 상의 이유로, 브라우저는 스크립트에서 시작한 교차 출처 HTTP 요청을 제한한다.<br>예를들어 XMLHttpRequest, Fetch API 는 동일 출처 정책을 따른다.<br>즉, 이 API를 사용하는 웹 애플리케이션은 자신의 출처와 동일한 리소스만 불러올 수 있으며, 다른 출처의 리소스를 불러오려면 그 출처에서 올바른 CORS 헤더를 포함한 응답을 반환해야 한다.</p>
+<p>자 그러면 출처에 대해서 자세하게 알아보자<br>우선 앞서 출처 도메인, 프로토콜, 포트 라고 했다<br>그러면 도메인과 프로토콜 포트가 각각 어떤것인지 알아보자</p>
+<p>url 은 보통 다음과 같은 구조를 가진다.</p>
+<p><code>&#123;protocol&#125;://&#123;Domain&#125;/&#123;path&#125;?&#123;paramater&#125;#&#123;fragment&#125;</code></p>
+<p><code>https://www.google.com/search?q=%EA%B5%AC%EA%B8%80&amp;rlz=1C5CHFA_enKR1015KR1015&amp;source=lnms&amp;tbm=isch&amp;sa=X&amp;ved=2ahUKEwisu_Oy07D-AhWdslYBHcF1ArkQ_AUoAXoECAEQAw&amp;biw=1710&amp;bih=902&amp;dpr=2#imgrc=_6YUFvCeFGUOSM</code></p>
+<p>예시를 위해 구글에서 구글을 검색해 이미지 탭에 들어간 링크를 가져왔다</p>
+<ol>
+<li>protocol<br>https(hypertext transfer protocol secure) 이다 html 같은 파일을 통신하기 위한 protocol 이다.</li>
+<li>Domain<br><a target="_blank" rel="noopener" href="http://www.google.com/">www.google.com</a> 이다</li>
+<li>path<br>&#x2F;search 이다</li>
+<li>paramater<br><code>?q=%EA%B5%AC%EA%B8%80&amp;rlz=1C5CHFA_enKR1015KR1015&amp;source=lnms&amp;tbm=isch&amp;sa=X&amp;ved=2ahUKEwisu_Oy07D-AhWdslYBHcF1ArkQ_AUoAXoECAEQAw&amp;biw=1710&amp;bih=902&amp;dpr=2</code><br>이 부분이며 url encoding 되어있기 때문에 decode 해보면 아래와 같이 나온다.<br><code>?q=구글&amp;rlz=1C5CHFA_enKR1015KR1015&amp;source=lnms&amp;tbm=isch&amp;sa=X&amp;ved=2ahUKEwisu_Oy07D-AhWdslYBHcF1ArkQ_AUoAXoECAEQAw&amp;biw=1710&amp;bih=902&amp;dpr=2</code><br><del>한글의 경우 url encoding 을 진행하면 url 이 굉장히 해석하기 힘들어진다.</del></li>
+<li>fragment<br>#imgrc&#x3D;_6YUFvCeFGUOSM 이다</li>
+</ol>
+<p>자 그러면 위에서 나온 <code>출처</code> 중 protocol,과 도메인이 뭔지는 알았을거다 그러면 포트 뭐길래 안보이는건가.</p>
+<ol start="6">
+<li>포트<br>위 링크의 경우 포트는 443 번이다<br>프로토콜에 따라 할당된 기본 포트가 있고 https 의 경우 443 번이 기본 포트 이기 때문에 443 은 생략이 가능하다<br>예시로 http 프로토콜의 경우 80이 기본 포트이고<br>80 포트의 경우 생략이 가능하다.</li>
+</ol>
+<p>그러면 출처 에 대해서 이해 했으니 다시 CORS 로 넘어가도록 하자</p>
+<p>출처가 다르면 CORS 헤더를 포함한 응답을 반환해야 한다는데<br>만약 출처가 다른 곳에서 api 를 호출하고싶으면 어떻게 해야할까</p>
+<p>CrossOrigin 어노테이션 사용하기, Preflight Request, 등등 많은 방법이 있지만<br>이번 포스트에서는 proxy 를 이용하는 방법을 사용하도록 하겠다.</p>
+<p>webpack devserver 를 사용하고있다는 가정하에<br>devserver 옵션중에 proxy 라는 옵션이 있다.</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">proxy<span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">     &#x27;/api&#x27;<span class="punctuation">:</span> &#x27;http<span class="punctuation">:</span><span class="comment">//localhost:3000&#x27;,</span></span><br><span class="line">   <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;api&#x2F;users에 대한 요청은 이제 <a target="_blank" rel="noopener" href="http://localhost:3000/api/users%EC%97%90">http://localhost:3000/api/users에</a> 대한 요청으로 프록시 처리한다.</p>
+<p>만약 유효하지않은 https 인증서로 개발을 진행하고있다면</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">proxy<span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      &#x27;/api&#x27;<span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        target<span class="punctuation">:</span> &#x27;https<span class="punctuation">:</span><span class="comment">//other-server.example.com&#x27;,</span></span><br><span class="line">        secure<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
+
+<p>secure 를 false 로 처리하면 된다.<br>&#x2F;api&#x2F;users에 대한 요청은 이제 <a target="_blank" rel="noopener" href="https://other-server.example.com/api/users">https://other-server.example.com/api/users</a> 에 대한 요청으로 프록시 처리한다.</p>
+<p>자 그러면 이제 개발 단계에서의 프록시 처리에 대해서 알아봤다.<br>추가로 더 필요한 문법은 하단 참고 링크에 webpack docs 를 링크해 뒀으니 찾아보기를 바란다.<br><del>웹팩 설정은 필요할때마다 처한 상황에 때라 하나씩 찾아보면서 설정하게 되는거같다.</del></p>
+<p>이제 production 단계에서 는 어떻게 처리하나 확인해 볼 차례이다.<br>production 을 webpack devserver 로 돌릴게 아니라면 결국<br>번들링 된 결과물 일 뿐인데 외부 웹서버 를 사용하는 환경에서는 cors 에러를 어떻게 처리하나 알아보자.</p>
+<p>여기서부터는 devops 엔지니어분이 봐주시던 부분이라 부끄럽게도 잘 모르는 영역이다.</p>
+<p>nginx 의 기능중 하나인 reverse Proxy server 를 사용해서 proxy 설정을 하려한다.</p>
+<p>우선 nginx 에 대해서 알아보도록 하겠다.</p>
+<h3 id="nginx란"><a href="#nginx란" class="headerlink" title="nginx란"></a>nginx란</h3><blockquote>
+<p>NGINX is a high‑performance, highly scalable, highly available web server, reverse proxy server, and web accelerator (combining the features of an HTTP load balancer, content cache, and more)</p>
+</blockquote>
+<p>NGINX는 고성능, 고확장성, 고가용성 웹 서버, 역방향 프록시 서버 및 웹 가속기 (HTTP 로드 밸런서, 콘텐츠 캐시 등의 기능 결합) 라고 한다</p>
+<p>그러면 http 서버는 뭘 하는걸까</p>
+<blockquote>
+<p>Serving static and index files, autoindexing; open file descriptor cache;</p>
+</blockquote>
+<p>정적 파일과 인덱스 파일 제공, 오토인덱싱, 파일 디스크립터 캐시 등의 기능을 제공하는 걸 말한다<br>즉 react 에서 번들링 한 결과물을 제공하고 디렉토리에 대한 요청이 있을 때 디렉토리 내의 파일을 자동으로 생성해서 보내주고 파일 구조체를 캐시해서<br>파일의 접근시간을 줄여준다고 이해 했다.</p>
+<p>자 그러면 역방향 프록시 서버(reverse Proxy server) 는 뭘까</p>
+<p>이제와서 알아보기 조금 늦은 감이 있지만 먼저 Proxy 에 대해서 알아보겠다.</p>
+<h3 id="Proxying-이란"><a href="#Proxying-이란" class="headerlink" title="Proxying 이란"></a>Proxying 이란</h3><blockquote>
+<p>Proxying is typically used to distribute the load among several servers, seamlessly show content from different websites, or pass requests for processing to application servers over protocols other than HTTP.</p>
+</blockquote>
+<p>일반적으로 여러 서버 간에 로드를 분산하거나,<br>서로 다른 웹 사이트의 콘텐츠를 원활하게 표시하거나,<br>HTTP 이외의 프로토콜을 통해 애플리케이션 서버에 처리 요청을 전달하는 데 사용된다 한다.</p>
+<p>이제 reverse Proxy server 에 대해 알아보자</p>
+<h3 id="reverse-Proxy-server"><a href="#reverse-Proxy-server" class="headerlink" title="reverse Proxy server"></a>reverse Proxy server</h3><blockquote>
+<p>Reverse proxy server는 클라이언트로부터 요청을 받아서 백엔드 서버로 전달하는 서버입니다. 일반적인 프록시 서버와 달리, 클라이언트는 백엔드 서버의 존재를 알지 못하고, 리버스 프록시 서버의 주소만 알고 있습니다.</p>
+</blockquote>
+<p>그럼 왜 이런 번거로운 일을 하는걸까</p>
+<p>백엔드 서버에 직접적인 접근을 허용하지 않고, 리버스 프록시 서버를 통해서만 접근하도록 설정하면, 보안상의 이점이 있다고 한다.<br>또한<br>리버스 프록시 서버는 캐시 기능을 제공하여, 동일한 요청에 대해서는 백엔드 서버로의 요청을 최소화할 수 있다고 한다.</p>
+<p>자 이제 개념에 대해서 알아봤으니 이전에 dockerize 한 프로젝트에 nginx 설정에서 프록시 설정을 해보도록 하겠다.</p>
+<p>이전에 작성한 Dockerfile 에서 nginx 부분을 조금더 자세하게 알아보자<br>이전에 작성한 Dockerfile 은 <a href="https://gastroad.github.io/2023/04/09/deploy-2/">여기</a> 에 서 볼수있다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx:latest</span><br><span class="line">RUN <span class="built_in">rm</span> -rf /etc/nginx/conf.d</span><br><span class="line">COPY conf /etc/nginx</span><br><span class="line">COPY --from=build /usr/src/app/build /usr/share/nginx/html</span><br></pre></td></tr></table></figure>
+
+<p>그때 자세하게 설명하지 않았지만<br>위 내용은 &#x2F;etc&#x2F;nginx&#x2F;conf.d 에 있는 nignx 기본설정을 삭제하고<br>conf 디렉토리를 복사해 &#x2F;etc&#x2F;nginx 붙여 넣는 부분이다.</p>
+<p>conf 디렉토리는 다음과 같이 구성했었다</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-conf</span><br><span class="line">--conf.d</span><br><span class="line">    default.conf</span><br></pre></td></tr></table></figure>
+
+<p>default.conf 파일은 다음과 같이 구성했다</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">server <span class="punctuation">&#123;</span></span><br><span class="line">    listen <span class="number">80</span>;</span><br><span class="line">    location / <span class="punctuation">&#123;</span></span><br><span class="line">        root /usr/share/nginx/html;</span><br><span class="line">        index index.html index.htm;</span><br><span class="line">        try_files $uri $uri/ /index.html;</span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>리버스 프록시 서버를 설정하는 방법은 생각보다 정말 간단하다<br>document에 따르면</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">location /some/path/ &#123;</span><br><span class="line">    proxy_pass http://www.example.com/link/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>이라고 한다 그렇다고하면<br>아까 웹팩 데브서버에서 설정한 것과 똑같이 설정하려면</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    location / &#123;</span><br><span class="line">        root /usr/share/nginx/html;</span><br><span class="line">        index index.html index.htm;</span><br><span class="line">        try_files $uri $uri/ /index.html;</span><br><span class="line">    &#125;</span><br><span class="line">    location /api &#123;</span><br><span class="line">        proxy_pass https://other-server.example.com/api</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>이런식으로 설정해 주면 된다.</p>
+<p>실제 production에 배포해서 확인해보지 못한게 아쉬웠다.<br>만약 production에 배포했다 치더라도 api 서버를 개발 할 능력도 부족하고 서브도메인을 파서 api 서버를 따로 띄워주는데도 한참 걸릴꺼라 생각하지만<br>그래도 대충이라도 api 서버를 파서 동작을 확인해봤으면 더 좋았을거 같다.<br>빌드 배포에 관한 내용은 여기까지 작성하고 다음부터는 flux 에대해 작성하도록 하겠다.</p>
+<p>~~ 분명 시작할때는 주제가 CORS 였는데~~</p>
+<p>참고<br><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy">https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy</a><br><a target="_blank" rel="noopener" href="https://webpack.kr/configuration/dev-server/#usage-via-api">https://webpack.kr/configuration/dev-server/#usage-via-api</a><br><a href="docs.nginx.com/nginx/admin-guide/web-server">docs.nginx.com&#x2F;nginx&#x2F;admin-guide&#x2F;web-server</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gastroad.github.io/2023/04/17/deploy-3/" data-id="clgapdcf20000jbjy62u6h6ve" data-title="CORS 에 대해서 알아보자" class="article-share-link">공유</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/build-delpoy/" rel="tag">build&amp;delpoy</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-flux" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/04/15/flux/" class="article-date">
+  <time class="dt-published" datetime="2023-04-15T06:49:05.000Z" itemprop="datePublished">2023-04-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/04/15/flux/">flux 패턴이란</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>오늘은 flux 패턴에 대해서 알아보려고 한다<br>react 를 사용해서 개발을 진행하게 되면 한번쯤은 들어봤을거라고 생각한다.</p>
+<p>본론으로 들어가기전 이 포스트는 개인의 경험과 이해를 바탕으로 쓰여졌으므로<br>틀린 내용이 있을수 있습니다.<br>혹시 틀린 내용을 발견하게 된다면 <a href="mailto:&#103;&#111;&#x73;&#116;&#x72;&#111;&#x61;&#100;&#51;&#55;&#64;&#103;&#109;&#97;&#105;&#x6c;&#46;&#99;&#111;&#109;">&#103;&#111;&#x73;&#116;&#x72;&#111;&#x61;&#100;&#51;&#55;&#64;&#103;&#109;&#97;&#105;&#x6c;&#46;&#99;&#111;&#109;</a> 으로 메일 주시면 감사하겠습니다.<br>정확한 내용은 하단 참고 링크에 쓰여진 공식 document를 참고하기를 바랍니다.</p>
+<h3 id="FLUX-란"><a href="#FLUX-란" class="headerlink" title="FLUX 란"></a>FLUX 란</h3><blockquote>
+<p>Application architecture for building user interfaces</p>
+</blockquote>
+<p>즉 사용자가 보는 화면을 만들기 위한 어플리케이션 구조 라고 이해했다.</p>
+<p>단방향 데이터 흐름을 활용해 뷰 컴포넌트를 구성하는 React를 보완하기 위해서 개발된 것으로 알고있다.</p>
+<p>바로 flux 의 구조와 데이터 흐름에 대해서 알아보도록 하자</p>
+<p><img src="/img/flux/1.png" alt="https://facebookarchive.github.io/flux/docs/in-depth-overview"></p>
+<p>공식 도큐먼트를 보면 아래와 같이 설명한다</p>
+<blockquote>
+<p>All data flows through the dispatcher as a central hub. Actions are provided to the dispatcher in an action creator method, and most often originate from user interactions with the views. The dispatcher then invokes the callbacks that the stores have registered with it, dispatching actions to all stores. Within their registered callbacks, stores respond to whichever actions are relevant to the state they maintain. The stores then emit a change event to alert the controller-views that a change to the data layer has occurred. Controller-views listen for these events and retrieve data from the stores in an event handler. The controller-views call their own setState() method, causing a re-rendering of themselves and all of their descendants in the component tree.</p>
+</blockquote>
+<p>정리하자면<br>모든 action 은 dispatcher 에게 action creator 메소드를 제공한다<br>dispatcher는 action을 store 로 전달한다<br>store 를 바탕으로 view 를 랜더링한다<br>라고 이해를 했다.</p>
+<p>위와 같은 데이터 흐름으로 flux 는 단방향(action &#x3D;&gt; dispatcher &#x3D;&gt; store &#x3D;&gt; view) 데이터 흐름을 만들었다.</p>
+<p>그러면 이쯤에서 궁금하게 된것이 react 도 결국 단방향 데이터 흐름을 가지고 있는데 왜 flux 라는것이 필요하고 왜 굳이 store 에 dispatcher 를 통해 action 을 보내는 번거로운 짓을 해야하는거지?<br><del>심지어 flux 패턴을 구현한 redux 는 어마무시한 Boilerplate 코드 때문에 한동안 사용하지않으려고 별 이상한 시도를 많이했었다. 현재는 RTK 덕분에 애용하고있다</del></p>
+<p>flux 아키텍처를 개발한 이유가 mvc 패턴이 양방향 데이터 흐름을 가지고 있고<br>이 양방향 데이터 흐름이 시스템의 복잡도를 기하급수적으로 증가 시키고, 예측 불가능한 코드를 만들게 된다고 했다 이 예측 불가능한 코드가<br>예측 불가능한 버그를 쏟아져 내기 떄문에 만든 아키텍쳐가 flux 인데</p>
+<p>react 도 결국 부모 component 에서 자식 component 로 props 를 전달하고 자식은 부모로 부터 받은 props 를 수정할수 없으니 단방향 데이터 흐름을 가지고 있는거 아닌가? 라는 생각이 들었다</p>
+<p>하지만 위와같이 flux 패턴으로 개발하게 되면 component 의 종속성없이<br>단방향으로 데이터를 흐르게 할수있다<br>이렇게 되면 프로젝트 의 확장에 따라 부모 component 가 점점 복잡해지는 문제를 해결할수있다.</p>
+<p>이번 포스트에서 flux 패턴을 구현하는방법이나 flux 패턴을 구현한 redux, recoil 같은 라이브러리도 다룰까 생각했으나 포스트가 너무 길어질거같아 다음 에 작성해보려한다.</p>
+<p>참고 : <a target="_blank" rel="noopener" href="https://facebookarchive.github.io/flux/">https://facebookarchive.github.io/flux/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gastroad.github.io/2023/04/15/flux/" data-id="clgkr1ug10000jxjyayx5hmkc" data-title="flux 패턴이란" class="article-share-link">공유</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/" rel="tag">react</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Refactoring-SEO" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/04/13/Refactoring-SEO/" class="article-date">
@@ -240,67 +431,14 @@
 
 <p>이제 localhost 에 접속하면 정상 작동한다.</p>
 <p>이번 포스팅을 하면서 웹서버 와 배포 환경에 얼마나 지식이 없는지 뼈아프게 실감했다.<br>포스트에 다쓰기엔 너무 길어질거같아 생략한 nginx 설정과 빌드 cahe 관련된 문제도 있었다. 다음에 여유가 있을때 nginx 관련내용도 포스팅해보도록 하겠다 우선 docker 컨테이너를 빌드하는데 성공하였으니<br>다음에는 aws kubernetes 에 대해 알아보도록 하겠다.</p>
+<hr>
+<p>2023&#x2F;04&#x2F;16<br>처음 계획상 aws 계정을 생성하고 무료 로 이용할수 있는기간이 있어<br>이를 이용해 aws 에 배포를 해보고 기간이 끝나기전 서비스를 내려<br>배포에 대해 알아보려 했으나 ligthsail Containers 의 경우 무료 이용기간이 없어 나중에 도메인을 구매하고 올리고싶은 프로젝트가 있을때 진행하기로 생각을 바꿨다.</p>
 <p>참고 : <a target="_blank" rel="noopener" href="https://docs.docker.com/get-started/">Docker docs</a><br><a target="_blank" rel="noopener" href="https://www.okteto.com/blog/building-docker-images-faster-for-webpack/">building-docker-images-faster-for-webpack</a></p>
 
       
     </div>
     <footer class="article-footer">
       <a data-url="https://gastroad.github.io/2023/04/09/deploy-2/" data-id="clg94apnd0001l4jy0xvhamjw" data-title="docker kubernetes 이용하여 aws 배포하기 2" class="article-share-link">공유</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/build-delpoy/" rel="tag">build&amp;delpoy</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-deploy-3" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/04/09/deploy-3/" class="article-date">
-  <time class="dt-published" datetime="2023-04-09T07:53:52.000Z" itemprop="datePublished">2023-04-09</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/etc/">etc</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/04/09/deploy-3/">react build 결과물을 nginx 로 서빙하려면..!</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>이번에는 nginx 와 설정에 대해서 알아보도록 하겠다<br>우선 nginx 에 대해 먼저 알아보자</p>
-<h3 id="nginx란"><a href="#nginx란" class="headerlink" title="nginx란"></a>nginx란</h3><blockquote>
-<p>NGINX is a high‑performance, highly scalable, highly available web server, reverse proxy server, and web accelerator (combining the features of an HTTP load balancer, content cache, and more)</p>
-</blockquote>
-<p>NGINX는 고성능, 고확장성, 고가용성 웹 서버, 역방향 프록시 서버 및 웹 가속기 (HTTP 로드 밸런서, 콘텐츠 캐시 등의 기능 결합) 라고 한다</p>
-<p>즉 아파치와 같은 웹 서버이다.</p>
-<p>그러면 http 서버는 뭘 하는걸까</p>
-<blockquote>
-<p>Serving static and index files, autoindexing; open file descriptor cache;</p>
-</blockquote>
-<p><del>너무 졸려서 다음에 이어서 쓰겠습니다..</del></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://gastroad.github.io/2023/04/09/deploy-3/" data-id="clgapdcf20000jbjy62u6h6ve" data-title="react build 결과물을 nginx 로 서빙하려면..!" class="article-share-link">공유</a>
       
       
       
@@ -728,55 +866,6 @@
 
 
   
-    <article id="post-Front-dev-blog-4" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/05/08/Front-dev-blog-4/" class="article-date">
-  <time class="dt-published" datetime="2020-05-07T15:00:00.000Z" itemprop="datePublished">2020-05-08</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/javascript/">javascript</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/05/08/Front-dev-blog-4/">Front 개발 블로그 (4)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>저번에 말했던대로 이번에는 github에 git 을 연결을 해보려고 한다<br>우선 지금까지의 작업본을 commit 을 하자<br><img src="/img/Front-dev-blog-4/1.png"></p>
-<p>나는 보통 vscode 에서 기본으로 제공해주는 git 이나 sourcetree, 터미널 3가지를 같이 사용한다<br>merge 는 터미널, commit 은 vscode, tree 를 보거나 roll back 같은 작업 은 sourcetree 를 선호한다<br>위 사진처럼 스테이징 한후 엔터를 눌러주면 git 에 커밋이 완료 된다<br>그리고<br>github에 가서 repository 를 생성해주면<br><img src="/img/Front-dev-blog-4/2.png"></p>
-<p>아래와 같은 화면이 나올거다<br>이제 쓰여있는 대로 git remote add orgin ~~ 명령어를 입력하면 되는데<br>git 이 위치한 &#x2F;savemoney 로 가서 헤당명령어를 입력한후 origin master 에 push 를 하면<br><img src="/img/Front-dev-blog-4/3.png"></p>
-<p>에러가 나올거다<br>github 에 ssh key 를 등록을 하지않아서 나오는 오류이다<br>예전에는 username, email, password 를 입력하면 됐지만 이제<br>ssh key를 등록해줘야 할수있게 바뀌였다고 들었다<br>ssh key 를 등록하는 방법은<br><a href="https://gastroad.github.io/2020/11/12/git-SSH-key/">https://gastroad.github.io/2020/11/12/git-SSH-key/</a><br>에 정리해 두었다<br>ssh key 를 git hub 에 등록후 push 에 성공했다면<br><img src="/img/Front-dev-blog-4/4.png"></p>
-<p>아래 화면 처럼 나오게 될것이다<br>여기서 contributors 가 2명인이유는 앞에서도 말했듯이<br>vscode, sourcetree, 터미널 3가지를 동시에 사용하기때문에 commit 을 하는 계정이 2개라 contributors 가 2명으로 나타난다</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://gastroad.github.io/2020/05/08/Front-dev-blog-4/" data-id="clg8tzw5y000d7tjyhneq9g2t" data-title="Front 개발 블로그 (4)" class="article-share-link">공유</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/" rel="tag">react</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -834,6 +923,14 @@
       <ul>
         
           <li>
+            <a href="/2023/04/17/deploy-3/">CORS 에 대해서 알아보자</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/15/flux/">flux 패턴이란</a>
+          </li>
+        
+          <li>
             <a href="/2023/04/13/Refactoring-SEO/">Refactoring-SEO</a>
           </li>
         
@@ -842,15 +939,7 @@
           </li>
         
           <li>
-            <a href="/2023/04/09/deploy-3/">react build 결과물을 nginx 로 서빙하려면..!</a>
-          </li>
-        
-          <li>
             <a href="/2023/04/08/deploy-1/">docker,kubernetes 이용하여 aws 배포하기</a>
-          </li>
-        
-          <li>
-            <a href="/2020/11/12/d3js/">D3</a>
           </li>
         
       </ul>

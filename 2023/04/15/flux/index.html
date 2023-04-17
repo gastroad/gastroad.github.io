@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>flux 패턴이란 | gastroad blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="오늘은 flux 패턴에 대해서 알아보려고 한다react 를 사용해서 개발을 진행하게 되면 한번쯤은 들어봤을거라고 생각한다. 본론으로 들어가기전 이 포스트는 개인의 경험과 이해를 바탕으로 쓰여졌으므로틀린 내용이 있을수 있습니다.혹시 틀린 내용을 발견하게 된다면 &amp;#103;&amp;#111;&amp;#x73;&amp;#116;&amp;#x72;&amp;#111;&amp;#x61;&amp;#100;&amp;#51;&amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flux 패턴이란">
+<meta property="og:url" content="https://gastroad.github.io/2023/04/15/flux/index.html">
+<meta property="og:site_name" content="gastroad blog">
+<meta property="og:description" content="오늘은 flux 패턴에 대해서 알아보려고 한다react 를 사용해서 개발을 진행하게 되면 한번쯤은 들어봤을거라고 생각한다. 본론으로 들어가기전 이 포스트는 개인의 경험과 이해를 바탕으로 쓰여졌으므로틀린 내용이 있을수 있습니다.혹시 틀린 내용을 발견하게 된다면 &amp;#103;&amp;#111;&amp;#x73;&amp;#116;&amp;#x72;&amp;#111;&amp;#x61;&amp;#100;&amp;#51;&amp;#">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://gastroad.github.io/img/flux/1.png">
+<meta property="article:published_time" content="2023-04-15T06:49:05.000Z">
+<meta property="article:modified_time" content="2023-04-17T11:25:17.074Z">
+<meta property="article:author" content="gastroad">
+<meta property="article:tag" content="react">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gastroad.github.io/img/flux/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="gastroad blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">gastroad blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="검색"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="검색"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://gastroad.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-flux" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/04/15/flux/" class="article-date">
+  <time class="dt-published" datetime="2023-04-15T06:49:05.000Z" itemprop="datePublished">2023-04-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      flux 패턴이란
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>오늘은 flux 패턴에 대해서 알아보려고 한다<br>react 를 사용해서 개발을 진행하게 되면 한번쯤은 들어봤을거라고 생각한다.</p>
+<p>본론으로 들어가기전 이 포스트는 개인의 경험과 이해를 바탕으로 쓰여졌으므로<br>틀린 내용이 있을수 있습니다.<br>혹시 틀린 내용을 발견하게 된다면 <a href="mailto:&#103;&#111;&#x73;&#116;&#x72;&#111;&#x61;&#100;&#51;&#55;&#64;&#103;&#109;&#97;&#105;&#x6c;&#46;&#99;&#111;&#109;">&#103;&#111;&#x73;&#116;&#x72;&#111;&#x61;&#100;&#51;&#55;&#64;&#103;&#109;&#97;&#105;&#x6c;&#46;&#99;&#111;&#109;</a> 으로 메일 주시면 감사하겠습니다.<br>정확한 내용은 하단 참고 링크에 쓰여진 공식 document를 참고하기를 바랍니다.</p>
+<h3 id="FLUX-란"><a href="#FLUX-란" class="headerlink" title="FLUX 란"></a>FLUX 란</h3><blockquote>
+<p>Application architecture for building user interfaces</p>
+</blockquote>
+<p>즉 사용자가 보는 화면을 만들기 위한 어플리케이션 구조 라고 이해했다.</p>
+<p>단방향 데이터 흐름을 활용해 뷰 컴포넌트를 구성하는 React를 보완하기 위해서 개발된 것으로 알고있다.</p>
+<p>바로 flux 의 구조와 데이터 흐름에 대해서 알아보도록 하자</p>
+<p><img src="/img/flux/1.png" alt="https://facebookarchive.github.io/flux/docs/in-depth-overview"></p>
+<p>공식 도큐먼트를 보면 아래와 같이 설명한다</p>
+<blockquote>
+<p>All data flows through the dispatcher as a central hub. Actions are provided to the dispatcher in an action creator method, and most often originate from user interactions with the views. The dispatcher then invokes the callbacks that the stores have registered with it, dispatching actions to all stores. Within their registered callbacks, stores respond to whichever actions are relevant to the state they maintain. The stores then emit a change event to alert the controller-views that a change to the data layer has occurred. Controller-views listen for these events and retrieve data from the stores in an event handler. The controller-views call their own setState() method, causing a re-rendering of themselves and all of their descendants in the component tree.</p>
+</blockquote>
+<p>정리하자면<br>모든 action 은 dispatcher 에게 action creator 메소드를 제공한다<br>dispatcher는 action을 store 로 전달한다<br>store 를 바탕으로 view 를 랜더링한다<br>라고 이해를 했다.</p>
+<p>위와 같은 데이터 흐름으로 flux 는 단방향(action &#x3D;&gt; dispatcher &#x3D;&gt; store &#x3D;&gt; view) 데이터 흐름을 만들었다.</p>
+<p>그러면 이쯤에서 궁금하게 된것이 react 도 결국 단방향 데이터 흐름을 가지고 있는데 왜 flux 라는것이 필요하고 왜 굳이 store 에 dispatcher 를 통해 action 을 보내는 번거로운 짓을 해야하는거지?<br><del>심지어 flux 패턴을 구현한 redux 는 어마무시한 Boilerplate 코드 때문에 한동안 사용하지않으려고 별 이상한 시도를 많이했었다. 현재는 RTK 덕분에 애용하고있다</del></p>
+<p>flux 아키텍처를 개발한 이유가 mvc 패턴이 양방향 데이터 흐름을 가지고 있고<br>이 양방향 데이터 흐름이 시스템의 복잡도를 기하급수적으로 증가 시키고, 예측 불가능한 코드를 만들게 된다고 했다 이 예측 불가능한 코드가<br>예측 불가능한 버그를 쏟아져 내기 떄문에 만든 아키텍쳐가 flux 인데</p>
+<p>react 도 결국 부모 component 에서 자식 component 로 props 를 전달하고 자식은 부모로 부터 받은 props 를 수정할수 없으니 단방향 데이터 흐름을 가지고 있는거 아닌가? 라는 생각이 들었다</p>
+<p>하지만 위와같이 flux 패턴으로 개발하게 되면 component 의 종속성없이<br>단방향으로 데이터를 흐르게 할수있다<br>이렇게 되면 프로젝트 의 확장에 따라 부모 component 가 점점 복잡해지는 문제를 해결할수있다.</p>
+<p>이번 포스트에서 flux 패턴을 구현하는방법이나 flux 패턴을 구현한 redux, recoil 같은 라이브러리도 다룰까 생각했으나 포스트가 너무 길어질거같아 다음 에 작성해보려한다.</p>
+<p>참고 : <a target="_blank" rel="noopener" href="https://facebookarchive.github.io/flux/">https://facebookarchive.github.io/flux/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gastroad.github.io/2023/04/15/flux/" data-id="clgkr1ug10000jxjyayx5hmkc" data-title="flux 패턴이란" class="article-share-link">공유</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/" rel="tag">react</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/04/17/deploy-3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">최신</strong>
+      <div class="article-nav-title">
+        
+          CORS 에 대해서 알아보자
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/04/13/Refactoring-SEO/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">이전</strong>
+      <div class="article-nav-title">Refactoring-SEO</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">카테고리</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/etc/">etc</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SEO/" rel="tag">SEO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/build-delpoy/" rel="tag">build&amp;delpoy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3js/" rel="tag">d3js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oh-my-zsh/" rel="tag">oh-my-zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그 클라우드</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/SEO/" style="font-size: 10px;">SEO</a> <a href="/tags/build-delpoy/" style="font-size: 15px;">build&delpoy</a> <a href="/tags/d3js/" style="font-size: 10px;">d3js</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/oh-my-zsh/" style="font-size: 10px;">oh-my-zsh</a> <a href="/tags/react/" style="font-size: 20px;">react</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">아카이브</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">4월 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">11월 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">6월 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">5월 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">최근 포스트</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/04/17/deploy-3/">CORS 에 대해서 알아보자</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/15/flux/">flux 패턴이란</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/13/Refactoring-SEO/">Refactoring-SEO</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/09/deploy-2/">docker kubernetes 이용하여 aws 배포하기 2</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/08/deploy-1/">docker,kubernetes 이용하여 aws 배포하기</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 gastroad<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
