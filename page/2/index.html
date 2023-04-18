@@ -71,6 +71,67 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Front-dev-blog-5" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/05/11/Front-dev-blog-5/" class="article-date">
+  <time class="dt-published" datetime="2020-05-10T15:00:00.000Z" itemprop="datePublished">2020-05-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/05/11/Front-dev-blog-5/">Front 개발 블로그 (5)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>저번에 프로젝트 개발 기본설정을 끝 마쳤으니 이번에 어떻게 프로젝트를 만들지 기획을 해보겠다.<br>평소라면 종이에 적어서 하겠지만 포스팅을 해야하므로 아이패드를 사용해서 기획을 하도록 하겠다<br>일단 이 프로젝트의 핵심기능인 여러 게임 플랫폼의 게임 목록을 한곳에서 볼수 있도록 하는 기능이 개발 가능 한지 부터 확인을 해보도록 하겠다<br>일단 1 차 목표로 steam 과 epic games 의 게임 목록을 불러올수 있는지부터 확인해보겠다<br>open api 를 확인할때 access token 을 발급 받는 방법, 필요한 api 와 scope 2가지를 유의해서 보면 된다<br>steam open api :<br><a target="_blank" rel="noopener" href="https://partner.steamgames.com/doc/webapi_overview">https://partner.steamgames.com/doc/webapi_overview</a><br><a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/Steam_Web_API#GetGlobalAchievementPercentagesForApp_.28v0001.29">https://developer.valvesoftware.com/wiki/Steam<em>Web_API#GetGlobalAchievementPercentagesForApp</em>.28v0001.29</a></p>
+<p><img src="/img/Front-dev-blog-5/1.png" alt="https://developer.valvesoftware.com/wiki/Steam_Web_API#GetOwnedGames_.28v0001.29"></p>
+<p>일단 GetOwnedGames 라는 api 가 있다<br>내 소유의 게임들 이라는 이름이니 아마 내가 소유하고있는 게임의 목록을 가져올수 있을것으로 보인다</p>
+<p><img src="/img/Front-dev-blog-5/2.png" alt="https://partner.steamgames.com/doc/webapi_overview"></p>
+<p>web api 사용법이 적혀있는 부분이다<br>아직 backend 를 개발하지 않을거기 때문에 일단은 기능 개발이 가능한것만 확인했으니 이제 epic games 를 확인해보도록 하겠다<br>epic games open api :<br><a target="_blank" rel="noopener" href="https://dev.epicgames.com/docs/services">https://dev.epicgames.com/docs/services</a><br>epic games 는 약 1시간 동안 찾아 보았지만 게임 목록 불러오는 기능을 찾지 못하여 나중에 crawling 을 하든 하도록 하겠다 backend 를 개발할때 헤당 기능 다시 찾아보기로 하고 일단은 넘어가겠다<br>이제 웹 뷰 기획을 시작하겠다</p>
+<h3 id="기획안-1"><a href="#기획안-1" class="headerlink" title="기획안 1"></a>기획안 1</h3><p><img src="/img/Front-dev-blog-5/3.png"></p>
+<p>nav를 좌측에 위치시키고 오른쪽에 Account 관련 정보를 둔다Account 를 클릭하면 팝업이 나타나고 현재 연동중인 플랫폼 (steam, epic games. etc…) 의 현재 상태가 나타나게 한다<br>이런식으로 진행했을경우 장점은 메뉴, 서브메뉴가 많아져도 편리하게 이용할수 있다</p>
+<h3 id="기획안-2"><a href="#기획안-2" class="headerlink" title="기획안 2"></a>기획안 2</h3><p><img src="/img/Front-dev-blog-5/4.png"></p>
+<p>nav 를 header 아래에 위치시키고 기획안 1과 동일하게 Account 를 위치시킨다<br>이 방법의 장점은 width 를 크게 사용할수 있다<br>하지만 menu, submenu 가 많아지면 화면이 쉽게 지저분해질수 있으므로 주의를 가해야 한다<br>일단 당장 필요한 기능을 생각해 보면</p>
+<ol>
+<li>dashBoard<br>게임 플레이시간 관련 통계, 소유하고있는 게임의 종류 통계,</li>
+<li>gameList<br>게임 목록 listview,cardview 2가지, 게임 실행</li>
+<li>setting<br>noti 관련 설정 (평소 게임을 자주 플레이 하는시간에 맞춰서 알림)<br>정도가 있겠다.</li>
+</ol>
+<h3 id="dashBoard"><a href="#dashBoard" class="headerlink" title="dashBoard"></a>dashBoard</h3><p><img src="/img/Front-dev-blog-5/5.png"><br><img src="/img/Front-dev-blog-5/6.jpg"></p>
+<p>DashBoard 페이지 기획안이다<br>사실 차트는 어떤 데이터를 어떻게 보여줄지 생각하고 만들어야 해서<br>어떤 데이터를 보여줄지 생각을 하면서 기획을 했지만 아직 어떤데이터를 가져올수있는지 확실하지 않아서 개발하면서 바뀔거같다<br><img src="/img/Front-dev-blog-5/7.jpg"><br><img src="/img/Front-dev-blog-5/8.jpg"></p>
+<p>게임 목록페이지를 card view 와 list view 2벌을 만들 예정이다<br>일단 기본적인 목록만 추가했고 filter 와 order by 를 추가할 예정이다<br>마지막으로 setting 을 추가해야하는데 setting 페이지는 가장 마지막에 개발할 예정으로 추후에 다시 다루도록 하겠다.<br>일단 웹 노티 설정과 계정 연동 상태에 대해서 추가할 예정이다</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gastroad.github.io/2020/05/11/Front-dev-blog-5/" data-id="clg8tzw5y000b7tjy4u3db8qy" data-title="Front 개발 블로그 (5)" class="article-share-link">공유</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/" rel="tag">react</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Front-dev-blog-4" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2020/05/08/Front-dev-blog-4/" class="article-date">
@@ -347,7 +408,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">태그</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SEO/" rel="tag">SEO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/build-delpoy/" rel="tag">build&amp;delpoy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3js/" rel="tag">d3js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oh-my-zsh/" rel="tag">oh-my-zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/SEO/" rel="tag">SEO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/build-delpoy/" rel="tag">build&amp;delpoy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3js/" rel="tag">d3js</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/host/" rel="tag">host</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oh-my-zsh/" rel="tag">oh-my-zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li></ul>
     </div>
   </div>
 
@@ -357,7 +418,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">태그 클라우드</h3>
     <div class="widget tagcloud">
-      <a href="/tags/SEO/" style="font-size: 10px;">SEO</a> <a href="/tags/build-delpoy/" style="font-size: 15px;">build&delpoy</a> <a href="/tags/d3js/" style="font-size: 10px;">d3js</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/oh-my-zsh/" style="font-size: 10px;">oh-my-zsh</a> <a href="/tags/react/" style="font-size: 20px;">react</a>
+      <a href="/tags/SEO/" style="font-size: 10px;">SEO</a> <a href="/tags/build-delpoy/" style="font-size: 15px;">build&delpoy</a> <a href="/tags/d3js/" style="font-size: 10px;">d3js</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/host/" style="font-size: 10px;">host</a> <a href="/tags/oh-my-zsh/" style="font-size: 10px;">oh-my-zsh</a> <a href="/tags/react/" style="font-size: 20px;">react</a>
     </div>
   </div>
 
@@ -379,6 +440,10 @@
       <ul>
         
           <li>
+            <a href="/2023/04/18/hosts/">hosts</a>
+          </li>
+        
+          <li>
             <a href="/2023/04/17/deploy-3/">CORS 에 대해서 알아보자</a>
           </li>
         
@@ -392,10 +457,6 @@
         
           <li>
             <a href="/2023/04/09/deploy-2/">docker kubernetes 이용하여 aws 배포하기 2</a>
-          </li>
-        
-          <li>
-            <a href="/2023/04/08/deploy-1/">docker,kubernetes 이용하여 aws 배포하기</a>
           </li>
         
       </ul>
