@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>간단한 웹 서버를 만들어 보자 2 | gastroad blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="이전에 react-query 를 위한 간단한 웹 서버를 만들었는데이떄 mockData 를 js 의 상수로 선언해 두었다 다시 생각해보니 그냥 json 으로 만들어서 간이 db 처럼 사용하면 put 이나post 요청도 제대로 해볼수 있지않을까? 생각이 들어 해보려고 한다. 우선 data.js 를 json 으로 변경해 주도록 하자 1234567891011121">
+<meta property="og:type" content="article">
+<meta property="og:title" content="간단한 웹 서버를 만들어 보자 2">
+<meta property="og:url" content="https://gastroad.github.io/2023/05/01/NodeJs/node-js-2/index.html">
+<meta property="og:site_name" content="gastroad blog">
+<meta property="og:description" content="이전에 react-query 를 위한 간단한 웹 서버를 만들었는데이떄 mockData 를 js 의 상수로 선언해 두었다 다시 생각해보니 그냥 json 으로 만들어서 간이 db 처럼 사용하면 put 이나post 요청도 제대로 해볼수 있지않을까? 생각이 들어 해보려고 한다. 우선 data.js 를 json 으로 변경해 주도록 하자 1234567891011121">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2023-05-01T05:20:24.000Z">
+<meta property="article:modified_time" content="2023-05-01T05:27:39.688Z">
+<meta property="article:author" content="gastroad">
+<meta property="article:tag" content="NodeJs">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="gastroad blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">gastroad blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="검색"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="검색"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://gastroad.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-NodeJs/node-js-2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/05/01/NodeJs/node-js-2/" class="article-date">
+  <time class="dt-published" datetime="2023-05-01T05:20:24.000Z" itemprop="datePublished">2023-05-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      간단한 웹 서버를 만들어 보자 2
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>이전에 react-query 를 위한 간단한 웹 서버를 만들었는데<br>이떄 mockData 를 js 의 상수로 선언해 두었다</p>
+<p>다시 생각해보니 그냥 json 으로 만들어서 간이 db 처럼 사용하면 put 이나<br>post 요청도 제대로 해볼수 있지않을까? 생각이 들어 해보려고 한다.</p>
+<p>우선 data.js 를 json 으로 변경해 주도록 하자</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;portfolio&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;이력서&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;paragraph&quot;</span><span class="punctuation">:</span> <span class="string">&quot;프론트엔드 개발자 진현성 이력서 입니다.&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;link&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://gastroad.github.io/resume/&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;img&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./src/assets/image/profile.jpeg&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;etc&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">3</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;GitHub&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;paragraph&quot;</span><span class="punctuation">:</span> <span class="string">&quot;github 링크 입니다.&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;link&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://github.com/gastroad&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;img&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./src/assets/image/github.png&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;etc&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">4</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="string">&quot;4&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">5</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="string">&quot;5&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">6</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="string">&quot;6&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">3</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Slides&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;paragraph&quot;</span><span class="punctuation">:</span> <span class="string">&quot;pt발표 자료 입니다.&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;link&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://slides.com/coldpotato&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;img&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./src/assets/image/slides.png&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;etc&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">7</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="string">&quot;7&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">4</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Github Blog&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;paragraph&quot;</span><span class="punctuation">:</span> <span class="string">&quot;개인 블로그 링크 입니다.&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;link&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://gastroad.github.io&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;img&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./src/assets/image/github.png&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;etc&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">          <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">8</span><span class="punctuation">,</span></span><br><span class="line">          <span class="attr">&quot;value&quot;</span><span class="punctuation">:</span> <span class="string">&quot;8&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>그리고 데이터를 실제로 사용하는<br>portfolio.service.js 에서 json 을 파싱해서 수정하게 api 를 수정해 주자</p>
+<p>etc 를 수정하는 api 는 당장 필요없어 보여 삭제 하였다</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// portfolio.service.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&quot;fs&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> dataFilePath = path.<span class="title function_">resolve</span>(__dirname, <span class="string">&quot;data.json&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">getAll</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> portfolio = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(fs.<span class="title function_">readFileSync</span>(dataFilePath));</span><br><span class="line">  <span class="keyword">return</span> portfolio;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">post</span> = <span class="function">(<span class="params">etc, img, link, paragraph, title</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> portfolio = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(fs.<span class="title function_">readFileSync</span>(dataFilePath));</span><br><span class="line">  <span class="keyword">const</span> newPortfolio = &#123;</span><br><span class="line">    etc,</span><br><span class="line">    img,</span><br><span class="line">    link,</span><br><span class="line">    paragraph,</span><br><span class="line">    title,</span><br><span class="line">    <span class="attr">id</span>: portfolio.<span class="property">portfolio</span>.<span class="property">length</span> + <span class="number">1</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">  portfolio.<span class="property">portfolio</span>.<span class="title function_">push</span>(newPortfolio);</span><br><span class="line">  fs.<span class="title function_">writeFileSync</span>(dataFilePath, <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(portfolio));</span><br><span class="line">  <span class="keyword">return</span> portfolio;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">getById</span> = <span class="function">(<span class="params">id</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> portfolio = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(fs.<span class="title function_">readFileSync</span>(dataFilePath));</span><br><span class="line">  <span class="keyword">return</span> portfolio.<span class="property">portfolio</span>.<span class="title function_">find</span>(<span class="function">(<span class="params">p</span>) =&gt;</span> p.<span class="property">id</span> === <span class="built_in">parseInt</span>(id));</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">exports</span>.<span class="property">putById</span> = <span class="function">(<span class="params">id, img, etc, link, paragraph, title</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> portfolio = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(fs.<span class="title function_">readFileSync</span>(dataFilePath));</span><br><span class="line">  <span class="keyword">const</span> changeIndex = portfolio.<span class="property">portfolio</span>.<span class="title function_">findIndex</span>(</span><br><span class="line">    <span class="function">(<span class="params">p</span>) =&gt;</span> p.<span class="property">id</span> === <span class="built_in">parseInt</span>(id)</span><br><span class="line">  );</span><br><span class="line">  portfolio.<span class="property">portfolio</span>.<span class="title function_">splice</span>(changeIndex, <span class="number">1</span>, [</span><br><span class="line">    &#123; id, img, etc, link, paragraph, title &#125;,</span><br><span class="line">  ]);</span><br><span class="line">  fs.<span class="title function_">writeFileSync</span>(dataFilePath, <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(portfolio));</span><br><span class="line">  <span class="keyword">return</span> portfolio;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>마지막으로 실제로 요청을 보내니 정상적으로 파일을 수정할수 있었다.</p>
+<p>node js 가 익숙하지 않으니 포스트로 작성할때 내용이 엄청 부실하고 적지만<br>상당한 시간이 소요된다. <del>정작 js 에서 데이터를 다루는것보다 크게 벗어난 부분은 없는데도..</del><br>백엔드 공부도 소홀하게 하면 안되겠다고 느꼈다.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gastroad.github.io/2023/05/01/NodeJs/node-js-2/" data-id="clh4el0tz000u6fjyh37y23kv" data-title="간단한 웹 서버를 만들어 보자 2" class="article-share-link">공유</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJs/" rel="tag">NodeJs</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/04/24/React/react-query-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">이전</strong>
+      <div class="article-nav-title">react-query를 사용해 보자(2)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">카테고리</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/etc/">etc</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Front-dev-blog/" rel="tag">Front-dev-blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJs/" rel="tag">NodeJs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SEO/" rel="tag">SEO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Terminal/" rel="tag">Terminal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/build-deploy/" rel="tag">build&amp;deploy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3js/" rel="tag">d3js</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그 클라우드</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Front-dev-blog/" style="font-size: 20px;">Front-dev-blog</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/NodeJs/" style="font-size: 13.33px;">NodeJs</a> <a href="/tags/React/" style="font-size: 16.67px;">React</a> <a href="/tags/SEO/" style="font-size: 10px;">SEO</a> <a href="/tags/Terminal/" style="font-size: 13.33px;">Terminal</a> <a href="/tags/build-deploy/" style="font-size: 16.67px;">build&deploy</a> <a href="/tags/d3js/" style="font-size: 10px;">d3js</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">아카이브</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">5월 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">4월 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">11월 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">6월 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">5월 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">최근 포스트</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/05/01/NodeJs/node-js-2/">간단한 웹 서버를 만들어 보자 2</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/24/React/react-query-2/">react-query를 사용해 보자(2)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/22/React/react-query-1/">react-query를 사용해 보자(1)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/21/NodeJs/node-js-1/">간단한 웹 서버를 만들어 보자</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/18/Terminal/hosts/">hosts 파일에 대해서 알아보자</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 gastroad<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>react-query를 사용해 보자(2) | gastroad blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="오늘은 rtk-query를 사용해서 비교해 보려고 한다. 우선 rtk-query의 동기부터 살펴보자  Tracking loading state in order to show UI spinnersAvoiding duplicate requests for the same dataOptimistic updates to make the UI feel fasterMa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react-query를 사용해 보자(2)">
+<meta property="og:url" content="https://gastroad.github.io/2023/04/24/React/react-query-2/index.html">
+<meta property="og:site_name" content="gastroad blog">
+<meta property="og:description" content="오늘은 rtk-query를 사용해서 비교해 보려고 한다. 우선 rtk-query의 동기부터 살펴보자  Tracking loading state in order to show UI spinnersAvoiding duplicate requests for the same dataOptimistic updates to make the UI feel fasterMa">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2023-04-24T09:04:06.000Z">
+<meta property="article:modified_time" content="2023-05-01T04:41:23.438Z">
+<meta property="article:author" content="gastroad">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="gastroad blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">gastroad blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="검색"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="검색"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://gastroad.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-React/react-query-2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/04/24/React/react-query-2/" class="article-date">
+  <time class="dt-published" datetime="2023-04-24T09:04:06.000Z" itemprop="datePublished">2023-04-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      react-query를 사용해 보자(2)
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>오늘은 rtk-query를 사용해서 비교해 보려고 한다.</p>
+<p>우선 rtk-query의 동기부터 살펴보자</p>
+<blockquote>
+<p>Tracking loading state in order to show UI spinners<br>Avoiding duplicate requests for the same data<br>Optimistic updates to make the UI feel faster<br>Managing cache lifetimes as the user interacts with the UI</p>
+</blockquote>
+<p>loading 상태 추적,<br>중복 요청 방지<br>UI가 더 빠르게 느껴지도록 업데이트<br>사용자가 UI와 상호 작용할 때 캐시 수명 관리</p>
+<p>react-query 보다 간결하다 (제공하는 기능도 간결하긴 하다.)</p>
+<p>rtk-qeury는 어떤 기능을 제공하는지 확인해 보자.</p>
+<blockquote>
+<p>createApi(): The core of RTK Query’s functionality. It allows you to define a set of endpoints describe how to retrieve data from a series of endpoints, including configuration of how to fetch and transform that data. In most cases, you should use this once per app, with “one API slice per base URL” as a rule of thumb.<br>fetchBaseQuery(): A small wrapper around fetch that aims to simplify requests. Intended as the recommended baseQuery to be used in createApi for the majority of users.<br><ApiProvider />: Can be used as a Provider if you do not already have a Redux store.<br>setupListeners(): A utility used to enable refetchOnMount and refetchOnReconnect behaviors.</p>
+</blockquote>
+<p>createApi :RTK의 핵심<br>데이터를 패치하고 변환하는 설정을 포함해서 엔드 포인트들에서 어떻게 데이터를 패치하는지 정의<br>대부분의 경우 “기본 URL 당 하나의 API 슬라이스”를 원칙으로 하여 App당 한 번 사용<br>fetchBaseQuery() : 간단한 요청을 위한 fetch 래퍼<br>createApi의 baseQuery를 권장함<br>ApiProvider<br>redux store 가 없을 경우 provider로 사용 가능<br>setupListeners():<br>refetchOnMount와 refetchOnReconnect를 위한 유틸리티</p>
+<p>제공하는 기능에 대해서도 대충 알아봤으니 이제 실제 적용해서 사용해 보도록 하자<br>우선 react-ground는 redux를 통해 작성했으니 ApiProvider를 사용할 필요가 없다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> portfolioApi = <span class="title function_">createApi</span>(&#123;</span><br><span class="line">    <span class="attr">reducerPath</span>: <span class="string">&#x27;portfolioApi&#x27;</span>,</span><br><span class="line">    <span class="attr">baseQuery</span>: <span class="title function_">fetchBaseQuery</span>(&#123; <span class="attr">baseUrl</span>: <span class="string">&#x27;/api&#x27;</span> &#125;),</span><br><span class="line">    <span class="attr">endpoints</span>: <span class="function">(<span class="params">builder</span>) =&gt;</span> (&#123;</span><br><span class="line">        <span class="attr">getPortfolioList</span>: builder.<span class="property">query</span>&lt;<span class="title class_">PortfolioCard</span>[], <span class="keyword">void</span>&gt;(&#123;</span><br><span class="line">            <span class="attr">query</span>: <span class="function">() =&gt;</span> <span class="string">&#x27;/portfolio&#x27;</span>,</span><br><span class="line">        &#125;),</span><br><span class="line">    &#125;),</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> &#123; useGetPortfolioListQuery &#125; = portfolioApi;</span><br></pre></td></tr></table></figure>
+
+<p>createApi를 통해 portfolioApi를 생성해 주었다.<br>RTK 쿼리를 사용하면 일반적으로 전체 API 정의를 한곳에서 정의해야 한다</p>
+<p>친절하게도 유지 보수를 위해 코드 분할하는 방법까지도 적혀있지만<br>지금 필요한 기능은 아니니 나중에 필요할 때 찾아보도록 해야겠다<br><a target="_blank" rel="noopener" href="https://redux-toolkit.js.org/rtk-query/usage/code-splitting">코드 분할 방법</a></p>
+<p>이후 root store에 reducer, middleware를 추가해 주어야 한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useDispatch &#125; <span class="keyword">from</span> <span class="string">&quot;react-redux&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; configureStore &#125; <span class="keyword">from</span> <span class="string">&quot;@reduxjs/toolkit&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> portfolioSlice <span class="keyword">from</span> <span class="string">&quot;./portfolioSlice&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; portfolioApi &#125; <span class="keyword">from</span> <span class="string">&quot;src/api/request&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = <span class="title function_">configureStore</span>(&#123;</span><br><span class="line">  <span class="attr">reducer</span>: &#123;</span><br><span class="line">    <span class="attr">portfolio</span>: portfolioSlice.<span class="property">reducer</span>,</span><br><span class="line">    [portfolioApi.<span class="property">reducerPath</span>]: portfolioApi.<span class="property">reducer</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">middleware</span>: <span class="function">(<span class="params">getDefaultMiddleware</span>) =&gt;</span></span><br><span class="line">    <span class="title function_">getDefaultMiddleware</span>().<span class="title function_">concat</span>(portfolioApi.<span class="property">middleware</span>),</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> type <span class="title class_">RootState</span> = <span class="title class_">ReturnType</span>&lt;<span class="keyword">typeof</span> store.<span class="property">getState</span>&gt;;</span><br><span class="line"></span><br><span class="line">type <span class="title class_">AppDispatch</span> = <span class="keyword">typeof</span> store.<span class="property">dispatch</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="attr">useAppDispatch</span>: <span class="function">() =&gt;</span> <span class="title class_">AppDispatch</span> = useDispatch;</span><br></pre></td></tr></table></figure>
+
+<p>이제 실제로 호출을 해보도록 하겠다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">FC</span> &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useQuery &#125; <span class="keyword">from</span> <span class="string">&quot;@tanstack/react-query&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; getPortfolioList, useGetPortfolioListQuery &#125; <span class="keyword">from</span> <span class="string">&quot;api/request&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">PortfolioList</span> <span class="keyword">from</span> <span class="string">&quot;./PortfolioList&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Portfolio</span>: <span class="variable constant_">FC</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> reactQuery = <span class="title function_">useQuery</span>(&#123;</span><br><span class="line">    <span class="attr">queryKey</span>: [<span class="string">&quot;portfolioList&quot;</span>],</span><br><span class="line">    <span class="attr">queryFn</span>: getPortfolioList,</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">const</span> rtkQuery = <span class="title function_">useGetPortfolioListQuery</span>();</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(rtkQuery);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (reactQuery.<span class="property">status</span> == <span class="string">&quot;error&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;&gt;</span>에러 발생<span class="tag">&lt;/&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (reactQuery.<span class="property">status</span> == <span class="string">&quot;loading&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;&gt;</span> 로딩중 <span class="tag">&lt;/&gt;</span></span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">PortfolioList</span> <span class="attr">portfolioList</span>=<span class="string">&#123;reactQuery.data&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">Portfolio</span>;</span><br></pre></td></tr></table></figure>
+
+<p>rtk-query는 react-query 랑 같은 유틸리티 불린 값을 제공해 준다<br><del>isLoading, isFetching 등등등</del></p>
+<p>이제 post api를 한번 사용해 보도록 하겠다.<br>post의 경우 mutation 을 이용해서 호출할 수 있다.<br>mutation 은 서버에게 데이터 업데이트를 전달하고 로컬에서 변화된 값을 적용시킬 때 사용한다.<br>또한 뮤테이션은 캐시 무효화와 강제 리패칭을 할 수 있다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> portfolioApi = <span class="title function_">createApi</span>(&#123;</span><br><span class="line">    <span class="attr">reducerPath</span>: <span class="string">&#x27;portfolioApi&#x27;</span>,</span><br><span class="line">    <span class="attr">baseQuery</span>: <span class="title function_">fetchBaseQuery</span>(&#123; <span class="attr">baseUrl</span>: <span class="string">&#x27;/api&#x27;</span> &#125;),</span><br><span class="line">    <span class="attr">endpoints</span>: <span class="function">(<span class="params">builder</span>) =&gt;</span> (&#123;</span><br><span class="line">        <span class="attr">getPortfolioList</span>: builder.<span class="property">query</span>&lt;<span class="title class_">PortfolioCard</span>[], <span class="keyword">void</span>&gt;(&#123;</span><br><span class="line">            <span class="attr">query</span>: <span class="function">() =&gt;</span> <span class="string">&#x27;/portfolio&#x27;</span>,</span><br><span class="line">        &#125;),</span><br><span class="line">        <span class="attr">postPortfolio</span>: builder.<span class="title function_">mutation</span>(&#123;</span><br><span class="line">            <span class="attr">query</span>: <span class="function">(<span class="params">post</span>) =&gt;</span> (&#123;</span><br><span class="line">                <span class="attr">url</span>: <span class="string">`/portfolio/`</span>,</span><br><span class="line">                <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">                <span class="attr">body</span>: post</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;),</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> &#123; useGetPortfolioListQuery, usePostPortfolioMutation &#125; = portfolioApi;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">FC</span> &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">PortfolioCard</span> <span class="keyword">from</span> <span class="string">&quot;./PortfolioCard&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useMutation, useQueryClient &#125; <span class="keyword">from</span> <span class="string">&quot;@tanstack/react-query&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; postPortfolio, usePostPortfolioMutation &#125; <span class="keyword">from</span> <span class="string">&quot;api/request&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> mockData = &#123;</span><br><span class="line">  <span class="attr">etc</span>: [</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">value</span>: <span class="string">&quot;1&quot;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="number">2</span>, <span class="attr">value</span>: <span class="string">&quot;2&quot;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">id</span>: <span class="number">3</span>, <span class="attr">value</span>: <span class="string">&quot;3&quot;</span> &#125;,</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">img</span>: <span class="string">&quot;github의 저장공간도 아끼는게 좋으니 이미지 호스팅 을 어디서 할지 고민해봐야겠다.&quot;</span>,</span><br><span class="line">  <span class="attr">link</span>: <span class="string">&quot;더미 링크&quot;</span>,</span><br><span class="line">  <span class="attr">paragraph</span>: <span class="string">&quot;더미내용&quot;</span>,</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&quot;더미 타이틀&quot;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">interface <span class="title class_">Props</span> &#123;</span><br><span class="line">  <span class="attr">portfolioList</span>: <span class="title class_">PortfolioCard</span>[];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">PortfolioList</span>: <span class="variable constant_">FC</span>&lt;<span class="title class_">Props</span>&gt; = <span class="function">(<span class="params">props</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; portfolioList &#125; = props;</span><br><span class="line">  <span class="keyword">const</span> queryClient = <span class="title function_">useQueryClient</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> [createPortfolio, &#123; isLoading, isError &#125;] = <span class="title function_">usePostPortfolioMutation</span>();</span><br><span class="line">  <span class="keyword">const</span> &#123; mutate &#125; = <span class="title function_">useMutation</span>(&#123;</span><br><span class="line">    <span class="attr">mutationFn</span>: postPortfolio,</span><br><span class="line">    <span class="attr">onSuccess</span>: <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      queryClient.<span class="title function_">invalidateQueries</span>(&#123; <span class="attr">queryKey</span>: [<span class="string">&quot;portfolioList&quot;</span>] &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">article</span> <span class="attr">className</span>=<span class="string">&quot;portfolio-wrapper&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;portfolioList.map((datum, index) =&gt; &#123;</span></span><br><span class="line"><span class="language-xml">        return <span class="tag">&lt;<span class="name">PortfolioCard</span> <span class="attr">portfolioCard</span>=<span class="string">&#123;datum&#125;</span> <span class="attr">key</span>=<span class="string">&#123;index&#125;</span> /&gt;</span>;</span></span><br><span class="line"><span class="language-xml">      &#125;)&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-xml">          mutate(mockData);</span></span><br><span class="line"><span class="language-xml">        &#125;&#125;</span></span><br><span class="line"><span class="language-xml">      &gt;</span></span><br><span class="line"><span class="language-xml">        추가</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">        <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-xml">          createPortfolio(mockData);</span></span><br><span class="line"><span class="language-xml">        &#125;&#125;</span></span><br><span class="line"><span class="language-xml">      &gt;</span></span><br><span class="line"><span class="language-xml">        추추가</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">article</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title class_">PortfolioList</span>;</span><br></pre></td></tr></table></figure>
+
+<p>포스트 요청에 성공했다.</p>
+<p>rtk-query 와 react-query를 사용해 보았는데<br>둘 다 기본적인 요청만 해서 그런지 크게 차이점을 모르겠다.</p>
+<p>기존에 redux-toolkit 을 사용 중이었다면 수정하기 어렵지 않을 것 같다는 생각을 했다.<br>하지만 fetchBaseQuery를 만들어줘야 해서 나중에 또 다른 기술로 갈아탈 때 고생을 할 거 같다</p>
+<p>그리고 rtk-query를 사용하면 server state를 전역으로 관리할 수 있다.<br>store를 사용하다 보니 전역에서 데이터에 접근이 가능하다.<br>시험 삼아 다른 컴포넌트에서 같은 api를 요청해 보니 네트워크 탭에서는 1개의 요청만 확인되었다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> rtkQuery = <span class="title function_">useGetPortfolioListQuery</span>();</span><br></pre></td></tr></table></figure>
+
+<p>반면 react-query의 경우 다른 컴포넌트에서 요청하면 당연하게도<br>다시 요청을 보낸다.<br><del>나중에 react-query devtool 을 통해서 자세히 확인해 봐야겠다.</del></p>
+<p>react-query의 경우 기존에 만들어둔 axios를 사용해서<br>편하게 개발 가능하고 많은 사람이 이용 중이라 트러블슈팅할 때도 편할 거 같다는 생각을 했다</p>
+<p>확실한 건 양쪽 다 server state 관리가 편해졌다.</p>
+<p>처음 계획엔 swr 도 알아보려 했는데 swr까지 공부했다가는 깊이가 너무 얕아질 것 같아서 추후에 시간이 있을 때로 미루고 react-query, rtk-query를 좀 더 자세히 알아봐야겠다.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gastroad.github.io/2023/04/24/React/react-query-2/" data-id="clh4el0tx000k6fjy1c45g5wg" data-title="react-query를 사용해 보자(2)" class="article-share-link">공유</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/" rel="tag">React</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/05/01/NodeJs/node-js-2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">최신</strong>
+      <div class="article-nav-title">
+        
+          간단한 웹 서버를 만들어 보자 2
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2023/04/22/React/react-query-1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">이전</strong>
+      <div class="article-nav-title">react-query를 사용해 보자(1)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">카테고리</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/etc/">etc</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Front-dev-blog/" rel="tag">Front-dev-blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJs/" rel="tag">NodeJs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SEO/" rel="tag">SEO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Terminal/" rel="tag">Terminal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/build-deploy/" rel="tag">build&amp;deploy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3js/" rel="tag">d3js</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그 클라우드</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Front-dev-blog/" style="font-size: 20px;">Front-dev-blog</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/NodeJs/" style="font-size: 13.33px;">NodeJs</a> <a href="/tags/React/" style="font-size: 16.67px;">React</a> <a href="/tags/SEO/" style="font-size: 10px;">SEO</a> <a href="/tags/Terminal/" style="font-size: 13.33px;">Terminal</a> <a href="/tags/build-deploy/" style="font-size: 16.67px;">build&deploy</a> <a href="/tags/d3js/" style="font-size: 10px;">d3js</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">아카이브</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">5월 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">4월 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">11월 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">6월 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">5월 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">최근 포스트</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/05/01/NodeJs/node-js-2/">간단한 웹 서버를 만들어 보자 2</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/24/React/react-query-2/">react-query를 사용해 보자(2)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/22/React/react-query-1/">react-query를 사용해 보자(1)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/21/NodeJs/node-js-1/">간단한 웹 서버를 만들어 보자</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/18/Terminal/hosts/">hosts 파일에 대해서 알아보자</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 gastroad<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

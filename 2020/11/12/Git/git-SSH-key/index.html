@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>git hub 에 SSH key 등록하기 | gastroad blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="git hub 에 ssh key 를 등록하는 방법에 대해서 알아보도록 하자mac os 기준으로 SSH key 를 등록할것이니 대부분 비슷하겠지만mac 이 아니라면 명령어가 조금 다를수도 있다 SSH key 란서버에 접속 할 때 비밀 번호 대신사용하는 기능이다비밀번호 보다 높은 수준의 보안을 필요로 하거나 로그인 없이 자동으로 서버에 접속 할 경우 사용한다S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git hub 에 SSH key 등록하기">
+<meta property="og:url" content="https://gastroad.github.io/2020/11/12/Git/git-SSH-key/index.html">
+<meta property="og:site_name" content="gastroad blog">
+<meta property="og:description" content="git hub 에 ssh key 를 등록하는 방법에 대해서 알아보도록 하자mac os 기준으로 SSH key 를 등록할것이니 대부분 비슷하겠지만mac 이 아니라면 명령어가 조금 다를수도 있다 SSH key 란서버에 접속 할 때 비밀 번호 대신사용하는 기능이다비밀번호 보다 높은 수준의 보안을 필요로 하거나 로그인 없이 자동으로 서버에 접속 할 경우 사용한다S">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://gastroad.github.io/img/git-SSH-key/1.png">
+<meta property="og:image" content="https://gastroad.github.io/img/git-SSH-key/2.png">
+<meta property="og:image" content="https://gastroad.github.io/img/git-SSH-key/3.png">
+<meta property="og:image" content="https://gastroad.github.io/img/git-SSH-key/4.png">
+<meta property="article:published_time" content="2020-11-11T15:00:00.000Z">
+<meta property="article:modified_time" content="2023-05-01T04:34:16.876Z">
+<meta property="article:author" content="gastroad">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gastroad.github.io/img/git-SSH-key/1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="gastroad blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">gastroad blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="검색"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="검색"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://gastroad.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Git/git-SSH-key" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/11/12/Git/git-SSH-key/" class="article-date">
+  <time class="dt-published" datetime="2020-11-11T15:00:00.000Z" itemprop="datePublished">2020-11-12</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/etc/">etc</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      git hub 에 SSH key 등록하기
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>git hub 에 ssh key 를 등록하는 방법에 대해서 알아보도록 하자<br>mac os 기준으로 SSH key 를 등록할것이니 대부분 비슷하겠지만<br>mac 이 아니라면 명령어가 조금 다를수도 있다</p>
+<h3 id="SSH-key-란"><a href="#SSH-key-란" class="headerlink" title="SSH key 란"></a>SSH key 란</h3><p>서버에 접속 할 때 비밀 번호 대신<br>사용하는 기능이다<br>비밀번호 보다 높은 수준의 보안을 필요로 하거나 로그인 없이 자동으로 서버에 접속 할 경우 사용한다<br>SSH key 는 비대칭 암호방식을 사용한다<br>public key 와 private key 2가지를 생성한다<br>public key 는 평문을 암호화 private key 는 암호문을 다시 평문으로 변환한다그래서 public key 를 github 에 업로드 하고<br>private key 는 로컬에만 두고<br>대조를 해서 사용자 를 인증을 하는 방식이다<br>이제 SSH key 를 등록하도록 해보겠다</p>
+<h3 id="목차"><a href="#목차" class="headerlink" title="목차"></a>목차</h3><ol>
+<li>SSH key 확인</li>
+<li>SSH keygen&lt;&#x2F;</li>
+<li>SSH key copy</li>
+<li>gih hub 등록</li>
+</ol>
+<h3 id="1-SSH-key-확인"><a href="#1-SSH-key-확인" class="headerlink" title="1.SSH key 확인"></a>1.SSH key 확인</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/.ssh</span><br><span class="line">$ <span class="built_in">ls</span> -al</span><br></pre></td></tr></table></figure>
+
+<p><img src="/img/git-SSH-key/1.png"></p>
+<p>우선 터미널에 들어가 위 명령어를 순서대로 입력한다<br>만약 SSH key 를 생성한 적이 있으면 이때 공개키가 있는것을 확인할수 있다<br>공개키가 있으면 2번 단계를 건너뛰고 3번으로 가면 된다.</p>
+<h3 id="2-SSH-keygen"><a href="#2-SSH-keygen" class="headerlink" title="2. SSH keygen"></a>2. SSH keygen</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C “하고싶은 말” -b 2048</span><br></pre></td></tr></table></figure>
+
+<p>위 명령어를 입력하면 ssh key 가 생성이 될것이다<br>-t 는 타입을 지정해주는 옵션이다<br>-C 는 코맨트 를 입력해주는 옵션이다<br>-b 는 비트수를 입력하는 옵션이다<br>그래서 rsa 타입으로 2048 비트 인 SSH key 를 생성해준다는 뜻이다<br>2048비트와 rsa 타입은 기본 값이므로</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen</span><br></pre></td></tr></table></figure>
+
+<p>으로만 입력해도 github에 등록하는데는 문제가 없다</p>
+<h3 id="2-3-SSH-key-copy"><a href="#2-3-SSH-key-copy" class="headerlink" title="2. 3. SSH key copy"></a>2. 3. SSH key copy</h3><p>이제 SSH key 를 생성 했으니 복사 하도록 하겠다</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<p>명령어를 입력하면<br>공개키가 터미널에 나올것이다 그부분을 복사하면 된다</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cat</span> ~/.ssh/id_rsa.pub | pbcopy</span><br></pre></td></tr></table></figure>
+
+<p>명령어를 통해 바로 클립보드로 복사할수도 있다</p>
+<h3 id="4-git-hub-등록"><a href="#4-git-hub-등록" class="headerlink" title="4. git hub 등록"></a>4. git hub 등록</h3><p>ssh public key를 클립보드에 복사했다면<br>github 에 접속후 우측상단에 프로필을 클릭한다음 setting 에 들어간다<br><img src="/img/git-SSH-key/2.png"></p>
+<p>그후SSH and GPG keys 에 들어간뒤 new SSH key 를 클릭한다<br><img src="/img/git-SSH-key/3.png"></p>
+<p>Key 부분에 복사한 public key 를 등록하면 SSH key 등록이 된다<br><img src="/img/git-SSH-key/4.png"></p>
+<p>이제 내 Repositories 에 있는 Repository 는 전부 연결이 정상작동 할거다</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gastroad.github.io/2020/11/12/Git/git-SSH-key/" data-id="clh4el0tx000d6fjyf3l6g6nm" data-title="git hub 에 SSH key 등록하기" class="article-share-link">공유</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/" rel="tag">Git</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/04/08/build&deploy/deploy-1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">최신</strong>
+      <div class="article-nav-title">
+        
+          docker,kubernetes 이용하여 aws 배포하기
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/11/12/Terminal/oh-my-zsh-alias/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">이전</strong>
+      <div class="article-nav-title">oh-my-zsh alias 설정</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">카테고리</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/etc/">etc</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Front-dev-blog/" rel="tag">Front-dev-blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJs/" rel="tag">NodeJs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SEO/" rel="tag">SEO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Terminal/" rel="tag">Terminal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/build-deploy/" rel="tag">build&amp;deploy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3js/" rel="tag">d3js</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그 클라우드</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Front-dev-blog/" style="font-size: 20px;">Front-dev-blog</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/NodeJs/" style="font-size: 13.33px;">NodeJs</a> <a href="/tags/React/" style="font-size: 16.67px;">React</a> <a href="/tags/SEO/" style="font-size: 10px;">SEO</a> <a href="/tags/Terminal/" style="font-size: 13.33px;">Terminal</a> <a href="/tags/build-deploy/" style="font-size: 16.67px;">build&deploy</a> <a href="/tags/d3js/" style="font-size: 10px;">d3js</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">아카이브</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">5월 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">4월 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">11월 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">6월 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">5월 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">최근 포스트</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/05/01/NodeJs/node-js-2/">간단한 웹 서버를 만들어 보자 2</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/24/React/react-query-2/">react-query를 사용해 보자(2)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/22/React/react-query-1/">react-query를 사용해 보자(1)</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/21/NodeJs/node-js-1/">간단한 웹 서버를 만들어 보자</a>
+          </li>
+        
+          <li>
+            <a href="/2023/04/18/Terminal/hosts/">hosts 파일에 대해서 알아보자</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 gastroad<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
