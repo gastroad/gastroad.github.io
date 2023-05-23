@@ -71,6 +71,80 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Terminal/hosts" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/04/18/Terminal/hosts/" class="article-date">
+  <time class="dt-published" datetime="2023-04-18T10:58:57.000Z" itemprop="datePublished">2023-04-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/etc/">etc</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/04/18/Terminal/hosts/">hosts 파일에 대해서 알아보자</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>오늘은 hosts 파일 수정하는 법에 대해서 알아보도록 하겠다</p>
+<h3 id="host-파일-이란"><a href="#host-파일-이란" class="headerlink" title="host 파일 이란"></a>host 파일 이란</h3><blockquote>
+<p>hosts 파일은 운영 체제가 호스트 이름을 IP 주소에 매핑할 때 사용하는 컴퓨터 파일이다.</p>
+</blockquote>
+<p>쉽게 브라우저에 도메인을 입력했을 때 해당하는 IP 주소에 매핑을 해줘 찾아갈 수 있게 하는 파일이다.</p>
+<p>가장 대표적으로 localhost 가 있다<br>127.0.0.1 IP를 localhost라는 도메인에 매핑을 해 브라우저에 localhost 라 입력을 해도 알아서 127.0.0.1로 찾아가게 된다.</p>
+<p>자 이제 그러면 언제 어떻게 사용하는가</p>
+<p>프론트엔드 개발을 하는 경우 주로 로컬 개발 서버를 띄워서 작업을 진행할 것이다.<br>그러면 보통 localhost 즉 127.0.0.1에 웹서버를 띄워서 작업을 진행할 텐데<br>카카오톡이나 페이스북 등 소셜 로그인(oauth) 기능을 구현해야 하는 상황에서 hosts 파일을 수정하면 편리하게 개발할 수 있다.</p>
+<p>카카오톡을 예시로 들겠다<br>소셜 로그인을 구현하는 방법까지는 다루지 않도록 하겠다.</p>
+<p>카카오 로그인 기능을 구현할 때 크게 3가지 단계로 구분해서 개발을 진행했다</p>
+<ol>
+<li>code 발급받기</li>
+<li>발급받은 code를 가지고 access token 발급받기</li>
+<li>발급받은 access token 을 가지고 auth token(login) 발급받기</li>
+</ol>
+<p>이중 첫 번째 code 발급받는 과정에서 hosts 파일을 수정하여 유용하게 사용할 수 있다<br>code를 발급받으려면 url 을 redirect 시켜야 한다.<br>이 과정에서 카카오톡 애플리케이션에 Redirect URI를 미리 등록해 두어야 한다.</p>
+<p>이때 Redirect URI에 localhost를 넣을 순 있지만.<br>서비스를 계속 운영하면서 localhost를 넣어둔 채로 작업하기에는 다소 찜찜하기에<br><del>나의 경우</del> production, stage에서 redirect를 받을 URI만 넣어주었다.</p>
+<p>이 경우 oauth를 개발하면서 계속 확인해 보고 테스트해 봐야 하는데 그때마다 배포해서 확인해 볼 수는 없으니<br>이때 hosts 파일을 수정해서 작업이 가능하다.</p>
+<p>자 그러면 이제 실제로 hosts 파일을 수정하는 방법에 대해 알아보도록 하자</p>
+<p>hosts 수정은 정말 간단하다 우선 하단에 링크해둔 위키백과에서 본인에 맞는 os의 hosts 파일 위치를 찾아보자.<br>맥 OS X 10.2 이상을 사용하고 있으니 &#x2F;etc&#x2F;hosts에 있을 것이다 그럼 바로 터미널로 들어가서 파일을 수정해 보자</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vi /etc/hosts</span><br><span class="line"></span><br><span class="line">----------------------------------------------------------------</span><br><span class="line"><span class="comment">##</span></span><br><span class="line"><span class="comment"># Host Database</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># localhost is used to configure the loopback interface</span></span><br><span class="line"><span class="comment"># when the system is booting.  Do not change this entry.</span></span><br><span class="line"><span class="comment">##</span></span><br><span class="line">127.0.0.1       localhost</span><br><span class="line">255.255.255.255 broadcasthost</span><br><span class="line">::1             localhost</span><br><span class="line"></span><br><span class="line">----------------------------------------------------------------</span><br></pre></td></tr></table></figure>
+
+<p>여기서 왼쪽에 IP 오른쪽에 도메인을 입력하면 해당하는 도메인에 해당하는 IP로 매핑을 해준다</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1       localhost</span><br><span class="line">255.255.255.255 broadcasthost</span><br><span class="line">::1             localhost</span><br><span class="line"></span><br><span class="line"><span class="comment">#은 주석이다 호스트 파일읋 수정해두고 까먹을 때도 많으니 주석으로 왜 이런 내용을 추가했는지 적어주도록하자.</span></span><br><span class="line">127.0.0.1       naver.com</span><br></pre></td></tr></table></figure>
+
+<p>위와 같이 설정해두고 naver.com에 접속하면 127.0.0.1 즉 localhost 가 보이게 된다.<br>만약 위와 같이 설정을 했는데도 적용이 잘 안 된 거 같다 싶으면 사용하고 있는 브라우저를 완전히 껐다가 다시 켜보자.</p>
+<p>이렇게 Hosts를 수정해서 ouath를 보다 편하게 개발할 수 있다.</p>
+<p>물론 ouath 개발을 편하게 하는 방법 중에는<br>환경 변수 같은 걸 이용해서 local stage production 다 다른 카카오톡 어플리케이션을 바라보게 해서<br>localhost를 redirect 하여 작업을 해도 무방하다</p>
+<p>본인이 개발할 수 있는 상황에 맞는 편한 방법을 사용해서 개발하면 된다고 생각한다.</p>
+<p>참고:<a target="_blank" rel="noopener" href="https://ko.wikipedia.org/wiki/Hosts">https://ko.wikipedia.org/wiki/Hosts</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gastroad.github.io/2023/04/18/Terminal/hosts/" data-id="clh4el0tz000x6fjy0necdjy3" data-title="hosts 파일에 대해서 알아보자" class="article-share-link">공유</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Terminal/" rel="tag">Terminal</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-build&amp;deploy/deploy-3" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2023/04/17/build&deploy/deploy-3/" class="article-date">
@@ -227,7 +301,8 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <p>오늘은 flux 패턴에 대해서 알아보려고 한다<br>react를 사용해서 개발을 진행하게 되면 한 번쯤은 들어봤을 거라고 생각한다.</p>
-<p>본론으로 들어가기 전 이 포스트는 개인의 경험과 이해를 바탕으로 쓰였으므로<br>틀린 내용이 있을 수 있습니다.<br>혹시 틀린 내용을 발견하게 된다면 <a href="mailto:&#103;&#111;&#115;&#x74;&#x72;&#111;&#97;&#x64;&#x33;&#x37;&#64;&#103;&#109;&#x61;&#x69;&#x6c;&#46;&#x63;&#111;&#109;">&#103;&#111;&#115;&#x74;&#x72;&#111;&#97;&#x64;&#x33;&#x37;&#64;&#103;&#109;&#x61;&#x69;&#x6c;&#46;&#x63;&#111;&#109;</a> 으로 메일 주시면 감사하겠습니다.<br>정확한 내용은 하단 참고 링크에 쓰인 공식 document를 참고하기를 바랍니다.</p>
+<p>본론으로 들어가기 전 이 포스트는 개인의 경험과 이해를 바탕으로 쓰였으므로<br>틀린 내용이 있을 수 있습니다.<br>혹시 틀린 내용을 발견하게 된다면 <a href="mailto:&#103;&#111;&#115;&#116;&#114;&#x6f;&#97;&#x64;&#x33;&#55;&#x40;&#x67;&#x6d;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#x6d;">&#103;&#111;&#115;&#116;&#114;&#x6f;&#97;&#x64;&#x33;&#55;&#x40;&#x67;&#x6d;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#x6d;</a> 으로 메일 주시면 감사하겠습니다.</p>
+<p>정확한 내용은 하단 참고 링크에 쓰인 공식 document를 참고하기를 바랍니다.</p>
 <h3 id="FLUX-란"><a href="#FLUX-란" class="headerlink" title="FLUX 란"></a>FLUX 란</h3><blockquote>
 <p>Application architecture for building user interfaces</p>
 </blockquote>
@@ -810,67 +885,6 @@
 
 
   
-    <article id="post-Front-dev-blog/Front-dev-blog-5" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2020/05/11/Front-dev-blog/Front-dev-blog-5/" class="article-date">
-  <time class="dt-published" datetime="2020-05-10T15:00:00.000Z" itemprop="datePublished">2020-05-11</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/javascript/">javascript</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2020/05/11/Front-dev-blog/Front-dev-blog-5/">Front 개발 블로그 (5)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>저번에 프로젝트 개발 기본설정을 끝 마쳤으니 이번에 어떻게 프로젝트를 만들지 기획을 해보겠다.<br>평소라면 종이에 적어서 하겠지만 포스팅을 해야하므로 아이패드를 사용해서 기획을 하도록 하겠다<br>일단 이 프로젝트의 핵심기능인 여러 게임 플랫폼의 게임 목록을 한곳에서 볼수 있도록 하는 기능이 개발 가능 한지 부터 확인을 해보도록 하겠다<br>일단 1 차 목표로 steam 과 epic games 의 게임 목록을 불러올수 있는지부터 확인해보겠다<br>open api 를 확인할때 access token 을 발급 받는 방법, 필요한 api 와 scope 2가지를 유의해서 보면 된다<br>steam open api :<br><a target="_blank" rel="noopener" href="https://partner.steamgames.com/doc/webapi_overview">https://partner.steamgames.com/doc/webapi_overview</a><br><a target="_blank" rel="noopener" href="https://developer.valvesoftware.com/wiki/Steam_Web_API#GetGlobalAchievementPercentagesForApp_.28v0001.29">https://developer.valvesoftware.com/wiki/Steam<em>Web_API#GetGlobalAchievementPercentagesForApp</em>.28v0001.29</a></p>
-<p><img src="/img/Front-dev-blog-5/1.png" alt="https://developer.valvesoftware.com/wiki/Steam_Web_API#GetOwnedGames_.28v0001.29"></p>
-<p>일단 GetOwnedGames 라는 api 가 있다<br>내 소유의 게임들 이라는 이름이니 아마 내가 소유하고있는 게임의 목록을 가져올수 있을것으로 보인다</p>
-<p><img src="/img/Front-dev-blog-5/2.png" alt="https://partner.steamgames.com/doc/webapi_overview"></p>
-<p>web api 사용법이 적혀있는 부분이다<br>아직 backend 를 개발하지 않을거기 때문에 일단은 기능 개발이 가능한것만 확인했으니 이제 epic games 를 확인해보도록 하겠다<br>epic games open api :<br><a target="_blank" rel="noopener" href="https://dev.epicgames.com/docs/services">https://dev.epicgames.com/docs/services</a><br>epic games 는 약 1시간 동안 찾아 보았지만 게임 목록 불러오는 기능을 찾지 못하여 나중에 crawling 을 하든 하도록 하겠다 backend 를 개발할때 헤당 기능 다시 찾아보기로 하고 일단은 넘어가겠다<br>이제 웹 뷰 기획을 시작하겠다</p>
-<h3 id="기획안-1"><a href="#기획안-1" class="headerlink" title="기획안 1"></a>기획안 1</h3><p><img src="/img/Front-dev-blog-5/3.png"></p>
-<p>nav를 좌측에 위치시키고 오른쪽에 Account 관련 정보를 둔다Account 를 클릭하면 팝업이 나타나고 현재 연동중인 플랫폼 (steam, epic games. etc…) 의 현재 상태가 나타나게 한다<br>이런식으로 진행했을경우 장점은 메뉴, 서브메뉴가 많아져도 편리하게 이용할수 있다</p>
-<h3 id="기획안-2"><a href="#기획안-2" class="headerlink" title="기획안 2"></a>기획안 2</h3><p><img src="/img/Front-dev-blog-5/4.png"></p>
-<p>nav 를 header 아래에 위치시키고 기획안 1과 동일하게 Account 를 위치시킨다<br>이 방법의 장점은 width 를 크게 사용할수 있다<br>하지만 menu, submenu 가 많아지면 화면이 쉽게 지저분해질수 있으므로 주의를 가해야 한다<br>일단 당장 필요한 기능을 생각해 보면</p>
-<ol>
-<li>dashBoard<br>게임 플레이시간 관련 통계, 소유하고있는 게임의 종류 통계,</li>
-<li>gameList<br>게임 목록 listview,cardview 2가지, 게임 실행</li>
-<li>setting<br>noti 관련 설정 (평소 게임을 자주 플레이 하는시간에 맞춰서 알림)<br>정도가 있겠다.</li>
-</ol>
-<h3 id="dashBoard"><a href="#dashBoard" class="headerlink" title="dashBoard"></a>dashBoard</h3><p><img src="/img/Front-dev-blog-5/5.png"><br><img src="/img/Front-dev-blog-5/6.jpg"></p>
-<p>DashBoard 페이지 기획안이다<br>사실 차트는 어떤 데이터를 어떻게 보여줄지 생각하고 만들어야 해서<br>어떤 데이터를 보여줄지 생각을 하면서 기획을 했지만 아직 어떤데이터를 가져올수있는지 확실하지 않아서 개발하면서 바뀔거같다<br><img src="/img/Front-dev-blog-5/7.jpg"><br><img src="/img/Front-dev-blog-5/8.jpg"></p>
-<p>게임 목록페이지를 card view 와 list view 2벌을 만들 예정이다<br>일단 기본적인 목록만 추가했고 filter 와 order by 를 추가할 예정이다<br>마지막으로 setting 을 추가해야하는데 setting 페이지는 가장 마지막에 개발할 예정으로 추후에 다시 다루도록 하겠다.<br>일단 웹 노티 설정과 계정 연동 상태에 대해서 추가할 예정이다</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://gastroad.github.io/2020/05/11/Front-dev-blog/Front-dev-blog-5/" data-id="clh4el0tv00066fjy1q355yd1" data-title="Front 개발 블로그 (5)" class="article-share-link">공유</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Front-dev-blog/" rel="tag">Front-dev-blog</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -928,6 +942,10 @@
       <ul>
         
           <li>
+            <a href="/2023/05/22/React/ui-design-pattern/">react 디렉토리 구조에 대해서 알아보자.</a>
+          </li>
+        
+          <li>
             <a href="/2023/05/18/React/nextjs-2/">Next.js 에 대해서 알아보자-2</a>
           </li>
         
@@ -941,10 +959,6 @@
         
           <li>
             <a href="/2023/05/05/React/flux-3/">redux vs recoil 2</a>
-          </li>
-        
-          <li>
-            <a href="/2023/05/02/React/flux-2/">redux vs recoil 1</a>
           </li>
         
       </ul>

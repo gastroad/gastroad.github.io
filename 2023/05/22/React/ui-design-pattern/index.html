@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>react 디렉토리 구조에 대해서 알아보자. | gastroad blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="React의 디렉토리 구조에 대해서 알아보려고 한다.디렉토리 구조는 각각 어떤 프로젝트를 하는지 어느 정도의 규모인지에 따라서 편한 디렉토리 구조가 바뀐다고 생각한다. 또한 규모가 점점 커지면서 이전에는 편했던 구조들이 불편해질 수도 있다.그래서 오늘 ui 디자인 패턴에 대해서 알아보려고 한다  Container-Presentational 패턴 Atomic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react 디렉토리 구조에 대해서 알아보자.">
+<meta property="og:url" content="https://gastroad.github.io/2023/05/22/React/ui-design-pattern/index.html">
+<meta property="og:site_name" content="gastroad blog">
+<meta property="og:description" content="React의 디렉토리 구조에 대해서 알아보려고 한다.디렉토리 구조는 각각 어떤 프로젝트를 하는지 어느 정도의 규모인지에 따라서 편한 디렉토리 구조가 바뀐다고 생각한다. 또한 규모가 점점 커지면서 이전에는 편했던 구조들이 불편해질 수도 있다.그래서 오늘 ui 디자인 패턴에 대해서 알아보려고 한다  Container-Presentational 패턴 Atomic">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2023-05-22T12:49:05.000Z">
+<meta property="article:modified_time" content="2023-05-23T10:48:37.801Z">
+<meta property="article:author" content="gastroad">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="gastroad blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">gastroad blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="검색"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="검색"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://gastroad.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-React/ui-design-pattern" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/05/22/React/ui-design-pattern/" class="article-date">
+  <time class="dt-published" datetime="2023-05-22T12:49:05.000Z" itemprop="datePublished">2023-05-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      react 디렉토리 구조에 대해서 알아보자.
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>React의 디렉토리 구조에 대해서 알아보려고 한다.<br>디렉토리 구조는 각각 어떤 프로젝트를 하는지 어느 정도의 규모인지에 따라서 편한 디렉토리 구조가 바뀐다고 생각한다.</p>
+<p>또한 규모가 점점 커지면서 이전에는 편했던 구조들이 불편해질 수도 있다.<br>그래서 오늘 ui 디자인 패턴에 대해서 알아보려고 한다</p>
+<ol>
+<li>Container-Presentational 패턴</li>
+<li>Atomic 패턴</li>
+</ol>
+<p>두가지 패턴을 알아보기 전에 각각의 비교를 위해서 간단한 화면을 예시로 구성해 보려 한다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;header&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;logo.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Logo&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">header</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">section</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;<span class="name">form</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;username&quot;</span>&gt;</span>아이디<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">id</span>=<span class="string">&quot;username&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;password&quot;</span>&gt;</span>비밀번호<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;password&quot;</span> <span class="attr">id</span>=<span class="string">&quot;password&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span>Submit<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">footer</span>&gt;</span>회사 정보<span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>이런 화면을 구성할 때 각각 패턴별 어떤 식으로 구성하는지 확인해 보도록 하자.</p>
+<h3 id="Container-Presentational"><a href="#Container-Presentational" class="headerlink" title="Container-Presentational"></a>Container-Presentational</h3><p>Container-Presentational 패턴의 경우 기본적으로 디렉토리 구조는 다음과 같다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">-src</span><br><span class="line">--components</span><br><span class="line">---Header</span><br><span class="line">        Header.tsx</span><br><span class="line">        index.ts</span><br><span class="line">---LoginForm</span><br><span class="line">        LoginForm.tsx</span><br><span class="line">        index.ts</span><br><span class="line">---Footer</span><br><span class="line">        Footer.tsx</span><br><span class="line">        index.ts</span><br><span class="line">--containers</span><br><span class="line">---MainPage</span><br><span class="line">        MainPage.tsx</span><br><span class="line">        index.ts</span><br></pre></td></tr></table></figure>
+
+<p>Container-Presentational의 특징을 살펴보자.</p>
+<p>이 패턴은 컴포넌트를 두 가지 유형으로 나누는 방법을 제공하여 역할과 책임을 명확하게 분리한다</p>
+<h4 id="Container-Components"><a href="#Container-Components" class="headerlink" title="Container Components"></a>Container Components</h4><p>비즈니스 로직을 처리하고 상태를 관리하는 역할을 수행한다.<br>데이터를 가져오고 변경 사항을 업데이트하는 등의 작업을 처리한다.<br>주로 상태 관리 라이브러리 (Redux, Recoil)와 연동될 수 있다.<br>UI 컴포넌트들을 조율하고 필요한 데이터와 콜백을 전달한다.</p>
+<h4 id="Presentational-Components"><a href="#Presentational-Components" class="headerlink" title="Presentational Components"></a>Presentational Components</h4><p>UI를 표현하고 사용자에게 정보를 보여주는 역할을 수행한다.<br>주로 상태를 가지지 않고, 입력된 props를 받아 UI를 렌더링 한다.<br>재사용 가능하고 독립적인 컴포넌트로 설계되어야 한다.</p>
+<p>따라서 위의 경우 Presentational Components는 components 디렉토리가<br>Container Components는 containers 가 된다.</p>
+<p>React hook 이 업데이트되기 전(심지어 업데이트된 후에도) 이 패턴을 많이 사용해서 프로젝트를 개발하였다.</p>
+<p>하지만 React hook 이 업데이트된 다음부터는 굳이 이러한 패턴을 사용할 필요가 없다.</p>
+<p>Presentational Components의 경우 Container Components는<br>상태 관리를 위해 주로 클래스 컴포넌트와 Higher-Order Component를 사용하는 경우가 많았다.</p>
+<p>React Hooks가 도입된 후 함수형 컴포넌트에서도 상태 관리와 라이프사이클 관리가 편리해졌고 custom hooks를 생성할 수 있기 때문에 굳이 Container Components를 선언할 필요 없이 코드의 재사용 성과 가독성을 높일 수 있어졌다.<br>따라서 Container-Presentational 패턴의 필요성이 줄어들었다.</p>
+<h3 id="Atomic"><a href="#Atomic" class="headerlink" title="Atomic"></a>Atomic</h3><p>Atomic 패턴의 경우 기본적으로 디렉토리 구조는 다음과 같다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">-src</span><br><span class="line">--components</span><br><span class="line">---atoms</span><br><span class="line">----Logo</span><br><span class="line">        Logo.tsx</span><br><span class="line">        index.ts</span><br><span class="line">----TextInput/</span><br><span class="line">        TextInput.tsx</span><br><span class="line">        index.ts</span><br><span class="line">---molecules</span><br><span class="line">----LoginForm</span><br><span class="line">        LoginForm.tsx</span><br><span class="line">        index.ts</span><br><span class="line">---organisms</span><br><span class="line">----Header</span><br><span class="line">        Header.tsx</span><br><span class="line">        index.ts</span><br><span class="line">--templates</span><br><span class="line">---mainTemplate</span><br><span class="line">    mainTemplate.tsx</span><br><span class="line">--pages</span><br><span class="line">---MainPage</span><br><span class="line">    mainPage.tsx</span><br><span class="line">    index.ts</span><br></pre></td></tr></table></figure>
+
+<p>아까 봤던 Container-Presentational 패턴 보다 훨씬 복잡해 보인다.<br>Atomic 패턴의 단점으로 이야기되는 복잡성, 학습 곡선, 과도한 분리 가<br>디렉토리 구조만 비교해 보아도 이해가 될 거 같다.</p>
+<p>우선 atomic 패턴의 특징을 살펴보자</p>
+<p>이 패턴은 컴포넌트를 다섯 가지 유형으로 나누는 방법을 제공한다.</p>
+<ol>
+<li>Atoms(원자): 원자는 UI의 가장 작은 단위로, 단일 기능을 수행하는 요소이다.<br>예를 들어, 버튼, 입력 필드, 레이블 등이 원자로 분류될 수 있다.</li>
+<li>Molecules(분자): 분자는 원자 요소들이 결합하여 하나의 기능을 수행하는 요소이다.<br>예를 들어, 검색 폼은 텍스트 입력 필드와 검색 버튼이 결합한 분자로 볼 수 있다.</li>
+<li>Organisms(유기체): 유기체는 더 큰 규모의 기능 또는 영역을 처리하는 요소이다.<br>예를 들어, 헤더, 사이드바, 카드 등이 유기체로 분류될 수 있다.<br>유기체는 원자와 분자를 포함할 수 있으며, 이들을 구성하여 완전한 기능을 제공합니다.</li>
+<li>Templates(템플릿): 템플릿은 실제 컨텐츠가 채워질 수 있는 레이아웃 구조이다.<br>예를 들어, 웹 페이지의 레이아웃이나 앱의 스크린 디자인이 템플릿으로 볼 수 있습니다.</li>
+<li>Pages(페이지): 페이지는 실제 컨텐츠가 채워진 완전한 UI 화면이다.</li>
+</ol>
+<p>이렇게 이론만 보았을 때 이해가 잘 안될 수도 있으니 예시를 좀 더 자세하게 분석해 보겠다. 상단에서 예시로 구성한 html 을 바탕으로 예시를 들겠다.</p>
+<p>input, label, img 같은 친구들은 atoms에 해당한다.<br>이런 atoms를 조합하여 LoginForm이라는 Molecules 을 구성한다.<br>atoms, Molecules를 합쳐서 Organisms 을 구성할 수 있다.</p>
+<p><del>위에 예시의 경우 Header는 logo img 하나만 존재하므로 Organisms보단 Molecules에 가까운 형태를 가지지만 Header에 nav 같은 다양한 기능이 포함될 수 있으므로 Organisms으로 만들어 주었다.</del></p>
+<p>이제 atoms, Molecules, Organisms 을 바탕으로 레이아웃을 구성한 것을<br>Templates라고 부른다.</p>
+<p>마지막으로 이런 Templates 에 데이터를 넣어주면 Pages 가 된다.</p>
+<p>상당히 복잡한 구조를 가지고 있다.<br>그만큼 많은 단점을 가지고 있는 패턴이다.<br>앞서 이야기한 복잡성, 학습 곡선, 과도한 분리뿐만 아니라 유연성 제한<br>일관성 유지의 어려움 등 다양한 단점을 가지고 있다.</p>
+<p>하지만 단점이 크면 장점도 크게 다가온다.<br>개인적인 생각으로 아토믹 패턴의 가장 큰 장점은 재사용성에 있다고 생각한다.<br>UI 구성 요소들을 필요에 따라 조합하여 다양한 화면을 만들 수 있으며 코드의 재사용성을 크게 높일 수 있다.</p>
+<p>그리고 각각 컴포넌트를 작은 단위로 나누기 때문에 테스트를 진행할 때도 편리하다고 한다</p>
+<p>오늘은 ui 디자인 패턴에 대해서 알아보았다. 위 2가지 말고 Component-Container(Container-Presentational 와 유사함)<br>등 많은 ui 디자인 패턴이 있다.</p>
+<p>디렉토리를 구성할때는 위에 사항 뿐만아니라 style,api,state,type, constants 등 많은 요소가 추가 될수 있다<br>이런 디자인 패턴은 방법론일 뿐이므로 맹신 하지말고 항상 지금 상황에 맞고 편리하게 변형 시켜도 된다고 생각한다.</p>
+<p>개인적으로 가장 중요하게 생각하는것은 일관성이다. 코드의 일관성이 보장되면<br>디자인 패턴을 고려하지않고 짠 코드라도 (간단한 프로젝트의경우) 유지보수가 크게 어렵지 않다고 생각한다.</p>
+<hr>
+<p>시각 자료 없이 글이 많다보니 가독성이 별로 좋지않아보인다.<br>나중에 여유가되면 실제로 컴포넌트들을 랜더링하여 시각자료를 추가하는게 좋을거같다.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gastroad.github.io/2023/05/22/React/ui-design-pattern/" data-id="cli05mh6p00002pjyh3r75rdc" data-title="react 디렉토리 구조에 대해서 알아보자." class="article-share-link">공유</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/" rel="tag">React</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/05/18/React/nextjs-2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">이전</strong>
+      <div class="article-nav-title">Next.js 에 대해서 알아보자-2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">카테고리</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/etc/">etc</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Front-dev-blog/" rel="tag">Front-dev-blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJs/" rel="tag">NodeJs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SEO/" rel="tag">SEO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Terminal/" rel="tag">Terminal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/build-deploy/" rel="tag">build&amp;deploy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3js/" rel="tag">d3js</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그 클라우드</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Front-dev-blog/" style="font-size: 17.5px;">Front-dev-blog</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/NodeJs/" style="font-size: 12.5px;">NodeJs</a> <a href="/tags/React/" style="font-size: 20px;">React</a> <a href="/tags/SEO/" style="font-size: 10px;">SEO</a> <a href="/tags/Terminal/" style="font-size: 12.5px;">Terminal</a> <a href="/tags/build-deploy/" style="font-size: 15px;">build&deploy</a> <a href="/tags/d3js/" style="font-size: 10px;">d3js</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">아카이브</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">5월 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">4월 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">11월 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">6월 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">5월 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">최근 포스트</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/05/22/React/ui-design-pattern/">react 디렉토리 구조에 대해서 알아보자.</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/18/React/nextjs-2/">Next.js 에 대해서 알아보자-2</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/15/React/nextjs-1/">Next.js 에 대해서 알아보자-1</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/10/React/flux-4/">redux vs recoil 3</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/05/React/flux-3/">redux vs recoil 2</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 gastroad<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -6,16 +6,16 @@
   
   <title>flux 패턴이란 | gastroad blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="오늘은 flux 패턴에 대해서 알아보려고 한다react를 사용해서 개발을 진행하게 되면 한 번쯤은 들어봤을 거라고 생각한다. 본론으로 들어가기 전 이 포스트는 개인의 경험과 이해를 바탕으로 쓰였으므로틀린 내용이 있을 수 있습니다.혹시 틀린 내용을 발견하게 된다면 &amp;#103;&amp;#111;&amp;#115;&amp;#x74;&amp;#x72;&amp;#111;&amp;#97;&amp;#x64;&amp;#x33;">
+  <meta name="description" content="오늘은 flux 패턴에 대해서 알아보려고 한다react를 사용해서 개발을 진행하게 되면 한 번쯤은 들어봤을 거라고 생각한다. 본론으로 들어가기 전 이 포스트는 개인의 경험과 이해를 바탕으로 쓰였으므로틀린 내용이 있을 수 있습니다.혹시 틀린 내용을 발견하게 된다면 &amp;#103;&amp;#111;&amp;#115;&amp;#116;&amp;#114;&amp;#x6f;&amp;#97;&amp;#x64;&amp;#x33;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="flux 패턴이란">
 <meta property="og:url" content="https://gastroad.github.io/2023/04/15/React/flux-1/index.html">
 <meta property="og:site_name" content="gastroad blog">
-<meta property="og:description" content="오늘은 flux 패턴에 대해서 알아보려고 한다react를 사용해서 개발을 진행하게 되면 한 번쯤은 들어봤을 거라고 생각한다. 본론으로 들어가기 전 이 포스트는 개인의 경험과 이해를 바탕으로 쓰였으므로틀린 내용이 있을 수 있습니다.혹시 틀린 내용을 발견하게 된다면 &amp;#103;&amp;#111;&amp;#115;&amp;#x74;&amp;#x72;&amp;#111;&amp;#97;&amp;#x64;&amp;#x33;">
+<meta property="og:description" content="오늘은 flux 패턴에 대해서 알아보려고 한다react를 사용해서 개발을 진행하게 되면 한 번쯤은 들어봤을 거라고 생각한다. 본론으로 들어가기 전 이 포스트는 개인의 경험과 이해를 바탕으로 쓰였으므로틀린 내용이 있을 수 있습니다.혹시 틀린 내용을 발견하게 된다면 &amp;#103;&amp;#111;&amp;#115;&amp;#116;&amp;#114;&amp;#x6f;&amp;#97;&amp;#x64;&amp;#x33;">
 <meta property="og:locale" content="ko_KR">
 <meta property="og:image" content="https://gastroad.github.io/img/flux/1.png">
 <meta property="article:published_time" content="2023-04-15T06:49:05.000Z">
-<meta property="article:modified_time" content="2023-05-02T11:34:40.427Z">
+<meta property="article:modified_time" content="2023-05-22T12:09:54.663Z">
 <meta property="article:author" content="gastroad">
 <meta property="article:tag" content="React">
 <meta name="twitter:card" content="summary">
@@ -103,7 +103,8 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <p>오늘은 flux 패턴에 대해서 알아보려고 한다<br>react를 사용해서 개발을 진행하게 되면 한 번쯤은 들어봤을 거라고 생각한다.</p>
-<p>본론으로 들어가기 전 이 포스트는 개인의 경험과 이해를 바탕으로 쓰였으므로<br>틀린 내용이 있을 수 있습니다.<br>혹시 틀린 내용을 발견하게 된다면 <a href="mailto:&#103;&#111;&#115;&#x74;&#x72;&#111;&#97;&#x64;&#x33;&#x37;&#64;&#103;&#109;&#x61;&#x69;&#x6c;&#46;&#x63;&#111;&#109;">&#103;&#111;&#115;&#x74;&#x72;&#111;&#97;&#x64;&#x33;&#x37;&#64;&#103;&#109;&#x61;&#x69;&#x6c;&#46;&#x63;&#111;&#109;</a> 으로 메일 주시면 감사하겠습니다.<br>정확한 내용은 하단 참고 링크에 쓰인 공식 document를 참고하기를 바랍니다.</p>
+<p>본론으로 들어가기 전 이 포스트는 개인의 경험과 이해를 바탕으로 쓰였으므로<br>틀린 내용이 있을 수 있습니다.<br>혹시 틀린 내용을 발견하게 된다면 <a href="mailto:&#103;&#111;&#115;&#116;&#114;&#x6f;&#97;&#x64;&#x33;&#55;&#x40;&#x67;&#x6d;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#x6d;">&#103;&#111;&#115;&#116;&#114;&#x6f;&#97;&#x64;&#x33;&#55;&#x40;&#x67;&#x6d;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#x6d;</a> 으로 메일 주시면 감사하겠습니다.</p>
+<p>정확한 내용은 하단 참고 링크에 쓰인 공식 document를 참고하기를 바랍니다.</p>
 <h3 id="FLUX-란"><a href="#FLUX-란" class="headerlink" title="FLUX 란"></a>FLUX 란</h3><blockquote>
 <p>Application architecture for building user interfaces</p>
 </blockquote>
@@ -209,6 +210,10 @@
       <ul>
         
           <li>
+            <a href="/2023/05/22/React/ui-design-pattern/">react 디렉토리 구조에 대해서 알아보자.</a>
+          </li>
+        
+          <li>
             <a href="/2023/05/18/React/nextjs-2/">Next.js 에 대해서 알아보자-2</a>
           </li>
         
@@ -222,10 +227,6 @@
         
           <li>
             <a href="/2023/05/05/React/flux-3/">redux vs recoil 2</a>
-          </li>
-        
-          <li>
-            <a href="/2023/05/02/React/flux-2/">redux vs recoil 1</a>
           </li>
         
       </ul>
