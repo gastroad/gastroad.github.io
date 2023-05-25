@@ -71,6 +71,55 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Front-dev-blog/Front-dev-blog-6" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2020/06/09/Front-dev-blog/Front-dev-blog-6/" class="article-date">
+  <time class="dt-published" datetime="2020-06-08T15:00:00.000Z" itemprop="datePublished">2020-06-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2020/06/09/Front-dev-blog/Front-dev-blog-6/">Front 개발 블로그 (6)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>거의 한 달 만에 포스팅을 하려한다<br>맥북에 커피를 쏟아 수리를 맡겼는데 2주 정도 걸렸다.<br>수리비가 장난 아니니까 커피를 쏟지 않게 조심해야 한다 …<br>역시 커피는 마시는 것보다 쏟는 게 잠 깨는 데에 도움이 되는 거 같다…<br>여차여차 백엔드 개발자를 구했다<br>그래서 부담이었던 백엔드 부분 공부를 미룰 수 있게 되었다.<br>본제로 돌아와서 먼저 기본적인 개발 준비는 끝났으니<br>본격적으로 개발을 시작하도록 하겠다<br>오늘은 router 설정 을 하려 한다<br>프로젝트 내부에서 URI 변경이 될때 화면이 전환되는 기능을 개발 할 것이다<br>react-router 라는 라이브러리를 사용해서 router 설정을 할 것이다.<br>react-router 설정은 간단하다 최상위에 Router 를 두고 Swich의 children 으로 Route component에 path, component를 props 로 넘겨주면 된다<br>말로 쓰려니까 어려워 보이지만 코드를 보면서 설명하도록 하겠다<br><img src="/img/Front-dev-blog-6/1.png"></p>
+<p>App.tsx 에 최상단 wrapper 로 Router를 생성하고 모든 페이지공용으로 사용 하는 Header 를 두었다<br>&lt;&gt; &lt;&#x2F;&gt; 문법은 React.Fragment 라는 그냥 wrapper 로 사용하는 문법이다<br>root-modal 은 나중에 popup 을 만들때 react-dom 에 createPortal 라는 기능을 사용하려고 미리 생성해 두었다<br>그후 Switch 하단에 Route 를 생성해두면<br>localhost&#x2F;dashboard 로 접근을 하면 DashBoard Component 가 rendering 될것이다<br>마지막으로 Redirect Component 를 작성하여 URI 가 잘못된 곳으로 접근했을때 모두 dashboard 페이지로 이동하게 설정해 두었다<br>renderRoute 는 이후 props 로 추가 데이터가 필요할 경우가 있을거 같아 미리 작성해 두었다<br>이쯤에서 디랙토리 구조를 살펴 보자면<br><img src="/img/Front-dev-blog-6/2.png"></p>
+<p>이런식으로 되어있다<br>DashBoard,GameList,Setting 은<br><img src="/img/Front-dev-blog-6/3.png"><br><img src="/img/Front-dev-blog-6/4.png"><br><img src="/img/Front-dev-blog-6/5.png"></p>
+<p>간단하게 제대로 나오는지 확인만 하려고 작성해 두었다<br><img src="/img/Front-dev-blog-6/6.png"><br><img src="/img/Front-dev-blog-6/7.png"></p>
+<p>header 도 비슷하게 작성해 두었다<br>index.ts 는 저런식으로 작성해두면 다른 파일에서 import 할 경우에<br>디랙토리 까지만 접근을해도 자동으로 잡아준다<br><img src="/img/Front-dev-blog-6/8.png"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gastroad.github.io/2020/06/09/Front-dev-blog/Front-dev-blog-6/" data-id="clh4el0tw000a6fjy5kn1d8wp" data-title="Front 개발 블로그 (6)" class="article-share-link">공유</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Front-dev-blog/" rel="tag">Front-dev-blog</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-Front-dev-blog/Front-dev-blog-5" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2020/05/11/Front-dev-blog/Front-dev-blog-5/" class="article-date">
@@ -440,6 +489,10 @@
       <ul>
         
           <li>
+            <a href="/2023/05/25/React/nextjs-3/">Next.js 에 대해서 알아보자-3</a>
+          </li>
+        
+          <li>
             <a href="/2023/05/22/React/ui-design-pattern/">react 디렉토리 구조에 대해서 알아보자.</a>
           </li>
         
@@ -453,10 +506,6 @@
         
           <li>
             <a href="/2023/05/10/React/flux-4/">redux vs recoil 3</a>
-          </li>
-        
-          <li>
-            <a href="/2023/05/05/React/flux-3/">redux vs recoil 2</a>
           </li>
         
       </ul>
