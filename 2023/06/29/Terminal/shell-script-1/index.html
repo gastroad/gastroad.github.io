@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>컴포넌트 생성이 번거로우신가요? | gastroad blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="최근 atomic 패턴으로 개발을 진행하다 보니 컴포넌트를 생성하는 것에 대한 번거로움이 생겼다.그래서 컴포넌트 생성을 조금이나마 편하게 하고자 shell script를 짜 보았다. 우선 컴포넌트를 생성할 때마다 하는 작업을 확인해 보자  component 디렉토리 생성 component 파일 생성 index 파일 생성 test 파일 생성 story 파일">
+<meta property="og:type" content="article">
+<meta property="og:title" content="컴포넌트 생성이 번거로우신가요?">
+<meta property="og:url" content="https://gastroad.github.io/2023/06/29/Terminal/shell-script-1/index.html">
+<meta property="og:site_name" content="gastroad blog">
+<meta property="og:description" content="최근 atomic 패턴으로 개발을 진행하다 보니 컴포넌트를 생성하는 것에 대한 번거로움이 생겼다.그래서 컴포넌트 생성을 조금이나마 편하게 하고자 shell script를 짜 보았다. 우선 컴포넌트를 생성할 때마다 하는 작업을 확인해 보자  component 디렉토리 생성 component 파일 생성 index 파일 생성 test 파일 생성 story 파일">
+<meta property="og:locale" content="ko_KR">
+<meta property="article:published_time" content="2023-06-29T09:00:00.000Z">
+<meta property="article:modified_time" content="2023-06-29T10:53:08.565Z">
+<meta property="article:author" content="gastroad">
+<meta property="article:tag" content="Terminal">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="gastroad blog" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">gastroad blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="검색"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="검색"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://gastroad.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Terminal/shell-script-1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/06/29/Terminal/shell-script-1/" class="article-date">
+  <time class="dt-published" datetime="2023-06-29T09:00:00.000Z" itemprop="datePublished">2023-06-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/etc/">etc</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      컴포넌트 생성이 번거로우신가요?
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>최근 atomic 패턴으로 개발을 진행하다 보니 컴포넌트를 생성하는 것에 대한 번거로움이 생겼다.<br>그래서 컴포넌트 생성을 조금이나마 편하게 하고자 shell script를 짜 보았다.</p>
+<p>우선 컴포넌트를 생성할 때마다 하는 작업을 확인해 보자</p>
+<ol>
+<li>component 디렉토리 생성</li>
+<li>component 파일 생성</li>
+<li>index 파일 생성</li>
+<li>test 파일 생성</li>
+<li>story 파일 생성</li>
+<li>style 파일 생성</li>
+</ol>
+<p>각 파일들을 생성하고 기본적으로 작성해야 하는 내용을 확인해 보자</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// component</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="variable constant_">FC</span> &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;./$componentName.scss&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> interface $&#123;componentName&#125;<span class="title class_">Props</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">$componentName</span>: <span class="variable constant_">FC</span>&lt;$&#123;componentName&#125;<span class="title class_">Props</span>&gt; = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;&gt;</span><span class="tag">&lt;/&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> $componentName</span><br></pre></td></tr></table></figure>
+<p>component의 경우 위와 같은 형태를 기본으로 개발을 진행한다. 기호의 따라 function으로 생성해도 무방하다</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//index</span></span><br><span class="line"><span class="keyword">export</span> &#123;<span class="keyword">default</span>&#125; <span class="keyword">from</span> <span class="string">&quot;./$componentName&quot;</span></span><br></pre></td></tr></table></figure>
+<p>index 파일의 경우 컴포넌트 접근을 위해 작성해 준다<br>index 가 아닌 package.json 을 만들어 주어도 무방하다</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// story</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Meta</span>, <span class="title class_">StoryObj</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@storybook/react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> $componentName, &#123; $&#123;componentName&#125;<span class="title class_">Props</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;./$componentName&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">meta</span>: <span class="title class_">Meta</span>&lt;$&#123;componentName&#125;<span class="title class_">Props</span>&gt; = &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">component</span>: $componentName,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> meta;</span><br><span class="line"></span><br><span class="line">type <span class="title class_">Story</span> = <span class="title class_">StoryObj</span>&lt;$&#123;componentName&#125;<span class="title class_">Props</span>&gt;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title class_">Default</span>: <span class="title class_">Story</span> = &#123;</span><br><span class="line">  <span class="attr">args</span>: &#123;&#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>story 파일의 경우 대부분 비슷한 형태를 가지고 있다.<br>대부분 여기서 args를 수정해 주거나<br>decorators를 추가해 주는 정도다.</p>
+<p>style, test의 경우 파일만 생성해 두고 내용은 컴포넌트에 따라 완전히 바뀔 수 있으므로 그냥 빈칸으로 두겠다.</p>
+<p>위 내용을 바탕으로 shell-script를 작성하면 다음과 같이 나온다</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">// maker.sh</span><br><span class="line"><span class="built_in">read</span> -p <span class="string">&quot;컴포넌트 이름을 입력하세요: &quot;</span> componentName</span><br><span class="line"></span><br><span class="line">componentPath=<span class="string">&quot;./<span class="variable">$componentName</span>&quot;</span></span><br><span class="line"><span class="built_in">mkdir</span> <span class="string">&quot;<span class="variable">$componentPath</span>&quot;</span></span><br><span class="line"></span><br><span class="line">files=(</span><br><span class="line">    <span class="string">&quot;<span class="variable">$componentName</span>.tsx&quot;</span></span><br><span class="line">    <span class="string">&quot;<span class="variable">$componentName</span>.scss&quot;</span></span><br><span class="line">    <span class="string">&quot;<span class="variable">$componentName</span>.test.tsx&quot;</span></span><br><span class="line">    <span class="string">&quot;<span class="variable">$componentName</span>.stories.tsx&quot;</span></span><br><span class="line">    <span class="string">&quot;index.ts&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> <span class="string">&quot;<span class="variable">$&#123;files[@]&#125;</span>&quot;</span>; <span class="keyword">do</span></span><br><span class="line">    <span class="built_in">touch</span> <span class="string">&quot;<span class="variable">$componentPath</span>/<span class="variable">$file</span>&quot;</span></span><br><span class="line">    <span class="keyword">case</span> <span class="string">&quot;<span class="variable">$file</span>&quot;</span> <span class="keyword">in</span></span><br><span class="line">    <span class="string">&quot;<span class="variable">$componentName</span>.tsx&quot;</span>)</span><br><span class="line">        <span class="built_in">cat</span> &lt;&lt;<span class="string">EOF &gt;&quot;$componentPath/$file&quot;</span></span><br><span class="line"><span class="string">import &#123; FC &#125; from &quot;react&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">import &quot;./$componentName.scss&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">export interface $&#123;componentName&#125;Props &#123;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">const $componentName: FC&lt;$&#123;componentName&#125;Props&gt; = () =&gt; &#123;</span></span><br><span class="line"><span class="string">    return &lt;&gt;&lt;/&gt;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">export default $componentName</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line">        ;;</span><br><span class="line">    <span class="string">&quot;<span class="variable">$componentName</span>.stories.tsx&quot;</span>)</span><br><span class="line">        <span class="built_in">cat</span> &lt;&lt;<span class="string">EOF &gt;&quot;$componentPath/$file&quot;</span></span><br><span class="line"><span class="string">import &#123; Meta, StoryObj &#125; from &#x27;@storybook/react&#x27;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">import $componentName, &#123; $&#123;componentName&#125;Props &#125; from &#x27;./$componentName&#x27;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">const meta: Meta&lt;$&#123;componentName&#125;Props&gt; = &#123;</span></span><br><span class="line"><span class="string">  title: &#x27;&#x27;,</span></span><br><span class="line"><span class="string">  component: $componentName,</span></span><br><span class="line"><span class="string">&#125;;</span></span><br><span class="line"><span class="string">export default meta;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">type Story = StoryObj&lt;$&#123;componentName&#125;Props&gt;;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">export const Default: Story = &#123;</span></span><br><span class="line"><span class="string">  args: &#123;&#125;,</span></span><br><span class="line"><span class="string">&#125;;</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line">        ;;</span><br><span class="line">    <span class="string">&quot;index.ts&quot;</span>)</span><br><span class="line">        <span class="built_in">cat</span> &lt;&lt;<span class="string">EOF &gt;&quot;$componentPath/$file&quot;</span></span><br><span class="line"><span class="string">export &#123;default&#125; from &quot;./$componentName&quot;</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line">        ;;</span><br><span class="line">    <span class="keyword">esac</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;폴더와 파일이 생성되었습니다: <span class="variable">$componentName</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>간단하게 사용된 문법을 설명하자면</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">read</span> -p </span><br></pre></td></tr></table></figure>
+<p>componentName 을 입력받는다</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">files=()</span><br></pre></td></tr></table></figure>
+<p>생성할 파일 배열을 만들어준다</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> <span class="string">&quot;<span class="variable">$&#123;files[@]&#125;</span>&quot;</span>; <span class="keyword">do</span>  </span><br><span class="line">~~</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>files의 개수만큼 for 문을 돈다</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> <span class="string">&quot;<span class="variable">$componentPath</span>/<span class="variable">$file</span>&quot;</span> </span><br></pre></td></tr></table></figure>
+<p>files 배열에 있는 파일을 생성해 준다</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="string">&quot;<span class="variable">$file</span>&quot;</span> <span class="keyword">in</span> <span class="string">&quot;&quot;</span>) ;;</span><br></pre></td></tr></table></figure>
+<p>file 이 “” 와 일치할 경우 ;; 전까지의 명령어를 실행한다</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &lt;&lt;<span class="string">EOF &gt;&quot;$componentPath/$file&quot;</span></span><br><span class="line"><span class="string">내용</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure>
+<p>cat 명령어를 통하여 파일 내용을 수정해 준다.</p>
+<p>터미널에서 아래 명령어를 입력하면 잘 작동하는 것을 확인할 수 있다.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sh maker.sh</span><br></pre></td></tr></table></figure>
+
+<p>추가로 디렉토리 구조가 일정하다면 root에 maker.sh를 위치시킨 뒤<br>내가 원하는 위치에 설정하는 것 또한 가능하다</p>
+<p>options&#x3D;() 명령어를 사용하여 &#x2F;component&#x2F;atoms, &#x2F;templates 등등의 선택지를 주어 폴더를 생성할 수도 있다.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gastroad.github.io/2023/06/29/Terminal/shell-script-1/" data-id="cljh1vws90000cjjy09ls0s07" data-title="컴포넌트 생성이 번거로우신가요?" class="article-share-link">공유</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Terminal/" rel="tag">Terminal</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2023/05/22/React/ui-design-pattern/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">이전</strong>
+      <div class="article-nav-title">react 디렉토리 구조에 대해서 알아보자.</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">카테고리</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/etc/">etc</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Front-dev-blog/" rel="tag">Front-dev-blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NodeJs/" rel="tag">NodeJs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SEO/" rel="tag">SEO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Terminal/" rel="tag">Terminal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/build-deploy/" rel="tag">build&amp;deploy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/d3js/" rel="tag">d3js</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">태그 클라우드</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Front-dev-blog/" style="font-size: 17.5px;">Front-dev-blog</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/NodeJs/" style="font-size: 12.5px;">NodeJs</a> <a href="/tags/React/" style="font-size: 20px;">React</a> <a href="/tags/SEO/" style="font-size: 10px;">SEO</a> <a href="/tags/Terminal/" style="font-size: 15px;">Terminal</a> <a href="/tags/build-deploy/" style="font-size: 15px;">build&deploy</a> <a href="/tags/d3js/" style="font-size: 10px;">d3js</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">아카이브</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">6월 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">5월 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">4월 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">11월 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">6월 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">5월 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">최근 포스트</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/06/29/Terminal/shell-script-1/">컴포넌트 생성이 번거로우신가요?</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/22/React/ui-design-pattern/">react 디렉토리 구조에 대해서 알아보자.</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/15/React/nextjs-1/">Next.js 에 대해서 알아보자-1</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/10/React/flux-4/">redux vs recoil 3</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/05/React/flux-3/">redux vs recoil 2</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2023 gastroad<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
