@@ -152,99 +152,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://gastroad.github.io/2023/06/29/Terminal/shell-script-1/" data-id="cljgyyrxs000gm4jy8inp6yge" data-title="컴포넌트 생성이 번거로우신가요?" class="article-share-link">공유</a>
+      <a data-url="https://gastroad.github.io/2023/06/29/Terminal/shell-script-1/" data-id="cljwav0tr001bh7jy5ejjexuq" data-title="컴포넌트 생성이 번거로우신가요?" class="article-share-link">공유</a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Terminal/" rel="tag">Terminal</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-React/todolendar-1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2023/06/29/React/todolendar-1/" class="article-date">
-  <time class="dt-published" datetime="2023-06-29T02:30:05.000Z" itemprop="datePublished">2023-06-29</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/todolendar/">todolendar</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2023/06/29/React/todolendar-1/">todolendar</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>포트폴리오 겸 공부한 기술을 실 프로젝트처럼 작성해 보고 싶어 todolendar라는 프로젝트를 기획하였다.</p>
-<p>todo-list + calendar로 달력에 일정을 적어 둘 수 있는 프로젝트를 만들어 보았다.</p>
-<p>주 목표는 다음과 같다.</p>
-<ol>
-<li>atomic 패턴 사용</li>
-<li>jest를 통한 테스트 작성</li>
-<li>storybook 작성</li>
-</ol>
-<p>그리고 여유가 된다면</p>
-<ol>
-<li>react-native로 웹뷰 만들기</li>
-<li>react-query 사용</li>
-<li>반응형 웹앱 개발</li>
-</ol>
-<p>까지 충족하고 싶어서 프로젝트를 시작하였다.</p>
-<p>특히 atomic 패턴의 경우 실무에서 바로 사용하게 된다면 상당히 난해할 것 같아서 꼭 미리 한번 사용해 보고 싶었다.</p>
-<p>현재 2023-06-29 일 기준으로<br>주 목표 3가지는 이루었다.</p>
-<h3 id="atomic-패턴"><a href="#atomic-패턴" class="headerlink" title="atomic 패턴"></a>atomic 패턴</h3><p>atomic 패턴을 사용해서 이루고자 했었던 목표는</p>
-<ol>
-<li>test, story 작성을 조금 더 편하게</li>
-<li>ui 와 상태 관리 관심사 분리</li>
-</ol>
-<p>두 가지를 이루고 싶어서 사용을 해 보았다.</p>
-<p>결론부터 말하자면 생각처럼 잘 되지는 않았다.</p>
-<p>우선 디렉토리 구조를 어떻게 만들었는지부터 설명을 하겠다.</p>
-<h4 id="src-x2F-component-x2F-atom"><a href="#src-x2F-component-x2F-atom" class="headerlink" title="src&#x2F;component&#x2F;atom"></a>src&#x2F;component&#x2F;atom</h4><p>더 이상 나눌 필요가 없는 단위까지 나눈 컴포넌트를 배치해 두었다.</p>
-<h4 id="src-x2F-component-x2F-molecules"><a href="#src-x2F-component-x2F-molecules" class="headerlink" title="src&#x2F;component&#x2F;molecules"></a>src&#x2F;component&#x2F;molecules</h4><p>atom으로 두기에는 구조가 복잡하거나 다수의 atom 을 사용해서 만든 컴포넌트를 배치해 두었다.</p>
-<h4 id="src-x2F-component-x2F-organisms"><a href="#src-x2F-component-x2F-organisms" class="headerlink" title="src&#x2F;component&#x2F;organisms"></a>src&#x2F;component&#x2F;organisms</h4><p>atom, molecules를 사용해서 만든 컴포넌트를 배치해 두었다.</p>
-<h4 id="src-x2F-templates"><a href="#src-x2F-templates" class="headerlink" title="src&#x2F;templates"></a>src&#x2F;templates</h4><p>위 3가지 컴포넌트들을 조합해서 화면을 구성하는 컴포넌트를 배치해 두었다.</p>
-<h4 id="src-x2F-pages"><a href="#src-x2F-pages" class="headerlink" title="src&#x2F;pages"></a>src&#x2F;pages</h4><p>templates에 데이터를 주입하는 컴포넌트를 배치해 두었다.</p>
-<p>organisms를 만들면서 가장 많은 고민을 했다.<br>처음에는 독립적으로 기능을 수행할 수 있는 단위를 생각하고 만들었기에<br>상태 관리를 organisms 단계에서부터 하기 시작했다. <del>atomic 패턴을 잘못 이해하고 있었던 거 같다.</del><br>Calendar 작업하던 중 문득 든 생각이 organisms 단계에서 상태 관리를 진행했을 경우 재사용성에 크게 문제가 생겨 props로 넘겨받게 수정을 진행했다.</p>
-<p>직접 atomic 패턴으로 개발을 해 보니 몇 가지 단점들이 눈에 보이기 시작했다.</p>
-<ol>
-<li>props drilling</li>
-</ol>
-<p>atomic 패턴의 특성상 정말 많은 component를 만들어서 조합하고 사용한다.<br>그러다 보니 필연적으로 props drilling이 심해진다.</p>
-<ol start="2">
-<li>설정의 번거로움<br>많은 component를 만들다 보니 쳐야 하는 코드 수 자체가 증가한다<br>각각의 컴포넌트당 index, component, test, stories, style 등의 파일을 생성해 주어야 해서 상당히 번거로웠다.<br>초기 설정의 경우 webpack, typscript 등의 alias를 설정하는 것도 상당히 번거로웠다.</li>
-</ol>
-<p>눈에 띄는 장점들도 있다.</p>
-<ol>
-<li>storybook<br>storybook 을 보니 상당히 괜찮다는 느낌을 받았다.<br>atom, molecules, organisms, templates 4가지 종류의 컴포넌트에 story를 작성했다.<br>작성을 다 해두고 보니 어떤컴포넌트를 어떻게 사용했는지 확실하게 보이고<br>figma라도 연동시켜두면 디자이너와 협업할 때 엄청 편리할 것 같다고 생각했다.</li>
-</ol>
-<p><a target="_blank" rel="noopener" href="https://github.com/gastroad/todolendar">https://github.com/gastroad/todolendar</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://gastroad.github.io/2023/06/29/React/todolendar-1/" data-id="cljh200tb000lm4jydacr35ma" data-title="todolendar" class="article-share-link">공유</a>
-      
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/" rel="tag">React</a></li></ul>
 
     </footer>
   </div>
@@ -334,7 +246,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://gastroad.github.io/2023/05/22/React/ui-design-pattern/" data-id="cli05jggb000oj1jyekh6hedg" data-title="react 디렉토리 구조에 대해서 알아보자." class="article-share-link">공유</a>
+      <a data-url="https://gastroad.github.io/2023/05/22/React/ui-design-pattern/" data-id="cljwav0tr0011h7jy5vfrcdus" data-title="react 디렉토리 구조에 대해서 알아보자." class="article-share-link">공유</a>
       
       
       
@@ -441,7 +353,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://gastroad.github.io/2023/05/15/React/nextjs-1/" data-id="clhqbh3710005j1jydxsu2xz7" data-title="Next.js 에 대해서 알아보자-1" class="article-share-link">공유</a>
+      <a data-url="https://gastroad.github.io/2023/05/15/React/nextjs-1/" data-id="cljwav0tu002fh7jycx13b7aw" data-title="Next.js 에 대해서 알아보자-1" class="article-share-link">공유</a>
       
       
       
@@ -534,7 +446,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://gastroad.github.io/2023/05/10/React/flux-4/" data-id="clhhintdh0001j1jy3km95xel" data-title="redux vs recoil 3" class="article-share-link">공유</a>
+      <a data-url="https://gastroad.github.io/2023/05/10/React/flux-4/" data-id="cljwav0tq000vh7jy4w4dblg3" data-title="redux vs recoil 3" class="article-share-link">공유</a>
       
       
       
@@ -645,7 +557,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://gastroad.github.io/2023/05/05/React/flux-3/" data-id="clhew2w5x00007ejy98fi5yx3" data-title="redux vs recoil 2" class="article-share-link">공유</a>
+      <a data-url="https://gastroad.github.io/2023/05/05/React/flux-3/" data-id="cljwav0tp000kh7jyddjth039" data-title="redux vs recoil 2" class="article-share-link">공유</a>
       
       
       
@@ -735,7 +647,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://gastroad.github.io/2023/05/02/React/flux-2/" data-id="clh66zwt400017hjyb9akct22" data-title="redux vs recoil 1" class="article-share-link">공유</a>
+      <a data-url="https://gastroad.github.io/2023/05/02/React/flux-2/" data-id="cljwav0tq000rh7jy7ddf7mu5" data-title="redux vs recoil 1" class="article-share-link">공유</a>
       
       
       
@@ -792,7 +704,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://gastroad.github.io/2023/05/01/NodeJs/node-js-2/" data-id="clh4el0tz000u6fjyh37y23kv" data-title="간단한 웹 서버를 만들어 보자 2" class="article-share-link">공유</a>
+      <a data-url="https://gastroad.github.io/2023/05/01/NodeJs/node-js-2/" data-id="cljwav0ts001lh7jy2rw96t38" data-title="간단한 웹 서버를 만들어 보자 2" class="article-share-link">공유</a>
       
       
       
@@ -872,7 +784,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://gastroad.github.io/2023/04/24/React/react-query-2/" data-id="clh4el0tx000k6fjy1c45g5wg" data-title="react-query를 사용해 보자(2)" class="article-share-link">공유</a>
+      <a data-url="https://gastroad.github.io/2023/04/24/React/react-query-2/" data-id="cljwav0tr0014h7jye2pj36hl" data-title="react-query를 사용해 보자(2)" class="article-share-link">공유</a>
       
       
       
@@ -975,11 +887,91 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://gastroad.github.io/2023/04/22/React/react-query-1/" data-id="clh4el0ty000o6fjy13zban0d" data-title="react-query를 사용해 보자(1)" class="article-share-link">공유</a>
+      <a data-url="https://gastroad.github.io/2023/04/22/React/react-query-1/" data-id="cljwav0tq000yh7jyc8cr34h3" data-title="react-query를 사용해 보자(1)" class="article-share-link">공유</a>
       
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/React/" rel="tag">React</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-NodeJs/node-js-1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2023/04/21/NodeJs/node-js-1/" class="article-date">
+  <time class="dt-published" datetime="2023-04-21T11:20:24.000Z" itemprop="datePublished">2023-04-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="/2023/04/21/NodeJs/node-js-1/">간단한 웹 서버를 만들어 보자</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>react-query를 사용해보고 테스트 해보기위해서 간단한 웹 서버를 만들어 보려고한다.</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/gastroad/portfolio">다른 프로젝트</a>를 만들 땐 아래와 같이 mock api를 만들어서 사용했었다</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getPortfolioList = <span class="keyword">async</span> (): <span class="title class_">Promise</span>&lt;<span class="title class_">PortfolioCard</span>[]&gt; =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">resolve</span>(portfolioCardData);</span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>setTimeout 으로 비동기(1초) 적으로 데이터를 내려받는 상황을 만들어 주었다.<br>하지만 이럴 경우 여러 상황을 테스트해보기 번거로워 그냥 node로 간단한 웹 서버를 만들어 보려 한다.</p>
+<p>우선 터미널에 들어가 간단한 환경 설정을 해주자</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">mkdir</span> node-server</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cd</span> node-server</span><br><span class="line"></span><br><span class="line">$ npm init</span><br><span class="line"></span><br><span class="line">$ npm install express nodemon</span><br></pre></td></tr></table></figure>
+
+<p>node-server라는 디렉토리 만들고 express 랑 nodemon 을 설치해 주었다</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#pakage.json</span><br><span class="line"></span><br><span class="line"><span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;start&quot;</span><span class="punctuation">:</span> <span class="string">&quot;nodemon app.js&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
+
+<p>pakage.json에 nodemon 을 통해서 app.js를 실행하는 scripts를 추가해 주었다.</p>
+<p>이제 텍스트 에디터를 통해서 간단한 웹서버를 만들어보려 한다</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// root</span></span><br><span class="line"></span><br><span class="line">app.<span class="property">js</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> portfolioRouter = <span class="built_in">require</span>(<span class="string">&quot;./routes/portfolio&quot;</span>);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&quot;/api/portfolio&quot;</span>, portfolioRouter);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> port = <span class="number">3000</span>;</span><br><span class="line">app.<span class="title function_">listen</span>(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Server is listening on port <span class="subst">$&#123;port&#125;</span>.`</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// root</span></span><br><span class="line"><span class="comment">// -routes</span></span><br><span class="line"><span class="comment">// -- portfolio</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> portfolioController = <span class="built_in">require</span>(<span class="string">&quot;./portfolio.controller&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = express.<span class="title class_">Router</span>();</span><br><span class="line"></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&quot;/&quot;</span>, portfolioController.<span class="property">getAll</span>);</span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&quot;/:id&quot;</span>, portfolioController.<span class="property">getById</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = router;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">------------------------------------------------------</span><br><span class="line"><span class="comment">// portfolio.controller.js</span></span><br><span class="line"><span class="keyword">const</span> portfolioService = <span class="built_in">require</span>(<span class="string">&quot;./portfolio.service&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">getAll</span> = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> portfolios = portfolioService.<span class="title function_">getAll</span>();</span><br><span class="line">  res.<span class="title function_">json</span>(portfolios);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">getById</span> = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; id &#125; = req.<span class="property">params</span>;</span><br><span class="line">  <span class="keyword">const</span> portfolio = portfolioService.<span class="title function_">getById</span>(id);</span><br><span class="line">  res.<span class="title function_">json</span>(portfolio);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">------------------------------------------------------</span><br><span class="line"><span class="comment">// portfolio.service.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; portfolioCardData &#125; = <span class="built_in">require</span>(<span class="string">&quot;./data&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">getAll</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> portfolioCardData;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">getById</span> = <span class="function">(<span class="params">id</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> portfolioCardData.<span class="title function_">find</span>(<span class="function">(<span class="params">p</span>) =&gt;</span> p.<span class="property">id</span> === <span class="built_in">parseInt</span>(id));</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// data.js</span></span><br><span class="line"><span class="keyword">const</span> portfolioCardData = [</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;이력서&quot;</span>,</span><br><span class="line">        <span class="attr">paragraph</span>: <span class="string">&quot;프론트엔드 개발자 진현성 이력서 입니다.&quot;</span>,</span><br><span class="line">        <span class="attr">link</span>: <span class="string">&quot;https://gastroad.github.io/resume/&quot;</span>,</span><br><span class="line">        <span class="comment">// img: &quot;./src/assets/image/profile.jpeg&quot;,</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="number">2</span>,</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;GitHub&quot;</span>,</span><br><span class="line">        <span class="attr">paragraph</span>: <span class="string">&quot;github 링크 입니다.&quot;</span>,</span><br><span class="line">        <span class="attr">link</span>: <span class="string">&quot;https://github.com/gastroad&quot;</span>,</span><br><span class="line">        <span class="comment">// img: &quot;./src/assets/image/github.png&quot;,</span></span><br><span class="line">    &#125;, &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="number">3</span>,</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;Slides&quot;</span>,</span><br><span class="line">        <span class="attr">paragraph</span>: <span class="string">&quot;pt발표 자료 입니다.&quot;</span>,</span><br><span class="line">        <span class="attr">link</span>: <span class="string">&quot;https://slides.com/coldpotato&quot;</span>,</span><br><span class="line">        <span class="comment">// img: &quot;./src/assets/image/slides.png&quot;,</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="number">4</span>,</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;Github Blog&quot;</span>,</span><br><span class="line">        <span class="attr">paragraph</span>: <span class="string">&quot;개인 블로그 링크 입니다.&quot;</span>,</span><br><span class="line">        <span class="attr">link</span>: <span class="string">&quot;https://gastroad.github.io&quot;</span>,</span><br><span class="line">        <span class="comment">// img: &quot;./src/assets/image/github.png&quot;,</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123; <span class="attr">portfolioCardData</span>: portfolioCardData &#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm start</span><br></pre></td></tr></table></figure>
+
+<p>이제 <a target="_blank" rel="noopener" href="http://localhost:3000/api/portfolio%EB%A1%9C">http://localhost:3000/api/portfolio로</a> 접속해 보면 json 이 잘 내려오는 것을 확인할 수 있다.</p>
+<p>이제</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"></span><br><span class="line"><span class="attr">devServer</span>: &#123;</span><br><span class="line">        <span class="attr">host</span>: <span class="string">&quot;0.0.0.0&quot;</span>,</span><br><span class="line">        <span class="attr">port</span>: <span class="number">80</span>,</span><br><span class="line">        <span class="attr">compress</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">server</span>: <span class="string">&#x27;http&#x27;</span>,</span><br><span class="line">        <span class="attr">historyApiFallback</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">proxy</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;/api&#x27;</span>: &#123;</span><br><span class="line">                <span class="attr">target</span>: <span class="string">&#x27;localhost:3000&#x27;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br></pre></td></tr></table></figure>
+
+<p>이렇게 하면 &#x2F;api로 들어오는 모든 요청이<br>localhost:3000&#x2F;api로 이동된다.<br>자세한 내용은 <a href="https://gastroad.github.io/2023/04/17/deploy-3/">여기</a>에 작성해 두었다.</p>
+<p>이제 프로젝트를 구동해서 동작을 확인해 보겠다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">getPortfolioList</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> data = <span class="keyword">await</span> axios.<span class="title function_">get</span>(<span class="string">&quot;/api/portfolio&quot;</span>);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(data);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="title function_">getPortfolioList</span>();</span><br><span class="line">&#125;, []);</span><br></pre></td></tr></table></figure>
+
+<p>간단하게 api를 호출을 해보았다.</p>
+<p><img src="/img/react-query-1/1.png"></p>
+<p>잘 작동하는 것을 확인하였다.<br>동작을 확인했으니 이제 다시 node로 돌아가서 api를 몇 개 더 만들어 주겠다.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// data.js</span></span><br><span class="line"><span class="keyword">const</span> portfolioCardData = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&quot;이력서&quot;</span>,</span><br><span class="line">    <span class="attr">paragraph</span>: <span class="string">&quot;프론트엔드 개발자 진현성 이력서 입니다.&quot;</span>,</span><br><span class="line">    <span class="attr">link</span>: <span class="string">&quot;https://gastroad.github.io/resume/&quot;</span>,</span><br><span class="line">    <span class="attr">img</span>: <span class="string">&quot;./src/assets/image/profile.jpeg&quot;</span>,</span><br><span class="line">    <span class="attr">etc</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">value</span>: <span class="string">&quot;1&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="number">2</span>,</span><br><span class="line">        <span class="attr">value</span>: <span class="string">&quot;2&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="number">3</span>,</span><br><span class="line">        <span class="attr">value</span>: <span class="string">&quot;3&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&quot;GitHub&quot;</span>,</span><br><span class="line">    <span class="attr">paragraph</span>: <span class="string">&quot;github 링크 입니다.&quot;</span>,</span><br><span class="line">    <span class="attr">link</span>: <span class="string">&quot;https://github.com/gastroad&quot;</span>,</span><br><span class="line">    <span class="attr">img</span>: <span class="string">&quot;./src/assets/image/github.png&quot;</span>,</span><br><span class="line">    <span class="attr">etc</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="number">4</span>,</span><br><span class="line">        <span class="attr">value</span>: <span class="string">&quot;4&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="number">5</span>,</span><br><span class="line">        <span class="attr">value</span>: <span class="string">&quot;5&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="number">6</span>,</span><br><span class="line">        <span class="attr">value</span>: <span class="string">&quot;6&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="number">3</span>,</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&quot;Slides&quot;</span>,</span><br><span class="line">    <span class="attr">paragraph</span>: <span class="string">&quot;pt발표 자료 입니다.&quot;</span>,</span><br><span class="line">    <span class="attr">link</span>: <span class="string">&quot;https://slides.com/coldpotato&quot;</span>,</span><br><span class="line">    <span class="attr">img</span>: <span class="string">&quot;./src/assets/image/slides.png&quot;</span>,</span><br><span class="line">    <span class="attr">etc</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="number">7</span>,</span><br><span class="line">        <span class="attr">value</span>: <span class="string">&quot;7&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="number">4</span>,</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&quot;Github Blog&quot;</span>,</span><br><span class="line">    <span class="attr">paragraph</span>: <span class="string">&quot;개인 블로그 링크 입니다.&quot;</span>,</span><br><span class="line">    <span class="attr">link</span>: <span class="string">&quot;https://gastroad.github.io&quot;</span>,</span><br><span class="line">    <span class="attr">img</span>: <span class="string">&quot;./src/assets/image/github.png&quot;</span>,</span><br><span class="line">    <span class="attr">etc</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="number">8</span>,</span><br><span class="line">        <span class="attr">value</span>: <span class="string">&quot;8&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    ],</span><br><span class="line">  &#125;,</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123; <span class="attr">portfolioCardData</span>: portfolioCardData &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>api 요청에 대한 응답으로 이중 배열을 받은 상황을 만들고 싶어<br>data를 수정했다.</p>
+<p>이에 맞게 api 도 생성해 주었다</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// index.js</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> portfolioController = <span class="built_in">require</span>(<span class="string">&quot;./portfolio.controller&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = express.<span class="title class_">Router</span>();</span><br><span class="line"></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&quot;/&quot;</span>, portfolioController.<span class="property">getAll</span>);</span><br><span class="line">router.<span class="title function_">post</span>(<span class="string">&quot;/&quot;</span>, portfolioController.<span class="property">post</span>);</span><br><span class="line"></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&quot;/:id&quot;</span>, portfolioController.<span class="property">getById</span>);</span><br><span class="line">router.<span class="title function_">put</span>(<span class="string">&quot;/:id&quot;</span>, portfolioController.<span class="property">putById</span>);</span><br><span class="line"></span><br><span class="line">router.<span class="title function_">post</span>(<span class="string">&quot;/:id/etc&quot;</span>, portfolioController.<span class="property">postEtc</span>);</span><br><span class="line">router.<span class="title function_">put</span>(<span class="string">&quot;/:id/etc/:etcId&quot;</span>, portfolioController.<span class="property">putEtcById</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = router</span><br><span class="line">---------------------------------------------------------</span><br><span class="line"><span class="comment">// portfolio.controller.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> portfolioService = <span class="built_in">require</span>(<span class="string">&quot;./portfolio.service&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">getAll</span> = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> portfolios = portfolioService.<span class="title function_">getAll</span>();</span><br><span class="line">  res.<span class="title function_">json</span>(portfolios);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">exports</span>.<span class="property">post</span> = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; img, etc, link, paragraph, title, &#125; = req.<span class="property">body</span></span><br><span class="line">  <span class="keyword">const</span> portfolio = portfolioService.<span class="title function_">post</span>(etc, img, link, paragraph, title)</span><br><span class="line">  res.<span class="title function_">json</span>(portfolio)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">getById</span> = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; id &#125; = req.<span class="property">params</span>;</span><br><span class="line">  <span class="keyword">const</span> portfolio = portfolioService.<span class="title function_">getById</span>(id);</span><br><span class="line">  res.<span class="title function_">json</span>(portfolio);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">putById</span> = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; img, etc, link, paragraph, title, &#125; = req.<span class="property">body</span></span><br><span class="line">  <span class="keyword">const</span> &#123; id &#125; = req.<span class="property">params</span>;</span><br><span class="line">  <span class="keyword">const</span> portfolio = portfolioService.<span class="title function_">putById</span>(id, img, etc, link, paragraph, title)</span><br><span class="line">  res.<span class="title function_">json</span>(portfolio)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">postEtc</span> = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; id &#125; = req.<span class="property">params</span>;</span><br><span class="line">  <span class="keyword">const</span> &#123; value &#125; = req.<span class="property">body</span>;</span><br><span class="line">  <span class="keyword">const</span> portfolio = portfolioService.<span class="title function_">postEtc</span>(id, value)</span><br><span class="line">  res.<span class="title function_">json</span>(portfolio)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">exports</span>.<span class="property">putEtcById</span> = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; id, etcId &#125; = req.<span class="property">params</span>;</span><br><span class="line">  <span class="keyword">const</span> &#123; value &#125; = req.<span class="property">body</span>;</span><br><span class="line">  <span class="keyword">const</span> portfolio = portfolioService.<span class="title function_">putEtcById</span>(id, etcId, value)</span><br><span class="line">  res.<span class="title function_">json</span>(portfolio)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">---------------------------------------------------------</span><br><span class="line"><span class="comment">// portfolio.service.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; portfolioCardData &#125; = <span class="built_in">require</span>(<span class="string">&quot;./data&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> i = <span class="number">1000</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">getAll</span> = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> portfolioCardData;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">post</span> = <span class="function">(<span class="params">etc, img, link, paragraph, title</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> newPortfolio = &#123;</span><br><span class="line">    etc, img, link, paragraph, title, <span class="attr">id</span>: i++</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> newPortfolio</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">exports</span>.<span class="property">getById</span> = <span class="function">(<span class="params">id</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> portfolioCardData.<span class="title function_">find</span>(<span class="function">(<span class="params">p</span>) =&gt;</span> p.<span class="property">id</span> === <span class="built_in">parseInt</span>(id));</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">exports</span>.<span class="property">putById</span> = <span class="function">(<span class="params">id, img, etc, link, paragraph, title</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> &#123; id, img, etc, link, paragraph, title &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">postEtc</span> = <span class="function">(<span class="params">id, value</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> newPortfolio = portfolioCardData.<span class="title function_">find</span>(<span class="function">(<span class="params">p</span>) =&gt;</span> p.<span class="property">id</span> === <span class="built_in">parseInt</span>(id))</span><br><span class="line">  newPortfolio.<span class="property">etc</span>.<span class="title function_">push</span>(&#123; value, <span class="attr">id</span>: i++ &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> newPortfolio</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">exports</span>.<span class="property">putEtcById</span> = <span class="function">(<span class="params">id, etcId, value</span>) =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> newPortfolio = portfolioCardData.<span class="title function_">find</span>(<span class="function">(<span class="params">p</span>) =&gt;</span> p.<span class="property">id</span> === <span class="built_in">parseInt</span>(id))</span><br><span class="line">  <span class="keyword">let</span> newEtc = newPortfolio.<span class="property">etc</span>.<span class="title function_">find</span>(<span class="function">(<span class="params">p</span>) =&gt;</span> p.<span class="property">id</span> === <span class="built_in">parseInt</span>(etcId))</span><br><span class="line">  newEtc.<span class="property">value</span> = value</span><br><span class="line">  newPortfolio.<span class="property">etc</span> = newEtc</span><br><span class="line">  <span class="keyword">return</span> newPortfolio</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>body 파싱을 위한 미들웨어를 추가하는 것도 잊지 말자</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&quot;express&quot;</span>);</span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">&quot;body-parser&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> portfolioRouter = <span class="built_in">require</span>(<span class="string">&quot;./routes/portfolio&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>();</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(bodyParser.<span class="title function_">json</span>());</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&quot;/api/portfolio&quot;</span>, portfolioRouter);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> port = <span class="number">3000</span>;</span><br><span class="line">app.<span class="title function_">listen</span>(port, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Server is listening on port <span class="subst">$&#123;port&#125;</span>.`</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://gastroad.github.io/2023/04/21/NodeJs/node-js-1/" data-id="cljwav0ts001ih7jy8ql401no" data-title="간단한 웹 서버를 만들어 보자" class="article-share-link">공유</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJs/" rel="tag">NodeJs</a></li></ul>
 
     </footer>
   </div>
@@ -1004,7 +996,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">카테고리</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/etc/">etc</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/todolendar/">todolendar</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/etc/">etc</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/javascript/">javascript</a></li></ul>
     </div>
   </div>
 
@@ -1050,10 +1042,6 @@
           </li>
         
           <li>
-            <a href="/2023/06/29/React/todolendar-1/">todolendar</a>
-          </li>
-        
-          <li>
             <a href="/2023/05/22/React/ui-design-pattern/">react 디렉토리 구조에 대해서 알아보자.</a>
           </li>
         
@@ -1063,6 +1051,10 @@
         
           <li>
             <a href="/2023/05/10/React/flux-4/">redux vs recoil 3</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/05/React/flux-3/">redux vs recoil 2</a>
           </li>
         
       </ul>
