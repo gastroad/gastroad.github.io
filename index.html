@@ -100,7 +100,9 @@
         <p>지난번에 shell-script를 통하여 컴포넌트 생성 자동화를 진행하였다.<br>사용하다 보니 만들어진 코드를 크게 수정하진 않지만 경로를 수정해 주고 파일을 계속 복사 붙여넣기 해야 해 조금 번거로운 감이 있다.</p>
 <p>어떻게 고도화를 하면 좋을까 고민하다<br>vscode extension으로 만들면 편리하지 않을까라는 생각이 들어<br>이번에 vscode extension으로 만들어 보려 한다.</p>
 <p>우선 vscode extenstion 을 어떻게 만드는지 확인해 보았다.<br>친절하게도 <a target="_blank" rel="noopener" href="https://code.visualstudio.com/api/get-started/your-first-extension">vscode docs</a> 에 해당 문서가 있어 우선 따라 해 보았다.</p>
-<p>우선 node, git 이 설치되어 있는지 확인을 해 보았다.<br><img src="/../../img/vscode-1/1.png"></p>
+<p>우선 node, git 이 설치되어 있는지 확인을 해 보았다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ git -v</span><br><span class="line">git version 2.40.1</span><br><span class="line">$ node -v</span><br><span class="line">v20.4.0</span><br></pre></td></tr></table></figure>
+
 <p>당연하겠지만 잘 설치되어 있다<br>그다음 <a target="_blank" rel="noopener" href="https://yeoman.io/">yeoman</a>,<a target="_blank" rel="noopener" href="https://www.npmjs.com/package/generator-code"> generator-code</a> 를 설치하고 실행해 주었다</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g yo generator-code</span><br><span class="line">$ yo code</span><br></pre></td></tr></table></figure>
 
